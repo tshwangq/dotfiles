@@ -1,0 +1,7 @@
+#Anyting ending with a tilde
+*~
+
+#Anything ending with a .class
+*.class
+*.log
+.idea

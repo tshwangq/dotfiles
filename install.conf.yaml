@@ -1,0 +1,8 @@
+- clean: ['~']
+
+- link:
+    ~/.bashrc: .bashrc
+    ~/.emacs: .emacs
+
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]
