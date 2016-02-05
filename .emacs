@@ -72,8 +72,6 @@
 
 (setq twittering-use-master-password t)
 
-(tool-bar-mode nil)
-
 (setq org2blog/wp-blog-alist
        '(("ruili"
           :url "http://beta.rui.li/xmlrpc.php"
