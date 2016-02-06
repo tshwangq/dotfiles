@@ -9,6 +9,7 @@
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
+ '(debug-on-error t)
  '(initial-frame-alist (quote ((fullscreen . maximized)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -34,6 +35,26 @@
   '(require 'php-ext))
 
 (load-theme 'solarized-light)
+
+; Load the default configuration
+(require 'auto-complete-config)
+; Make sure we can find the dictionaries
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+; Use dictionaries by default
+(setq-default ac-sources (add-to-list 'ac-sources 'ac-source-dictionary))
+(global-auto-complete-mode t)
+; Start auto-completion after 2 characters of a word
+(setq ac-auto-start 2)
+; case sensitivity is important when finding matches
+(setq ac-ignore-case nil)
+
+
+;; Load the library
+(require 'yasnippet)
+;; Let's have snippets in the auto-complete dropdown
+(add-to-list 'ac-sources 'ac-source-yasnippet)
+;(yas-global-mode 1)
+
 
 ;;;
 ;;; Org Mode
@@ -68,11 +89,6 @@
 
 (setq org-log-done 'time)
 (setq org-log-done 'note)
-(setq url-proxy-services '(("no_proxy" . "work\\.com")
-                           ("http" . "127.0.0.1:8123")))
-
-(setq twittering-use-master-password t)
-
 (setq org2blog/wp-blog-alist
        '(("ruili"
           :url "http://beta.rui.li/xmlrpc.php"
@@ -128,3 +144,22 @@
 
 (defun turn-on-flyspell () (flyspell-mode 1))
 (add-hook 'find-file-hooks 'turn-on-flyspell)
+(setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))
+
+(defun sudo-edit (&optional arg)
+  "Edit currently visited file as root.
+
+With a prefix ARG prompt for a file to visit.
+Will also prompt for a file to visit if current
+buffer is not visiting a file."
+  (interactive "P")
+  (if (or arg (not buffer-file-name))
+      (find-file (concat "/sudo:root@localhost:"
+                         (ido-read-file-name "Find file(as root): ")))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
+(global-set-key (kbd "C-x C-r") 'sudo-edit)
+
+(setq url-proxy-services '(("no_proxy" . "work\\.com")
+                           ("http" . "127.0.0.1:8123")))
+
