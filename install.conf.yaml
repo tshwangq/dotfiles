@@ -3,6 +3,7 @@
 - link:
     ~/.bashrc: .bashrc
     ~/.emacs: .emacs
-
+    ~/.gitconfig: .gitconfig
+    
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
