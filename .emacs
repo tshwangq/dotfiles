@@ -126,3 +126,5 @@
 (tags-todo "work")
 (tags-todo "支持")))))
 
+(defun turn-on-flyspell () (flyspell-mode 1))
+(add-hook 'find-file-hooks 'turn-on-flyspell)
