@@ -160,6 +160,27 @@ buffer is not visiting a file."
 
 (global-set-key (kbd "C-x C-r") 'sudo-edit)
 
-(setq url-proxy-services '(("no_proxy" . "work\\.com")
-                           ("http" . "127.0.0.1:8123")))
+;(setq url-proxy-services '(("no_proxy" . "work\\.com")
+;                           ("http" . "127.0.0.1:8123")))
 
+(setq browse-url-browser-function 'w3m-goto-url-new-session)
+(setq w3m-user-agent "Mozilla/5.0 (Linux; U; Android 2.3.3; zh-tw; HTC_Pyramid Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.")
+(defun hn ()
+  (interactive)
+  (browse-url "http://news.ycombinator.com"))
+
+(defun toggle-env-http-proxy ()
+  "set/unset the environment variable http_proxy which w3m uses"
+  (interactive)
+  (let ((proxy "http://127.0.0.1:8123"))
+    (if (string= (getenv "http_proxy") proxy)
+        ;; clear the proxy
+        (progn
+          (setenv "http_proxy" "")
+          (message "env http_proxy is empty now")
+          )
+      ;; set the proxy
+      (setenv "http_proxy" proxy)
+      (message "env http_proxy is %s now" proxy)
+        )
+    ))
