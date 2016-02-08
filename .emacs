@@ -141,7 +141,8 @@
 ((agenda "")
 (tags-todo "work")
 (tags-todo "支持")))))
-
+(add-to-list 'load-path "~/org-8.3.3/contrib/lisp" t)
+(require 'ox-taskjuggler)
 (defun turn-on-flyspell () (flyspell-mode 1))
 (add-hook 'find-file-hooks 'turn-on-flyspell)
 (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))
