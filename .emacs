@@ -226,6 +226,8 @@ buffer is not visiting a file."
     volatile-highlights
     undo-tree
     zygospore
+    js2-mode
+    ac-js2
     magit
     org-plus-contrib))
 
@@ -425,6 +427,55 @@ buffer is not visiting a file."
 
 (require 'bash-completion)
 (bash-completion-setup)
-
-
+(setq org-plantuml-jar-path
+      (expand-file-name "~/plantuml.jar"))
+;; active Org-babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(;; other Babel languages
+   (plantuml . t)))
 ;(require 'eh-org)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((dot . t))) ; this line activates dot
+
+(use-package flycheck)
+
+(use-package flycheck-package
+  :config
+  (add-hook 'flycheck-mode-hook 'flycheck-package-setup))
+
+(global-flycheck-mode)
+
+;; javascript
+(use-package js2-mode
+  :ensure t
+  :init
+  (setq js-basic-indent 2)
+  (setq-default js2-basic-indent 2
+                js2-basic-offset 2
+                js2-auto-indent-p t
+                js2-cleanup-whitespace t
+                js2-enter-indents-newline t
+                js2-indent-on-enter-key t
+                js2-global-externs (list "window" "module" "require" "buster" "sinon" "assert" "refute" "setTimeout" "clearTimeout" "setInterval" "clearInterval" "location" "__dirname" "console" "JSON" "jQuery" "$"))
+
+  (add-hook 'js2-mode-hook
+            (lambda ()
+              (push '("function" . ?ƒ) prettify-symbols-alist)))
+
+  (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode)))
+
+(use-package color-identifiers-mode
+  :ensure t
+  :init
+  (add-hook 'js2-mode-hook 'color-identifiers-mode))
+
+(add-hook 'js2-mode-hook
+          (lambda () (flycheck-select-checker "javascript-eslint")))
+
+(use-package js2-refactor
+  :ensure t
+  :init   (add-hook 'js2-mode-hook 'js2-refactor-mode)
+  :config (js2r-add-keybindings-with-prefix "C-c ."))
