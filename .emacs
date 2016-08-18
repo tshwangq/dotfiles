@@ -6,11 +6,11 @@
  '(custom-safe-themes
    (quote
     ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
+ '(debug-on-error t)
+ '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
- '(tool-bar-mode nil)
- '(debug-on-error t)
- '(initial-frame-alist (quote ((fullscreen . maximized)))))
+ '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -20,8 +20,7 @@
 
 (menu-bar-mode 0)
 (tool-bar-mode 0)
-
-
+(setq load-prefer-newer 0)
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
@@ -30,10 +29,17 @@
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
+(eval-when-compile
+  (require 'use-package))
 
-(eval-after-load 'php-mode
-  '(require 'php-ext))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/init"))
+(require 'init-dired)
+(require 'init-web)
+(require 'init-php)
 
 (load-theme 'solarized-light)
 
@@ -51,7 +57,9 @@
 
 
 ;; Load the library
-(require 'yasnippet)
+(use-package yasnippet
+  :config
+  (yas-reload-all))
 ;; Let's have snippets in the auto-complete dropdown
 (add-to-list 'ac-sources 'ac-source-yasnippet)
 ;(yas-global-mode 1)
@@ -62,15 +70,29 @@
 ;;;
 ;;
 ;; Standard key bindings
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
+(use-package org
+  :ensure t
+  :defer t
+  :init
+  (setq org-replace-disputed-keys t
+        org-default-notes-file (expand-file-name "notes.org" (getenv "HOME")))
+  :bind (("C-c l" . org-store-link)
+         ("C-c a" . org-agenda)
+         ("C-c b" . org-iswitchb)
+         ("C-c c" . org-capture)
+         ("C-c M-p" . org-babel-previous-src-block)
+         ("C-c M-n" . org-babel-next-src-block)
+         ("C-c S" . org-babel-previous-src-block)
+         ("C-c s" . org-babel-next-src-block))
+  :config
+  (progn
+    (setq org-highest-priority ?1)
+    (setq org-default-priority ?2)
+    (setq org-lowest-priority ?3)
+    ))
 
 ;; The following lines are always needed. Choose your own keys.
 (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
 ;(require 'org-latex)
 (unless (boundp 'org-export-latex-classes)
   (setq org-export-latex-classes nil))
@@ -151,7 +173,7 @@
 (tags-todo "work")
 (tags-todo "支持")))))
 (add-to-list 'load-path "~/org-8.3.3/contrib/lisp" t)
-(require 'ox-taskjuggler)
+;(require 'ox-taskjuggler)
 
 (defun turn-on-flyspell () (flyspell-mode 1))
 (add-hook 'find-file-hooks 'turn-on-flyspell)
@@ -196,7 +218,6 @@ buffer is not visiting a file."
         )
     ))
 
-(package-initialize)
 
 (setq gc-cons-threshold 100000000)
 (setq inhibit-startup-message t)
@@ -273,7 +294,7 @@ buffer is not visiting a file."
 ;; (define-key c++-mode-map  [(control tab)] 'company-complete)
 
 ;; company-c-headers
-(add-to-list 'company-backends 'company-c-headers)
+;(add-to-list 'company-backends 'company-c-headers)
 
 ;; hs-minor-mode for folding source code
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
@@ -292,7 +313,8 @@ buffer is not visiting a file."
 (setq
  c-default-style "linux" ;; set style to "linux"
  )
-
+;(setq load-path (cons (expand-file-name "~/m0-15/lisp") load-path))
+;(require 'gnus-load)
 (global-set-key (kbd "RET") 'newline-and-indent)  ; automatically indent when press RET
 
 ;; activate whitespace-mode to view all whitespace characters
@@ -334,9 +356,13 @@ buffer is not visiting a file."
 (require 'ws-butler)
 (add-hook 'prog-mode-hook 'ws-butler-mode)
 
-;; Package: yasnippet
-(require 'yasnippet)
-(yas-global-mode 1)
+(use-package yasnippet
+  :init
+  (progn
+    (use-package yasnippets)
+    (yas-global-mode 1)
+))
+
 
 ;; Package: smartparens
 (require 'smartparens-config)
@@ -427,27 +453,47 @@ buffer is not visiting a file."
 
 (require 'bash-completion)
 (bash-completion-setup)
-(setq org-plantuml-jar-path
-      (expand-file-name "~/plantuml.jar"))
 ;; active Org-babel languages
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(;; other Babel languages
    (plantuml . t)))
 ;(require 'eh-org)
+(use-package ob-plantuml
+  :ensure nil
+  :config
+  (setq org-plantuml-jar-path "~/plantuml.jar"))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((dot . t))) ; this line activates dot
 
-(use-package flycheck)
-
-(use-package flycheck-package
-  :config
-  (add-hook 'flycheck-mode-hook 'flycheck-package-setup))
+(setq org-publish-project-alist
+      '(("www"
+         :base-directory "~/workspace/www/"
+         :publishing-directory "~/public_html/"
+         :publishing-function org-twbs-publish-to-html
+         :with-sub-superscript nil
+         )))
+(defun my-org-publish-buffer ()
+  (interactive)
+  (save-buffer)
+  (save-excursion (org-publish-current-file))
+  (let* ((proj (org-publish-get-project-from-filename buffer-file-name))
+         (proj-plist (cdr proj))
+         (rel (file-relative-name buffer-file-name
+                                  (plist-get proj-plist :base-directory)))
+         (dest (plist-get proj-plist :publishing-directory)))
+    (browse-url (concat "file://"
+                        (file-name-as-directory (expand-file-name dest))
+                        (file-name-sans-extension rel)
+                        ".html"))))
+(use-package flycheck-package)
+;(use-package flycheck
+;  :config
+;  (add-hook 'flycheck-mode-hook 'flycheck-package-setup))
 
 (global-flycheck-mode)
-
 ;; javascript
 (use-package js2-mode
   :ensure t
@@ -459,23 +505,103 @@ buffer is not visiting a file."
                 js2-cleanup-whitespace t
                 js2-enter-indents-newline t
                 js2-indent-on-enter-key t
-                js2-global-externs (list "window" "module" "require" "buster" "sinon" "assert" "refute" "setTimeout" "clearTimeout" "setInterval" "clearInterval" "location" "__dirname" "console" "JSON" "jQuery" "$"))
+                js2-global-externs (list "window" "module" "require" "buster" "sinon" "assert" "refute" "setTimeout" "clearTimeout" "setInterval" "clearInterval" "location" "__dirname" "console" "JSON" "jQuery" "$")))
 
   (add-hook 'js2-mode-hook
             (lambda ()
               (push '("function" . ?ƒ) prettify-symbols-alist)))
+  (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
+  (setq tern-command (cons (executable-find "tern") '()))
+  (eval-after-load 'tern
+    '(progn
+       (require 'tern-auto-complete)
+       (tern-ac-setup)))
+  (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
-  (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode)))
 
 (use-package color-identifiers-mode
   :ensure t
   :init
   (add-hook 'js2-mode-hook 'color-identifiers-mode))
 
-(add-hook 'js2-mode-hook
-          (lambda () (flycheck-select-checker "javascript-eslint")))
+(use-package flycheck
+  :ensure t
+  :diminish flycheck-mode
+  :config
+  (global-flycheck-mode)
+  ;; disable jshint since we prefer eslint checking
+  (setq-default flycheck-disabled-checkers
+                (append flycheck-disabled-checkers
+                        '(javascript-jshint)))
 
+  (setq flycheck-checkers '(javascript-eslint))
+  ;; use eslint with web-mode for jsx files
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (flycheck-add-mode 'javascript-eslint 'js2-mode)
+  (flycheck-add-mode 'javascript-eslint 'js-mode)
+  ;; disable json-jsonlist checking for json files
+  (setq-default flycheck-disabled-checkers
+                (append flycheck-disabled-checkers
+                        '(json-jsonlist)))
+)
 (use-package js2-refactor
   :ensure t
   :init   (add-hook 'js2-mode-hook 'js2-refactor-mode)
   :config (js2r-add-keybindings-with-prefix "C-c ."))
+
+
+(use-package function-args
+  :config (fa-config-default))
+(setq-local imenu-create-index-function #'ggtags-build-imenu-index)
+(require 'cc-mode)
+(require 'semantic)
+
+(global-semanticdb-minor-mode 1)
+(global-semantic-idle-scheduler-mode 1)
+
+(semantic-mode 1)
+
+(use-package dired-subtree :ensure t
+  :after dired
+  :config
+  (bind-key "<tab>" #'dired-subtree-toggle dired-mode-map)
+  (bind-key "<backtab>" #'dired-subtree-cycle dired-mode-map))
+
+;;preview files in dired
+(use-package peep-dired
+  :ensure t
+  :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
+  :bind (:map dired-mode-map
+              ("P" . peep-dired)))
+(use-package yaml-mode
+  :mode ("\\.yml$" . yaml-mode))
+
+(use-package popwin
+  :config (popwin-mode 1))
+(use-package windmove
+  :config (windmove-default-keybindings 'shift))
+
+(use-package smart-mode-line
+  :ensure t
+  :init
+  (progn
+    (setq sml/no-confirm-load-theme t)
+    (sml/setup)))
+
+(use-package beacon
+  :ensure t
+  :defer t
+  :init (beacon-mode 1))
+
+(use-package mode-icons
+  :ensure t
+  :defer t
+  :init (mode-icons-mode))
+(defun dired-open-file ()
+  "In dired, open the file named on this line."
+  (interactive)
+  (let* ((file (dired-get-filename nil t)))
+    (message "Opening %s..." file)
+    (call-process "gnome-open" nil 0 nil file)
+    (message "Opening %s done" file)))
+(provide '.emacs)
