@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
+    ("4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
  '(debug-on-error t)
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(save-place t nil (saveplace))
@@ -37,23 +37,34 @@
   (require 'use-package))
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/init"))
-(require 'init-dired)
-(require 'init-web)
-(require 'init-php)
+;(require 'init-dired)
+;(require 'init-web)
+;(require 'init-php)
 
-(load-theme 'solarized-light)
+(use-package auto-complete
+  :diminish auto-complete-mode
+  :ensure t
+  :config
+  (use-package auto-complete-config)
+  (ac-config-default)
+  (global-auto-complete-mode t)
+					; Start auto-completion after 2 characters of a word
+  (setq ac-auto-start 2)
+					; case sensitivity is important when finding matches
+  (setq ac-ignore-case nil)
+  (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+  (setq-default ac-sources (add-to-list 'ac-sources 'ac-source-dictionary))
+  (add-to-list 'ac-modes 'html-mode)
+  (setq ac-use-menu-map t)
+  (ac-set-trigger-key "TAB")
+  (ac-set-trigger-key "<tab>"))
+					; Load the default configuration
+(use-package auto-complete-config)
+					; Make sure we can find the dictionaries
 
-; Load the default configuration
-(require 'auto-complete-config)
-; Make sure we can find the dictionaries
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-; Use dictionaries by default
-(setq-default ac-sources (add-to-list 'ac-sources 'ac-source-dictionary))
-(global-auto-complete-mode t)
-; Start auto-completion after 2 characters of a word
-(setq ac-auto-start 2)
-; case sensitivity is important when finding matches
-(setq ac-ignore-case nil)
+					; Use dictionaries by default
+
+
 
 
 ;; Load the library
@@ -451,8 +462,10 @@ buffer is not visiting a file."
                 (lambda () (interactive) (find-file "~/workspace/workspace/gtd.org")))
 
 
-(require 'bash-completion)
-(bash-completion-setup)
+(use-package bash-completion
+  :ensure t
+  :init
+  (bash-completion-setup))
 ;; active Org-babel languages
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -489,11 +502,12 @@ buffer is not visiting a file."
                         (file-name-sans-extension rel)
                         ".html"))))
 (use-package flycheck-package)
-;(use-package flycheck
-;  :config
-;  (add-hook 'flycheck-mode-hook 'flycheck-package-setup))
-
-(global-flycheck-mode)
+(use-package flycheck
+  :ensure t
+  :config
+  )
+(add-hook 'after-init-hook #'global-flycheck-mode)
+;(global-flycheck-mode)
 ;; javascript
 (use-package js2-mode
   :ensure t
@@ -604,4 +618,10 @@ buffer is not visiting a file."
     (message "Opening %s..." file)
     (call-process "gnome-open" nil 0 nil file)
     (message "Opening %s done" file)))
+
+(use-package color-theme-sanityinc-solarized
+  :ensure t
+  :init
+  (load-theme 'sanityinc-solarized-light))  
+
 (provide '.emacs)
