@@ -39,6 +39,7 @@
   (require 'use-package))
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/init"))
+<<<<<<< HEAD
 (require 'init-dired)
 (require 'init-web)
 (require 'init-php)
@@ -48,8 +49,10 @@
 
 (use-package php-mode :ensure t)
 (use-package php-extras :ensure t)
-
-(load-theme 'solarized-light)
+=======
+;(require 'init-dired)
+;(require 'init-web)
+;(require 'init-php)
 
 (use-package auto-complete
   :diminish auto-complete-mode
@@ -73,6 +76,7 @@
 					; Make sure we can find the dictionaries
 
 					; Use dictionaries by default
+>>>>>>> 0fba179cd3bb9adf26351c5bd183ce562606ac52
 
 
 
@@ -335,7 +339,6 @@ buffer is not visiting a file."
  c-default-style "linux" ;; set style to "linux"
  )
 ;(setq load-path (cons (expand-file-name "~/m0-15/lisp") load-path))
-;(require 'gnus-load)
 (global-set-key (kbd "RET") 'newline-and-indent)  ; automatically indent when press RET
 
 ;; activate whitespace-mode to view all whitespace characters
@@ -634,6 +637,7 @@ buffer is not visiting a file."
     (message "Opening %s..." file)
     (call-process "gnome-open" nil 0 nil file)
     (message "Opening %s done" file)))
+<<<<<<< HEAD
 (require 'run-assoc)
 (setq associated-program-alist
       '(("gnochm" "\\.chm$")
@@ -644,4 +648,12 @@ buffer is not visiting a file."
            (browse-url (concat "file:///" (expand-file-name file)))) "\\.html?$")))
 
 (require 'org-drill)
+=======
+
+(use-package color-theme-sanityinc-solarized
+  :ensure t
+  :init
+  (load-theme 'sanityinc-solarized-light))  
+
+>>>>>>> 0fba179cd3bb9adf26351c5bd183ce562606ac52
 (provide '.emacs)
