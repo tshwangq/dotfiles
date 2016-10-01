@@ -8,6 +8,9 @@
     ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
  '(debug-on-error t)
  '(initial-frame-alist (quote ((fullscreen . maximized))))
+ '(package-selected-packages
+   (quote
+    (zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package undo-tree tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin php-mode peep-dired paradox ox-twbs org-plus-contrib org nyan-mode nginx-mode mode-icons markdown-preview-eww markdown-mode magit lenlen-theme json-mode js2-refactor iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu ac-js2)))
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
@@ -22,12 +25,11 @@
 (tool-bar-mode 0)
 (setq load-prefer-newer 0)
 (require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
+
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-(when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/")))
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                           ("marmalade" . "http://marmalade-repo.org/packages/")
+                           ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 (package-initialize)
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -40,6 +42,12 @@
 (require 'init-dired)
 (require 'init-web)
 (require 'init-php)
+(use-package php-mode
+  :ensure t
+  :mode "\\.php[345]?\\'")
+
+(use-package php-mode :ensure t)
+(use-package php-extras :ensure t)
 
 (load-theme 'solarized-light)
 
@@ -314,7 +322,6 @@ buffer is not visiting a file."
  c-default-style "linux" ;; set style to "linux"
  )
 ;(setq load-path (cons (expand-file-name "~/m0-15/lisp") load-path))
-;(require 'gnus-load)
 (global-set-key (kbd "RET") 'newline-and-indent)  ; automatically indent when press RET
 
 ;; activate whitespace-mode to view all whitespace characters
@@ -593,6 +600,12 @@ buffer is not visiting a file."
   :defer t
   :init (beacon-mode 1))
 
+
+(use-package hackernews
+  :ensure t
+  :defer t
+  :init )
+
 (use-package mode-icons
   :ensure t
   :defer t
@@ -604,4 +617,14 @@ buffer is not visiting a file."
     (message "Opening %s..." file)
     (call-process "gnome-open" nil 0 nil file)
     (message "Opening %s done" file)))
+(require 'run-assoc)
+(setq associated-program-alist
+      '(("gnochm" "\\.chm$")
+        ("evince" "\\.pdf$")
+        ("mplayer" "\\.mp3$")
+        ("evince" "\\.ps$")
+        ((lambda (file)
+           (browse-url (concat "file:///" (expand-file-name file)))) "\\.html?$")))
+
+(require 'org-drill)
 (provide '.emacs)
