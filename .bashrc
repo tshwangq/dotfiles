@@ -16,8 +16,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+# HISTSIZE=10000
+# HISTFILESIZE=2000000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -191,3 +191,4 @@ fi
 ###-end-npm-completion-###
 
 alias hp="http_proxy=http://localhost:8123"
+alias php='docker run --rm -it -v $(pwd):/opt php:7.0-cli'
