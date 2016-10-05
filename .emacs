@@ -122,6 +122,9 @@
     (setq org-highest-priority ?1)
     (setq org-default-priority ?2)
     (setq org-lowest-priority ?3)
+    (setq org-confirm-babel-evaluate nil
+          org-src-fontify-natively t
+          org-src-tab-acts-natively t)
     ))
 
 ;; The following lines are always needed. Choose your own keys.
@@ -132,16 +135,16 @@
 (add-to-list 'org-export-latex-classes
              '("article"
                "\\documentclass{article}"
-               ("\\section{%s}" . "\\section*{%s}")))  
+               ("\\section{%s}" . "\\section*{%s}")))
 
-(setq Tex-auto-save t) ;I forget what these do, I've 
-(setq TeX-parse-self t) ;always had them 
-;(require 'tex-mik) 
-;(load "auctex.el" nil t t) ;Now necessary with latest  
-            ;version of AucTeX 
-(setq org-export-with-LaTeX-fragments "dvipng") ;Now necessary with  
-            ;orgmove version 7.4  
-            ;or later 
+(setq Tex-auto-save t) ;I forget what these do, I've
+(setq TeX-parse-self t) ;always had them
+;(require 'tex-mik)
+;(load "auctex.el" nil t t) ;Now necessary with latest
+            ;version of AucTeX
+(setq org-export-with-LaTeX-fragments "dvipng") ;Now necessary with
+            ;orgmove version 7.4
+            ;or later
 
 (setq org-log-done 'time)
 (setq org-log-done 'note)
@@ -169,7 +172,7 @@
 
 (setq org-todo-keywords
     '((sequence "TODO(t!)" "NEXT(n)" "WAITTING(w)" "SOMEDAY(s)" "|" "DONE(d@/!)" "ABORT(a@/!)")
-     ))  
+     ))
 
 (setq org-directory "~/workspace/workspace/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
@@ -504,8 +507,17 @@ buffer is not visiting a file."
 
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((dot . t))) ; this line activates dot
-
+ '((sh         . t)
+   (js         . t)
+   (emacs-lisp . t)
+   (perl       . t)
+   (scala      . t)
+   (clojure    . t)
+   (python     . t)
+   (ruby       . t)
+   (dot        . t)
+   (css        . t)
+   (plantuml   . t)))
 (setq org-publish-project-alist
       '(("www"
          :base-directory "~/workspace/www/"
