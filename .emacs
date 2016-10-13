@@ -17,6 +17,9 @@
     ("4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
  '(debug-on-error t)
  '(initial-frame-alist (quote ((fullscreen . maximized))))
+ '(org-agenda-files
+   (quote
+    ("~/workspace/workspace/gtd.org" "~/workspace/workspace/smoking.org" "~/workspace/workspace/notes.org" "~/workspace/workspace/someday.org")))
  '(package-selected-packages
    (quote
     (popup auto-complete-auctex auto-complete company-php zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package undo-tree tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin php-mode peep-dired paradox ox-twbs org-plus-contrib org nyan-mode nginx-mode mode-icons markdown-preview-eww markdown-mode magit lenlen-theme json-mode js2-refactor iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu ac-js2)))
@@ -169,11 +172,20 @@
  (setq org2blog/wp-buffer-format-function 'my-format-function)
 
 
-
 (setq org-todo-keywords
-    '((sequence "TODO(t!)" "NEXT(n)" "WAITTING(w)" "SOMEDAY(s)" "|" "DONE(d@/!)" "ABORT(a@/!)")
-     ))
+      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+              (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
 
+
+(setq org-todo-keyword-faces
+      (quote (("TODO" :foreground "red" :weight bold)
+              ("NEXT" :foreground "blue" :weight bold)
+              ("DONE" :foreground "forest green" :weight bold)
+              ("WAITING" :foreground "orange" :weight bold)
+              ("HOLD" :foreground "magenta" :weight bold)
+              ("CANCELLED" :foreground "forest green" :weight bold)
+              ("MEETING" :foreground "forest green" :weight bold)
+              ("PHONE" :foreground "forest green" :weight bold))))
 (setq org-directory "~/workspace/workspace/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (global-set-key (kbd "C-c c") 'org-capture)
@@ -199,8 +211,8 @@
 
 (setq org-agenda-files (list "~/workspace/workspace/gtd.org"
                      "~/workspace/workspace/journal.org"
-                     "~/workspace/workspace/birthday.org"
                      "~/workspace/workspace/notes.org"
+                     "~/workspace/awesome-smoking/smoking.org"
 	         "~/workspace/workspace/someday.org"))
 
 (setq org-agenda-custom-commands
@@ -653,6 +665,9 @@ buffer is not visiting a file."
   :ensure t
   :init)
 
+(use-package plantuml-mode
+  :ensure t
+  :init)
 (use-package mode-icons
   :ensure t
   :defer t
@@ -674,4 +689,24 @@ buffer is not visiting a file."
            (browse-url (concat "file:///" (expand-file-name file)))) "\\.html?$")))
 
 (require 'org-drill)
+(defun ange-ftp-set-passive ()
+  "Function to send a PASV command to hosts not named in the variable
+  `ange-ft-hosts-no-pasv'. Intended to be called from the hook variable
+  `ange-ftp-process-startup-hook'."	; rephrased significantly // era
+  (if (not (member host ange-ftp-hosts-no-pasv))
+      (ange-ftp-raw-send-cmd proc "passive")))
+(add-hook 'ange-ftp-process-startup-hook 'ange-ftp-set-passive)
+
+
+(setq org-agenda-custom-commands
+      '(("h" "Daily habits"
+         ((agenda ""))
+         ((org-agenda-show-log t)
+          (org-agenda-ndays 7)
+          (org-agenda-log-mode-items '(state))
+          (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp ":smoking:"))))
+        ;; other commands here
+        ))
+(add-to-list 'org-modules 'org-habit)
+(require 'org-habit)
 (provide '.emacs)
