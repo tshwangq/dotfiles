@@ -197,3 +197,7 @@ alias hp="http_proxy=http://localhost:8123"
 export ALTERNATE_EDITOR=""
 export EDITOR="emacsclient -t"                  # $EDITOR should open in terminal
 export VISUAL="emacsclient -c -a emacs"         # $VISUAL opens in GUI with non-daemon as alternate
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/qun/.sdkman"
+[[ -s "/home/qun/.sdkman/bin/sdkman-init.sh" ]] && source "/home/qun/.sdkman/bin/sdkman-init.sh"

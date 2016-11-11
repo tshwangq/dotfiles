@@ -16,13 +16,14 @@
    (quote
     ("4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
  '(debug-on-error t)
+ '(eww-search-prefix "http://www.google.com/search?q=")
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(org-agenda-files
    (quote
-    ("~/workspace/workspace/gtd.org" "~/workspace/workspace/smoking.org" "~/workspace/workspace/notes.org" "~/workspace/workspace/someday.org")))
+    ("~/workspace/workspace/gtd.org" "~/workspace/workspace/smoking/readme.org" "~/workspace/workspace/notes.org" "~/workspace/workspace/someday.org")))
  '(package-selected-packages
    (quote
-    (popup auto-complete-auctex auto-complete company-php zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package undo-tree tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin php-mode peep-dired paradox ox-twbs org-plus-contrib org nyan-mode nginx-mode mode-icons markdown-preview-eww markdown-mode magit lenlen-theme json-mode js2-refactor iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu ac-js2)))
+    (groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete-auctex auto-complete company-php zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package undo-tree tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin php-mode peep-dired paradox ox-twbs org nyan-mode nginx-mode markdown-preview-eww markdown-mode magit lenlen-theme json-mode js2-refactor iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu ac-js2)))
  '(protect-buffer-bury-p nil)
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
@@ -43,8 +44,11 @@
 
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                           ("marmalade" . "http://marmalade-repo.org/packages/")
-                           ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")
+                         ;("melpa" . "http://elpa.zilongshanren.com/melpa/")
+                         ;("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                         ))
 (package-initialize)
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -56,6 +60,7 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/init"))
 (require 'init-dired)
 (require 'init-web)
+
 (require 'init-php)
 (use-package php-mode
   :ensure t
@@ -87,18 +92,7 @@
 (use-package auto-complete-config)
 					; Make sure we can find the dictionaries
 
-					; Use dictionaries by default
-
-
-
-
-;; Load the library
-(use-package yasnippet
-  :config
-  (yas-reload-all))
-;; Let's have snippets in the auto-complete dropdown
-(add-to-list 'ac-sources 'ac-source-yasnippet)
-;(yas-global-mode 1)
+                    ; Use dictionaries by default
 
 
 ;;;
@@ -109,6 +103,7 @@
 (use-package org
   :ensure t
   :defer t
+  :ensure org-plus-contrib
   :init
   (setq org-replace-disputed-keys t
         org-default-notes-file (expand-file-name "notes.org" (getenv "HOME")))
@@ -212,7 +207,7 @@
 (setq org-agenda-files (list "~/workspace/workspace/gtd.org"
                      "~/workspace/workspace/journal.org"
                      "~/workspace/workspace/notes.org"
-                     "~/workspace/awesome-smoking/smoking.org"
+                     "~/workspace/awesome-smoking/README.org"
 	         "~/workspace/workspace/someday.org"))
 
 (setq org-agenda-custom-commands
@@ -289,7 +284,6 @@ buffer is not visiting a file."
     ws-butler
     sr-speedbar
     iedit
-    yasnippet
     smartparens
     projectile
     volatile-highlights
@@ -297,8 +291,7 @@ buffer is not visiting a file."
     zygospore
     js2-mode
     ac-js2
-    magit
-    org-plus-contrib))
+    magit))
 
 (defun install-packages ()
   "Install all required packages."
@@ -405,12 +398,13 @@ buffer is not visiting a file."
 (add-hook 'prog-mode-hook 'ws-butler-mode)
 
 (use-package yasnippet
+  :ensure t
   :init
   (progn
     (use-package yasnippets)
     (yas-global-mode 1)
+    (add-to-list 'ac-sources 'ac-source-yasnippet)
 ))
-
 
 ;; Package: smartparens
 (require 'smartparens-config)
@@ -581,6 +575,15 @@ buffer is not visiting a file."
        (tern-ac-setup)))
   (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
+(use-package ag
+  :ensure t
+  :init
+  )
+
+(use-package helm-ag
+  :ensure t
+                                        ;:bind ("C-c a g" . helm-do-ag-project-root))
+  )
 
 (use-package color-identifiers-mode
   :ensure t
@@ -629,7 +632,7 @@ buffer is not visiting a file."
   :config
   (bind-key "<tab>" #'dired-subtree-toggle dired-mode-map)
   (bind-key "<backtab>" #'dired-subtree-cycle dired-mode-map))
-
+(add-hook 'dired-mode-hook 'hl-line-mode)
 ;;preview files in dired
 (use-package peep-dired
   :ensure t
@@ -664,14 +667,20 @@ buffer is not visiting a file."
 (use-package docker
   :ensure t
   :init)
+(use-package gradle-mode
+  :ensure t
+  :init)
+(use-package groovy-mode
+  :ensure t
+  :init)
 
 (use-package plantuml-mode
   :ensure t
   :init)
-(use-package mode-icons
-  :ensure t
-  :defer t
-  :init (mode-icons-mode))
+;(use-package mode-icons
+;  :ensure t
+;  :defer t
+;  :init (mode-icons-mode))
 (defun dired-open-file ()
   "In dired, open the file named on this line."
   (interactive)
@@ -679,6 +688,7 @@ buffer is not visiting a file."
     (message "Opening %s..." file)
     (call-process "gnome-open" nil 0 nil file)
     (message "Opening %s done" file)))
+
 (require 'run-assoc)
 (setq associated-program-alist
       '(("gnochm" "\\.chm$")
@@ -696,6 +706,13 @@ buffer is not visiting a file."
   (if (not (member host ange-ftp-hosts-no-pasv))
       (ange-ftp-raw-send-cmd proc "passive")))
 (add-hook 'ange-ftp-process-startup-hook 'ange-ftp-set-passive)
+(defun dired-open-file ()
+  "In dired, open the file named on this line."
+  (interactive)
+  (let* ((file (dired-get-filename nil t)))
+    (message "Opening %s..." file)
+    (call-process "gnome-open" nil 0 nil file)
+    (message "Opening %s done" file)))
 
 
 (setq org-agenda-custom-commands
@@ -708,5 +725,49 @@ buffer is not visiting a file."
         ;; other commands here
         ))
 (add-to-list 'org-modules 'org-habit)
+
+
 (require 'org-habit)
+
+(with-eval-after-load 'eww
+  (custom-set-variables
+   '(eww-search-prefix "http://www.google.com/search?q="))
+
+  (define-key eww-mode-map (kbd "h") 'backward-char)
+  (define-key eww-mode-map (kbd "n") 'next-line)
+  (define-key eww-mode-map (kbd "s") 'forward-char)
+  (define-key eww-mode-map (kbd "t") 'previous-line)
+
+  (define-key eww-mode-map (kbd "H") 'eww-back-url)
+  (define-key eww-mode-map (kbd "S") 'eww-forward-url)
+
+  (define-key eww-mode-map (kbd "b") 'eww-history-browse)
+  (define-key eww-mode-map (kbd "c") 'eww-browse-with-external-browser)
+  (define-key eww-mode-map (kbd "i") 'eww)
+  (define-key eww-mode-map (kbd "m") 'eww-lnum-follow)
+  (define-key eww-mode-map (kbd "z") 'eww-lnum-universal)
+
+  (define-key eww-mode-map (kbd "M-n") 'nil)
+  (define-key eww-mode-map (kbd "M-p") 'nil)
+
+  (define-key eww-mode-map (kbd "<C-S-iso-lefttab>") 'eww-previous-buffer)
+  (define-key eww-mode-map (kbd "<C-tab>")           'eww-next-buffer)
+  )
+
+(require 'company)
+(setq dired-dwim-target t)
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/init"))
+(require 'init-python)
+
+(setq recentf-auto-cleanup 'never) ;; disable before we start recentf!
+(recentf-mode 1)
+(setq recentf-max-menu-items 2500)
+(run-at-time nil (* 5 60) 'recentf-save-list)
+(setq helm-mini-default-sources '(helm-source-buffers-list
+                                  helm-source-recentf
+                                  helm-source-bookmarks
+                                  helm-source-buffer-not-found))
+
+(setq display-time-world-list '(("Asia/Shanghai" "China")
+                                ("Australia/Melbourne" "Melbourne")))
 (provide '.emacs)
