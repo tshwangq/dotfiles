@@ -14,7 +14,7 @@
  '(comint-scroll-to-bottom-on-output nil)
  '(custom-safe-themes
    (quote
-    ("4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
+    ("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
  '(debug-on-error t)
  '(eww-search-prefix "http://www.google.com/search?q=")
  '(initial-frame-alist (quote ((fullscreen . maximized))))
@@ -23,18 +23,12 @@
     ("~/workspace/workspace/gtd.org" "~/workspace/workspace/smoking/readme.org" "~/workspace/workspace/notes.org" "~/workspace/workspace/someday.org")))
  '(package-selected-packages
    (quote
-    (groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete-auctex auto-complete company-php zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package undo-tree tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin php-mode peep-dired paradox ox-twbs org nyan-mode nginx-mode markdown-preview-eww markdown-mode magit lenlen-theme json-mode js2-refactor iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu ac-js2)))
+    (company ac-php-core ac-php ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete-auctex auto-complete company-php zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package undo-tree tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin php-mode peep-dired paradox ox-twbs org nyan-mode nginx-mode markdown-preview-eww markdown-mode magit lenlen-theme json-mode js2-refactor iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
  '(protect-buffer-bury-p nil)
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(tramp-default-method "ssh"))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 (server-start)
 (menu-bar-mode 0)
@@ -45,9 +39,9 @@
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")
-                         ;("melpa" . "http://elpa.zilongshanren.com/melpa/")
-                         ;("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                        ; ("melpa" . "https://melpa.org/packages/")
+                        ;("melpa" . "http://elpa.zilongshanren.com/melpa/")
+                         ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                          ))
 (package-initialize)
 (unless (package-installed-p 'use-package)
@@ -70,30 +64,6 @@
 (use-package php-extras :ensure t)
 
 (load-theme 'solarized-light)
-
-(use-package auto-complete
-  :diminish auto-complete-mode
-  :ensure t
-  :config
-  (use-package auto-complete-config)
-  (ac-config-default)
-  (global-auto-complete-mode t)
-					; Start auto-completion after 2 characters of a word
-  (setq ac-auto-start 2)
-					; case sensitivity is important when finding matches
-  (setq ac-ignore-case nil)
-  (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-  (setq-default ac-sources (add-to-list 'ac-sources 'ac-source-dictionary))
-  (add-to-list 'ac-modes 'html-mode)
-  (setq ac-use-menu-map t)
-  (ac-set-trigger-key "TAB")
-  (ac-set-trigger-key "<tab>"))
-					; Load the default configuration
-(use-package auto-complete-config)
-					; Make sure we can find the dictionaries
-
-                    ; Use dictionaries by default
-
 
 ;;;
 ;;; Org Mode
@@ -237,7 +207,7 @@ buffer is not visiting a file."
 (global-set-key (kbd "C-x C-r") 'sudo-edit)
 
 ;(setq url-proxy-services '(("no_proxy" . "work\\.com")
-;                           ("http" . "127.0.0.1:8123")))
+;                           ("http" . "127.0.0.1:8888")))
 
 (setq browse-url-browser-function 'w3m-goto-url-new-session)
 (setq w3m-user-agent "Mozilla/5.0 (Linux; U; Android 2.3.3; zh-tw; HTC_Pyramid Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.")
@@ -248,7 +218,7 @@ buffer is not visiting a file."
 (defun toggle-env-http-proxy ()
   "set/unset the environment variable http_proxy which w3m uses"
   (interactive)
-  (let ((proxy "http://127.0.0.1:8123"))
+  (let ((proxy "http://127.0.0.1:8888"))
     (if (string= (getenv "http_proxy") proxy)
         ;; clear the proxy
         (progn
@@ -290,7 +260,6 @@ buffer is not visiting a file."
     undo-tree
     zygospore
     js2-mode
-    ac-js2
     magit))
 
 (defun install-packages ()
@@ -327,37 +296,6 @@ buffer is not visiting a file."
 
 ;; company
 (require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
-(delete 'company-semantic company-backends)
-(define-key c-mode-map  [(tab)] 'company-complete)
-(define-key c++-mode-map  [(tab)] 'company-complete)
-;; (define-key c-mode-map  [(control tab)] 'company-complete)
-;; (define-key c++-mode-map  [(control tab)] 'company-complete)
-
-;; company-c-headers
-;(add-to-list 'company-backends 'company-c-headers)
-
-;; hs-minor-mode for folding source code
-(add-hook 'c-mode-common-hook 'hs-minor-mode)
-
-;; Available C style:
-;; “gnu”: The default style for GNU projects
-;; “k&r”: What Kernighan and Ritchie, the authors of C used in their book
-;; “bsd”: What BSD developers use, aka “Allman style” after Eric Allman.
-;; “whitesmith”: Popularized by the examples that came with Whitesmiths C, an early commercial C compiler.
-;; “stroustrup”: What Stroustrup, the author of C++ used in his book
-;; “ellemtel”: Popular C++ coding standards as defined by “Programming in C++, Rules and Recommendations,” Erik Nyquist and Mats Henricson, Ellemtel
-;; “linux”: What the Linux developers use for kernel development
-;; “python”: What Python developers use for extension modules
-;; “java”: The default style for java-mode (see below)
-;; “user”: When you want to define your own style
-(setq
- c-default-style "linux" ;; set style to "linux"
- )
-;(setq load-path (cons (expand-file-name "~/m0-15/lisp") load-path))
-;(require 'gnus-load)
-(global-set-key (kbd "RET") 'newline-and-indent)  ; automatically indent when press RET
-
 ;; activate whitespace-mode to view all whitespace characters
 (global-set-key (kbd "C-c w") 'whitespace-mode)
 
@@ -403,8 +341,19 @@ buffer is not visiting a file."
   (progn
     (use-package yasnippets)
     (yas-global-mode 1)
-    (add-to-list 'ac-sources 'ac-source-yasnippet)
 ))
+;; Add yasnippet support for all company backends
+;; https://github.com/syl20bnr/spacemacs/pull/179
+(defvar company-mode/enable-yas t
+  "Enable yasnippet for all backends.")
+
+(defun company-mode/backend-with-yas (backend)
+  (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
+      backend
+    (append (if (consp backend) backend (list backend))
+            '(:with company-yasnippet))))
+
+(setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
 
 ;; Package: smartparens
 (require 'smartparens-config)
@@ -545,12 +494,12 @@ buffer is not visiting a file."
                         (file-name-sans-extension rel)
                         ".html"))))
 (use-package flycheck-package)
-(use-package flycheck
+
+(use-package helm-zhihu-daily
   :ensure t
   :config
   )
-(add-hook 'after-init-hook #'global-flycheck-mode)
-;(global-flycheck-mode)
+
 ;; javascript
 (use-package js2-mode
   :ensure t
@@ -567,13 +516,9 @@ buffer is not visiting a file."
   (add-hook 'js2-mode-hook
             (lambda ()
               (push '("function" . ?ƒ) prettify-symbols-alist)))
-  (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
-  (setq tern-command (cons (executable-find "tern") '()))
-  (eval-after-load 'tern
-    '(progn
-       (require 'tern-auto-complete)
-       (tern-ac-setup)))
-  (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+  ;(add-hook 'js2-mode-hook (lambda () (tern-mode t)))
+  ;(setq tern-command (cons (executable-find "tern") '()))
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 (use-package ag
   :ensure t
@@ -593,8 +538,8 @@ buffer is not visiting a file."
 (use-package flycheck
   :ensure t
   :diminish flycheck-mode
+  :init  (global-flycheck-mode)
   :config
-  (global-flycheck-mode)
   ;; disable jshint since we prefer eslint checking
   (setq-default flycheck-disabled-checkers
                 (append flycheck-disabled-checkers
@@ -609,7 +554,9 @@ buffer is not visiting a file."
   (setq-default flycheck-disabled-checkers
                 (append flycheck-disabled-checkers
                         '(json-jsonlist)))
-)
+  )
+
+(add-hook 'after-init-hook #'global-flycheck-mode)
 (use-package js2-refactor
   :ensure t
   :init   (add-hook 'js2-mode-hook 'js2-refactor-mode)
@@ -770,4 +717,65 @@ buffer is not visiting a file."
 
 (setq display-time-world-list '(("Asia/Shanghai" "China")
                                 ("Australia/Melbourne" "Melbourne")))
+
+(set-frame-parameter nil 'fullscreen 'fullboth)
+
+(defun setup-windows ()
+  "Organize a series of windows for ultimate distraction."
+  (interactive)
+  (delete-other-windows)
+
+  ;; Start with the Stack Overflow interface
+  (sx-tab-frontpage t nil)
+
+  ;; Put IRC on the other side
+  (split-window-horizontally)
+  (other-window 1)
+  (circe-connect-all)
+
+  ;; My RSS Feed goes on top:
+  (split-window-vertically)
+  (elfeed)
+
+  ;; And start up the Twitter interface above that:
+  (other-window 2)
+  (split-window-vertically)
+  (twit)
+
+  (window-configuration-to-register ?w))
+
+(add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode))
+
+(require 'ycmd)
+
+(set-variable 'ycmd-server-command '("python" "/home/qun/ycmd/ycmd"))
+(setq company-tooltip-limit 10)
+(setq company-idle-delay 0.5)
+(setq company-echo-delay 0)
+(setq company-begin-commands '(self-insert-command))
+(setq company-require-match nil)
+(company-ycmd-setup)
+(add-hook 'after-init-hook 'global-company-mode)
+
+(define-derived-mode react-mode web-mode "React-IDE"
+  "Major mode for eding jsx code.")
+(add-hook 'react-mode-hook 'ycmd-mode)
+(add-hook 'react-mode-hook
+          '(lambda
+             ()
+             (web-mode-set-content-type "jsx")
+             (message "set web-mode-content-type %s" web-mode-content-type))
+
+          (add-to-list 'ycmd-file-type-map '(react-mode . ("javascript")))
+          (add-to-list 'auto-mode-alist '("\\.jsx$" . react-mode)))
+(add-hook 'web-mode-hook (lambda () (tern-mode t)))
+(add-to-list 'company-backends 'company-tern)
+
+(require 'albin-music-mode)
 (provide '.emacs)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

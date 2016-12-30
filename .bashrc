@@ -201,3 +201,7 @@ export VISUAL="emacsclient -c -a emacs"         # $VISUAL opens in GUI with non-
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/qun/.sdkman"
 [[ -s "/home/qun/.sdkman/bin/sdkman-init.sh" ]] && source "/home/qun/.sdkman/bin/sdkman-init.sh"
+
+export ANDROID_HOME=~/Android/Sdk
+export PATH=${PATH}:${ANDROID_HOME}/tools
+export PATH=${PATH}:${ANDROID_HOME}/platform-tools
