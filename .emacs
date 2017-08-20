@@ -17,13 +17,14 @@
     ("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
  '(debug-on-error t)
  '(eww-search-prefix "http://www.google.com/search?q=")
+ '(helm-ag-base-command "rg --smart-case --no-heading --line-number")
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(org-agenda-files
    (quote
-    ("~/workspace/workspace/gtd.org" "~/workspace/workspace/smoking/readme.org" "~/workspace/workspace/notes.org" "~/workspace/workspace/someday.org")))
+    ("~/workspace/workspace/gtd.org" "~/workspace/workspace/finance.org" "~/workspace/workspace/smoking/readme.org" "~/workspace/workspace/notes.org" "~/workspace/workspace/someday.org")))
  '(package-selected-packages
    (quote
-    (company ac-php-core ac-php ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete-auctex auto-complete company-php zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package undo-tree tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin php-mode peep-dired paradox ox-twbs org nyan-mode nginx-mode markdown-preview-eww markdown-mode magit lenlen-theme json-mode js2-refactor iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
+    (counsel-dash jedi circe circle elfeed company ac-php-core ac-php ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete-auctex auto-complete company-php zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package undo-tree tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin php-mode peep-dired paradox ox-twbs org nyan-mode nginx-mode markdown-preview-eww markdown-mode magit lenlen-theme json-mode js2-refactor iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
  '(protect-buffer-bury-p nil)
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
@@ -39,9 +40,9 @@
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
-                        ; ("melpa" . "https://melpa.org/packages/")
-                        ;("melpa" . "http://elpa.zilongshanren.com/melpa/")
-                         ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                        ;("melpa" . "https://melpa.org/packages/")
+                        ("melpa" . "http://elpa.zilongshanren.com/melpa/")
+                       ;  ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                          ))
 (package-initialize)
 (unless (package-installed-p 'use-package)
@@ -154,7 +155,7 @@
 (setq org-directory "~/workspace/workspace/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (global-set-key (kbd "C-c c") 'org-capture)
-
+(setq org-agenda-include-diary t)
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
       (quote (("t" "todo" entry (file (concat org-directory "gtd.org"))
@@ -177,8 +178,14 @@
 (setq org-agenda-files (list "~/workspace/workspace/gtd.org"
                      "~/workspace/workspace/journal.org"
                      "~/workspace/workspace/notes.org"
+                     "~/workspace/workspace/dairy.org"
+                     "~/workspace/workspace/finance.org"
                      "~/workspace/awesome-smoking/README.org"
-	         "~/workspace/workspace/someday.org"))
+                     "~/workspace/workspace/someday.org"))
+
+(setq org-todo-keyword-faces
+      '(("TODO" . org-warning) ("STARTED" . "red")
+        ("CANCELED" . (:foreground "blue" :weight bold))))
 
 (setq org-agenda-custom-commands
 '(("k" "work haha"
@@ -187,7 +194,8 @@
 (tags-todo "支持")))))
 (add-to-list 'load-path "~/org-8.3.3/contrib/lisp" t)
 ;(require 'ox-taskjuggler)
-
+(setq org-clock-persist 'history)
+(org-clock-persistence-insinuate)
 (defun turn-on-flyspell () (flyspell-mode 1))
 (add-hook 'find-file-hooks 'turn-on-flyspell)
 (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))
@@ -464,6 +472,7 @@ buffer is not visiting a file."
  'org-babel-load-languages
  '((sh         . t)
    (js         . t)
+   (sql        . t)
    (emacs-lisp . t)
    (perl       . t)
    (scala      . t)
@@ -527,6 +536,9 @@ buffer is not visiting a file."
 
 (use-package helm-ag
   :ensure t
+  :init
+  (custom-set-variables
+   '(helm-ag-base-command "rg --smart-case --no-heading --line-number"))
                                         ;:bind ("C-c a g" . helm-do-ag-project-root))
   )
 
@@ -563,8 +575,6 @@ buffer is not visiting a file."
   :config (js2r-add-keybindings-with-prefix "C-c ."))
 
 
-(use-package function-args
-  :config (fa-config-default))
 (setq-local imenu-create-index-function #'ggtags-build-imenu-index)
 (require 'cc-mode)
 (require 'semantic)
@@ -645,7 +655,7 @@ buffer is not visiting a file."
         ((lambda (file)
            (browse-url (concat "file:///" (expand-file-name file)))) "\\.html?$")))
 
-(require 'org-drill)
+; (require 'org-drill)
 (defun ange-ftp-set-passive ()
   "Function to send a PASV command to hosts not named in the variable
   `ange-ft-hosts-no-pasv'. Intended to be called from the hook variable
@@ -704,7 +714,7 @@ buffer is not visiting a file."
 (require 'company)
 (setq dired-dwim-target t)
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/init"))
-(require 'init-python)
+;(require 'init-python)
 
 (setq recentf-auto-cleanup 'never) ;; disable before we start recentf!
 (recentf-mode 1)
@@ -747,7 +757,6 @@ buffer is not visiting a file."
 (add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode))
 
 (require 'ycmd)
-
 (set-variable 'ycmd-server-command '("python" "/home/qun/ycmd/ycmd"))
 (setq company-tooltip-limit 10)
 (setq company-idle-delay 0.5)
@@ -755,7 +764,11 @@ buffer is not visiting a file."
 (setq company-begin-commands '(self-insert-command))
 (setq company-require-match nil)
 (company-ycmd-setup)
+                                        ; Jedi
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
 (add-hook 'after-init-hook 'global-company-mode)
+
 
 (define-derived-mode react-mode web-mode "React-IDE"
   "Major mode for eding jsx code.")
@@ -771,7 +784,52 @@ buffer is not visiting a file."
 (add-hook 'web-mode-hook (lambda () (tern-mode t)))
 (add-to-list 'company-backends 'company-tern)
 
+(use-package circe
+  :ensure t
+  :init
+  (setq circe-network-options
+        '(("Freenode"
+           :tls t
+           :nick "qun"
+           ;:sasl-username "my-nick"
+           ;:sasl-password "my-password"
+           :channels ("#emacs")
+           )))
+  )
+
 (require 'albin-music-mode)
+
+(defun sudo-edit-current-file ()
+  (interactive)
+  (let ((my-file-name) ; fill this with the file to open
+        (position))    ; if the file is already open save position
+    (if (equal major-mode 'dired-mode) ; test if we are in dired-mode
+        (progn
+          (setq my-file-name (dired-get-file-for-visit))
+          (find-alternate-file (prepare-tramp-sudo-string my-file-name)))
+      (setq my-file-name (buffer-file-name); hopefully anything else is an already opened file
+            position (point))
+      (find-alternate-file (prepare-tramp-sudo-string my-file-name))
+      (goto-char position))))
+
+
+(defun prepare-tramp-sudo-string (tempfile)
+  (if (file-remote-p tempfile)
+      (let ((vec (tramp-dissect-file-name tempfile)))
+
+        (tramp-make-tramp-file-name
+         "sudo"
+         (tramp-file-name-user nil)
+         (tramp-file-name-host vec)
+         (tramp-file-name-localname vec)
+         (format "ssh:%s@%s|"
+                 (tramp-file-name-user vec)
+                 (tramp-file-name-host vec))))
+    (concat "/sudo:root@localhost:" tempfile)))
+
+(define-key dired-mode-map [s-return] 'sudo-edit-current-file)
+(setq python-shell-prompt-detect-failure-warning nil)
+(setq magit-repository-directories `("~/workspace", user-emacs-directory))
 (provide '.emacs)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
