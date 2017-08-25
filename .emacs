@@ -1,3 +1,10 @@
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -24,7 +31,7 @@
     ("~/workspace/workspace/gtd.org" "~/workspace/workspace/finance.org" "~/workspace/workspace/smoking/readme.org" "~/workspace/workspace/notes.org" "~/workspace/workspace/someday.org")))
  '(package-selected-packages
    (quote
-    (counsel-dash jedi circe circle elfeed company ac-php-core ac-php ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete-auctex auto-complete company-php zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package undo-tree tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin php-mode peep-dired paradox ox-twbs org nyan-mode nginx-mode markdown-preview-eww markdown-mode magit lenlen-theme json-mode js2-refactor iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
+    (ob-redis indium counsel-dash jedi circe circle elfeed company ac-php-core ac-php ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete-auctex auto-complete company-php zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package  tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin php-mode peep-dired paradox ox-twbs org nyan-mode nginx-mode markdown-preview-eww markdown-mode  lenlen-theme json-mode js2-refactor iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
  '(protect-buffer-bury-p nil)
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
@@ -32,27 +39,13 @@
  '(tramp-default-method "ssh"))
 
 (server-start)
-(menu-bar-mode 0)
-(tool-bar-mode 0)
+
 (setq load-prefer-newer 0)
-(require 'package)
-
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
-                        ;("melpa" . "https://melpa.org/packages/")
-                        ("melpa" . "http://elpa.zilongshanren.com/melpa/")
-                       ;  ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-                         ))
-(package-initialize)
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-(eval-when-compile
-  (require 'use-package))
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/init"))
+(add-to-list 'load-path (expand-file-name "~/emacs.d/"))
+(require 'base)
+(require 'base-extensions)
 (require 'init-dired)
 (require 'init-web)
 
@@ -222,6 +215,11 @@ buffer is not visiting a file."
 (defun hn ()
   (interactive)
   (browse-url "http://news.ycombinator.com"))
+;; export HTTP_PROXY=127.0.0.1:8888
+
+(setq url-proxy-services '(("no_proxy" . "work\\.com")
+                           ("http" . "127.0.0.1:8888")
+                           ("https" . "127.0.0.1:8888")))
 
 (defun toggle-env-http-proxy ()
   "set/unset the environment variable http_proxy which w3m uses"
@@ -247,10 +245,8 @@ buffer is not visiting a file."
 
 (defconst demo-packages
   '(anzu
-    company
     duplicate-thing
     ggtags
-    helm
     helm-gtags
     helm-projectile
     helm-swoop
@@ -265,10 +261,9 @@ buffer is not visiting a file."
     smartparens
     projectile
     volatile-highlights
-    undo-tree
     zygospore
     js2-mode
-    magit))
+    ))
 
 (defun install-packages ()
   "Install all required packages."
@@ -301,11 +296,6 @@ buffer is not visiting a file."
 ;; (fa-config-default)
 ;; (define-key c-mode-map  [(tab)] 'company-complete)
 ;; (define-key c++-mode-map  [(tab)] 'company-complete)
-
-;; company
-(require 'company)
-;; activate whitespace-mode to view all whitespace characters
-(global-set-key (kbd "C-c w") 'whitespace-mode)
 
 ;; show unncessary whitespace that can mess up your diff
 (add-hook 'prog-mode-hook (lambda () (interactive) (setq show-trailing-whitespace 1)))
@@ -347,7 +337,6 @@ buffer is not visiting a file."
   :ensure t
   :init
   (progn
-    (use-package yasnippets)
     (yas-global-mode 1)
 ))
 ;; Add yasnippet support for all company backends
@@ -387,61 +376,6 @@ buffer is not visiting a file."
 
 ;; Package zygospore
 (global-set-key (kbd "C-x 1") 'zygospore-toggle-delete-other-windows)
-(require 'helm-descbinds)
-(helm-descbinds-mode)
-
-(require 'helm)
-(require 'helm-config)
-
-;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
-;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
-;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
-(global-unset-key (kbd "C-x c"))
-
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
-(when (executable-find "curl")
-  (setq helm-google-suggest-use-curl-p t))
-
-(setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-      helm-move-to-line-cycle-in-source     t ; move to end or be(define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)ginning of source when reaching top or bottom of source.
-      helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-      helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-      helm-ff-file-name-history-use-recentf t)
-(define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
-(helm-mode 1)
-(add-hook 'shell-mode-hook 'my-shell-mode-hook)
-(defun my-shell-mode-hook ()
-  (setq comint-input-ring-file-name "~/.bash_eternal_history")  ;; or bash_history
-  (comint-read-input-ring t))
-(setq history-delete-duplicates t)
-(setq
- helm-gtags-ignore-case t
- helm-gtags-auto-update t
- helm-gtags-use-input-at-cursor t
- helm-gtags-pulse-at-cursor t
- helm-gtags-prefix-key "\C-cg"
- helm-gtags-suggested-key-mapping t
- )
-
-(require 'helm-gtags)
-;; Enable helm-gtags-mode
-(add-hook 'dired-mode-hook 'helm-gtags-mode)
-(add-hook 'eshell-mode-hook 'helm-gtags-mode)
-(add-hook 'c-mode-hook 'helm-gtags-mode)
-(add-hook 'c++-mode-hook 'helm-gtags-mode)
-(add-hook 'asm-mode-hook 'helm-gtags-mode)
-
-(define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
-(define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
-(define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
-(define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
-(define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
-(define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)
 
 (require 'org)
 (let ((current-prefix-arg 1))
@@ -502,7 +436,7 @@ buffer is not visiting a file."
                         (file-name-as-directory (expand-file-name dest))
                         (file-name-sans-extension rel)
                         ".html"))))
-(use-package flycheck-package)
+
 
 (use-package helm-zhihu-daily
   :ensure t
@@ -534,41 +468,12 @@ buffer is not visiting a file."
   :init
   )
 
-(use-package helm-ag
-  :ensure t
-  :init
-  (custom-set-variables
-   '(helm-ag-base-command "rg --smart-case --no-heading --line-number"))
-                                        ;:bind ("C-c a g" . helm-do-ag-project-root))
-  )
 
 (use-package color-identifiers-mode
   :ensure t
   :init
   (add-hook 'js2-mode-hook 'color-identifiers-mode))
 
-(use-package flycheck
-  :ensure t
-  :diminish flycheck-mode
-  :init  (global-flycheck-mode)
-  :config
-  ;; disable jshint since we prefer eslint checking
-  (setq-default flycheck-disabled-checkers
-                (append flycheck-disabled-checkers
-                        '(javascript-jshint)))
-
-  (setq flycheck-checkers '(javascript-eslint))
-  ;; use eslint with web-mode for jsx files
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
-  (flycheck-add-mode 'javascript-eslint 'js2-mode)
-  (flycheck-add-mode 'javascript-eslint 'js-mode)
-  ;; disable json-jsonlist checking for json files
-  (setq-default flycheck-disabled-checkers
-                (append flycheck-disabled-checkers
-                        '(json-jsonlist)))
-  )
-
-(add-hook 'after-init-hook #'global-flycheck-mode)
 (use-package js2-refactor
   :ensure t
   :init   (add-hook 'js2-mode-hook 'js2-refactor-mode)
@@ -711,7 +616,6 @@ buffer is not visiting a file."
   (define-key eww-mode-map (kbd "<C-tab>")           'eww-next-buffer)
   )
 
-(require 'company)
 (setq dired-dwim-target t)
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/init"))
 ;(require 'init-python)
@@ -720,10 +624,7 @@ buffer is not visiting a file."
 (recentf-mode 1)
 (setq recentf-max-menu-items 2500)
 (run-at-time nil (* 5 60) 'recentf-save-list)
-(setq helm-mini-default-sources '(helm-source-buffers-list
-                                  helm-source-recentf
-                                  helm-source-bookmarks
-                                  helm-source-buffer-not-found))
+
 
 (setq display-time-world-list '(("Asia/Shanghai" "China")
                                 ("Australia/Melbourne" "Melbourne")))
@@ -758,16 +659,10 @@ buffer is not visiting a file."
 
 (require 'ycmd)
 (set-variable 'ycmd-server-command '("python" "/home/qun/ycmd/ycmd"))
-(setq company-tooltip-limit 10)
-(setq company-idle-delay 0.5)
-(setq company-echo-delay 0)
-(setq company-begin-commands '(self-insert-command))
-(setq company-require-match nil)
 (company-ycmd-setup)
                                         ; Jedi
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
-(add-hook 'after-init-hook 'global-company-mode)
 
 
 (define-derived-mode react-mode web-mode "React-IDE"
@@ -829,7 +724,11 @@ buffer is not visiting a file."
 
 (define-key dired-mode-map [s-return] 'sudo-edit-current-file)
 (setq python-shell-prompt-detect-failure-warning nil)
-(setq magit-repository-directories `("~/workspace", user-emacs-directory))
+
+
+(unless (package-installed-p 'indium)
+  (package-install 'indium))
+(require 'indium)
 (provide '.emacs)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

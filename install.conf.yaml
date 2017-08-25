@@ -3,6 +3,7 @@
 - link:
     ~/.bashrc: .bashrc
     ~/.emacs: .emacs
+    ~/emacs.d: emacs.d
     ~/.gitconfig: .gitconfig
     
 - shell:
