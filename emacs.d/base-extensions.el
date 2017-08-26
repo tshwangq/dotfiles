@@ -10,6 +10,10 @@
 
 (use-package dashboard
   :config
+  (setq dashboard-items '((recents  . 5)
+                          (bookmarks . 5)
+                          (projects . 12)
+                          (agenda . 5)))
   (dashboard-setup-startup-hook))
 
 
@@ -81,9 +85,6 @@
 (use-package undo-tree
   :config
   ;; Remember undo history
-  (setq
-   undo-tree-auto-save-history nil
-   undo-tree-history-directory-alist `(("." . ,(concat temp-dir "/undo/"))))
   (global-undo-tree-mode 1))
 
 (provide 'base-extensions)

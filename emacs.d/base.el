@@ -1,5 +1,6 @@
 (menu-bar-mode 0)
 (tool-bar-mode 0)
+(setq load-prefer-newer 0)
 
 ;; Core settings
 ;; UTF-8 please
@@ -57,5 +58,7 @@
       fringes-outside-margins            t
       x-select-enable-clipboard          t
       use-package-always-ensure          t)
+
+(load-theme 'solarized-light)
 
 (provide 'base)
