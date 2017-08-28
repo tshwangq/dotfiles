@@ -24,6 +24,10 @@
   (setq ediff-diff-options "-w"))
 
 
+(use-package expand-region
+  :config
+  (global-set-key (kbd "C-@") 'er/expand-region)
+)
 (use-package flycheck-package)
 
 (use-package flycheck

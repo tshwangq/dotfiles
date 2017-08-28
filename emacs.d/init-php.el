@@ -1,6 +1,6 @@
-;(use-package php-extras
-;  :ensure t
-;  :commands php-mode)
+                                        ;(use-package php-extras
+                                        ;  :ensure t
+                                        ;  :commands php-mode)
 
 (use-package php-mode
   :ensure t
@@ -15,7 +15,7 @@
   (defun cmack/php-mode-hook ()
     (emmet-mode 1)
     (flycheck-mode 1)
-    ;(ggtags-mode 1)
+                                        ;(ggtags-mode 1)
     (turn-on-auto-fill)
     (electric-indent-mode)
     (electric-pair-mode)
@@ -33,15 +33,16 @@
         indent-tabs-mode nil)
 
   (add-hook 'php-mode-hook #'cmack/php-mode-hook))
+
 (unless (package-installed-p 'ac-php )
   (package-refresh-contents)
-  (package-install 'ac-php )
-  )
+  (package-install 'ac-php ))
+
 (require 'cl)
 (require 'php-mode)
 (use-package php-extras :ensure t)
 (add-hook 'php-mode-hook
-         '(lambda ()
+          '(lambda ()
              (auto-complete-mode t)
              (require 'ac-php)
              (setq ac-sources  '(ac-source-php ) )
@@ -50,9 +51,9 @@
              (define-key php-mode-map  (kbd "C-t") 'ac-php-location-stack-back   ) ;go back
              ))
 
-;(add-hook 'php-mode-hook
- ;         '(lambda ()
-  ;           (require 'company-php)
-   ;          (company-mode t)
-    ;         (add-to-list 'company-backends 'company-ac-php-backend )))
+                                        ;(add-hook 'php-mode-hook
+                                        ;         '(lambda ()
+                                        ;           (require 'company-php)
+                                        ;          (company-mode t)
+                                        ;         (add-to-list 'company-backends 'company-ac-php-backend )))
 (provide 'init-php)

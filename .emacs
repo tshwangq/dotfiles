@@ -31,7 +31,7 @@
     ("~/workspace/workspace/gtd.org" "~/workspace/workspace/finance.org" "~/workspace/workspace/notes.org" "~/workspace/workspace/someday.org")))
  '(package-selected-packages
    (quote
-    (ob-redis indium counsel-dash jedi circe circle elfeed company   ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete-auctex auto-complete zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin peep-dired paradox ox-twbs org nyan-mode nginx-mode markdown-preview-eww markdown-mode lenlen-theme json-mode js2-refactor iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
+    (expand-region ob-redis indium counsel-dash jedi circe circle elfeed company ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete-auctex auto-complete zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin peep-dired paradox ox-twbs org nyan-mode nginx-mode markdown-preview-eww markdown-mode lenlen-theme json-mode js2-refactor iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
  '(protect-buffer-bury-p nil)
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
@@ -40,7 +40,6 @@
 
 (server-start)
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/init"))
 (add-to-list 'load-path (expand-file-name "~/emacs.d/"))
 (require 'base)
 (require 'base-extensions)
@@ -196,9 +195,6 @@ buffer is not visiting a file."
 
 (global-set-key (kbd "C-x C-r") 'sudo-edit)
 
-;(setq url-proxy-services '(("no_proxy" . "work\\.com")
-;                           ("http" . "127.0.0.1:8888")))
-
 (setq browse-url-browser-function 'w3m-goto-url-new-session)
 (setq w3m-user-agent "Mozilla/5.0 (Linux; U; Android 2.3.3; zh-tw; HTC_Pyramid Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.")
 (defun hn ()
@@ -213,7 +209,7 @@ buffer is not visiting a file."
 (defun toggle-env-http-proxy ()
   "set/unset the environment variable http_proxy which w3m uses"
   (interactive)
-  (let ((proxy "http://127.0.0.1:8888"))
+  (let ((proxy "127.0.0.1:8888"))
     (if (string= (getenv "http_proxy") proxy)
         ;; clear the proxy
         (progn
@@ -225,7 +221,6 @@ buffer is not visiting a file."
       (message "env http_proxy is %s now" proxy)
         )
     ))
-
 
 (setq gc-cons-threshold 100000000)
 (setq inhibit-startup-message t)
