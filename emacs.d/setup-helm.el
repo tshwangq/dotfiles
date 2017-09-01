@@ -1,3 +1,5 @@
+(add-to-list 'load-path "~/.emacs.d/packages/helm-shell-history")
+
 (use-package helm
   :init
   (require 'helm-config)
@@ -159,4 +161,13 @@
                                   helm-source-recentf
                                   helm-source-bookmarks
                                   helm-source-buffer-not-found))
+(require 'helm-shell-history)
+(add-hook 'term-mode-hook (lambda () (define-key term-raw-map (kbd "C-r") 'helm-shell-history)))
+
+
+(use-package helm-zhihu-daily
+  :ensure t
+  :config
+  )
+
 (provide 'setup-helm)

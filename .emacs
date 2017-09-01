@@ -23,7 +23,6 @@
    (quote
     ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
  '(debug-on-error t)
- '(eww-search-prefix "http://www.google.com/search?q=")
  '(helm-ag-base-command "rg --smart-case --no-heading --line-number")
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(org-agenda-files
@@ -31,7 +30,7 @@
     ("~/workspace/workspace/gtd.org" "~/workspace/workspace/finance.org" "~/workspace/workspace/notes.org" "~/workspace/workspace/someday.org")))
  '(package-selected-packages
    (quote
-    (expand-region ob-redis indium counsel-dash jedi circe circle elfeed company ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete-auctex auto-complete zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin peep-dired paradox ox-twbs org nyan-mode nginx-mode markdown-preview-eww markdown-mode lenlen-theme json-mode js2-refactor iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
+    (paredit expand-region ob-redis indium counsel-dash jedi circe circle elfeed company ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete-auctex auto-complete zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin peep-dired paradox ox-twbs org nyan-mode nginx-mode markdown-preview-eww markdown-mode lenlen-theme json-mode js2-refactor iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
  '(protect-buffer-bury-p nil)
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
@@ -201,11 +200,12 @@ buffer is not visiting a file."
   (interactive)
   (browse-url "http://news.ycombinator.com"))
 ;; export HTTP_PROXY=127.0.0.1:8888
-
-(setq url-proxy-services '(("no_proxy" . "work\\.com")
-                           ("http" . "127.0.0.1:8888")
-                           ("https" . "127.0.0.1:8888")))
-
+;; eww
+;(setq url-proxy-services '(("no_proxy" . "work\\.com")
+                           ;("http" . "127.0.0.1:8888")
+                           ;("https" . "127.0.0.1:8888")))
+(setq url-gateway-method 'socks)
+(setq socks-server '("Default server" "127.0.0.1" 1080 5))
 (defun toggle-env-http-proxy ()
   "set/unset the environment variable http_proxy which w3m uses"
   (interactive)
@@ -259,13 +259,6 @@ buffer is not visiting a file."
       (package-install package))))
 
 (install-packages)
-
-;; this variables must be set before load helm-gtags
-;; you can change to any prefix key of your choice
-(setq helm-gtags-prefix-key "\C-cg")
-
-(add-to-list 'load-path "~/.emacs.d/custom")
-(add-to-list 'load-path "~/.emacs.d/packages/helm-shell-history")
 
 (require 'setup-helm)
 (require 'setup-helm-gtags)
@@ -355,8 +348,6 @@ buffer is not visiting a file."
 (helm-projectile-on)
 (setq projectile-completion-system 'helm)
 (setq projectile-indexing-method 'alien)
-(require 'helm-shell-history)
-(add-hook 'term-mode-hook (lambda () (define-key term-raw-map (kbd "C-r") 'helm-shell-history)))
 
 ;; Package zygospore
 (global-set-key (kbd "C-x 1") 'zygospore-toggle-delete-other-windows)
@@ -420,12 +411,6 @@ buffer is not visiting a file."
                         (file-name-as-directory (expand-file-name dest))
                         (file-name-sans-extension rel)
                         ".html"))))
-
-
-(use-package helm-zhihu-daily
-  :ensure t
-  :config
-  )
 
 ;; javascript
 (use-package js2-mode
@@ -598,7 +583,7 @@ buffer is not visiting a file."
 
   (define-key eww-mode-map (kbd "<C-S-iso-lefttab>") 'eww-previous-buffer)
   (define-key eww-mode-map (kbd "<C-tab>")           'eww-next-buffer)
-  )
+)
 
 (setq dired-dwim-target t)
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/init"))
@@ -612,8 +597,6 @@ buffer is not visiting a file."
 
 (setq display-time-world-list '(("Asia/Shanghai" "China")
                                 ("Australia/Melbourne" "Melbourne")))
-
-(set-frame-parameter nil 'fullscreen 'fullboth)
 
 (defun setup-windows ()
   "Organize a series of windows for ultimate distraction."
