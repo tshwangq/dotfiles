@@ -81,7 +81,8 @@
         neotree-smart-optn t
         neo-window-fixed-size nil)
   ;; Disable linum for neotree
-  (add-hook 'neo-after-create-hook 'disable-neotree-hook))
+ ; (add-hook 'neo-after-create-hook 'disable-neotree-hook)
+ )
 
 (setq magit-repository-directories `("~/workspace", user-emacs-directory))
 

@@ -138,7 +138,7 @@
 (setq org-agenda-include-diary t)
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
-      (quote (("t" "todo" entry (file (concat org-directory "gtd.org"))
+      (quote (("t" "todo" entry (file (concat org-directory "inbox.org"))
                "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
               ("r" "respond" entry (file (concat org-directory "notes.org"))
                "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
@@ -146,22 +146,31 @@
                "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
               ("j" "Journal" entry (file+datetree (concat org-directory "diary.org"))
                "* %?\n%U\n" :clock-in t :clock-resume t)
-              ("w" "org-protocol" entry (file (concat org-directory "gtd.org"))
+              ("w" "org-protocol" entry (file (concat org-directory "inbox.org"))
                "* TODO Review %c\n%U\n" :immediate-finish t)
-              ("m" "Meeting" entry (file (concat org-directory "gtd.org"))
+              ("m" "Meeting" entry (file (concat org-directory "inbox.org"))
                "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
-              ("p" "Phone call" entry (file (concat org-directory "gtd.org"))
+              ("p" "Phone call" entry (file (concat org-directory "inbox.org"))
                "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
-              ("h" "Habit" entry (file (concat org-directory "gtd.org"))
+              ("h" "Habit" entry (file (concat org-directory "inbox.org"))
                "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
 
 (setq org-agenda-files (list "~/workspace/workspace/gtd.org"
+                             "~/workspace/workspace/inbox.org"
                      "~/workspace/workspace/journal.org"
                      "~/workspace/workspace/notes.org"
                      "~/workspace/workspace/dairy.org"
                      "~/workspace/workspace/finance.org"
                      "~/workspace/awesome-smoking/README.org"
-                     "~/workspace/workspace/someday.org"))
+                    ))
+
+(setq org-refile-targets (list "~/workspace/workspace/gtd.org"
+                             "~/workspace/workspace/journal.org"
+                             "~/workspace/workspace/notes.org"
+                             "~/workspace/workspace/dairy.org"
+                             "~/workspace/workspace/finance.org"
+                             "~/workspace/awesome-smoking/README.org"
+                             "~/workspace/workspace/someday.org"))
 
 (setq org-todo-keyword-faces
       '(("TODO" . org-warning) ("STARTED" . "red")

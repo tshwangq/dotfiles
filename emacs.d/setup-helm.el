@@ -1,8 +1,32 @@
 (add-to-list 'load-path "~/.emacs.d/packages/helm-shell-history")
 
-(use-package helm
+(use-package helm-flx
+  :ensure t
   :init
-  (require 'helm-config)
+  (setq helm-flx-for-helm-find-files nil)
+  (helm-flx-mode 1))
+
+(use-package helm
+  :ensure helm
+  :demand t
+  :diminish helm-mode
+  :bind (("M-x" . helm-M-x)
+         ("C-M-z" . helm-resume)
+         ("C-x C-f" . helm-find-files)
+         ("C-x b" . helm-mini)
+         ;("C-x o" . helm-occur)
+         ("M-y" . helm-show-kill-ring)
+         ("C-h a" . helm-apropos)
+         ("C-h m" . helm-man-woman)
+         ("C-h SPC" . helm-all-mark-rings)
+         ("C-x C-i" . helm-semantic-or-imenu)
+         ("C-x C-m" . helm-M-x)
+         ("C-x C-b" . helm-buffers-list)
+         ("C-x v" . helm-projectile)
+         ("C-x p" . helm-projectile-ag)
+         :map helm-map
+         ("<tab>" . helm-execute-persistent-action))
+  :init
   :config
   (setq helm-split-window-in-side-p t
         helm-split-window-default-side 'below
@@ -11,22 +35,14 @@
         helm-quick-update t
         helm-ff-skip-boring-files t)
   (helm-mode 1)
-  :bind (("M-x" . helm-M-x)
-         ("C-x C-m" . helm-M-x)
-         ("C-x C-f" . helm-find-files)
-         ("C-x v" . helm-projectile)
-         ("C-x c o" . helm-occur)
-         ("C-x c p" . helm-projectile-ag)
-         ("C-x c k" . helm-show-kill-ring)
-         :map helm-map
-         ("<tab>" . helm-execute-persistent-action)))
+  )
 
 (require 'helm-grep)
 
 ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
 ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
 ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
+;(global-set-key (kbd "C-c h") 'helm-command-prefix)
 (global-unset-key (kbd "C-x c"))
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebihnd tab to do persistent action
@@ -54,16 +70,14 @@
 
 (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
 
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
 (global-set-key (kbd "C-x b") 'helm-mini)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
-(global-set-key (kbd "C-c h o") 'helm-occur)
+;(global-set-key (kbd "C-c h o") 'helm-occur)
 
-(global-set-key (kbd "C-c h C-c w") 'helm-wikipedia-suggest)
+;(global-set-key (kbd "C-c h C-c w") 'helm-wikipedia-suggest)
 
-(global-set-key (kbd "C-c h x") 'helm-register)
+;(global-set-key (kbd "C-c h x") 'helm-register)
 ;; (global-set-key (kbd "C-x r j") 'jump-to-register)
 
 (define-key 'help-command (kbd "C-f") 'helm-apropos)
@@ -84,7 +98,6 @@
 
 (define-key global-map [remap find-tag] 'helm-etags-select)
 
-(define-key global-map [remap list-buffers] 'helm-buffers-list)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PACKAGE: helm-swoop                ;;
@@ -93,7 +106,7 @@
 (require 'helm-swoop)
 
 ;; Change the keybinds to whatever you like :)
-(global-set-key (kbd "C-c h o") 'helm-swoop)
+;(global-set-key (kbd "C-c h o") 'helm-swoop)
 (global-set-key (kbd "C-c s") 'helm-multi-swoop-all)
 
 ;; When doing isearch, hand the word over to helm-swoop
