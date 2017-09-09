@@ -128,7 +128,9 @@
 (setq helm-swoop-speed-or-color t)
 
 (helm-mode 1)
-(define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
+                                        ;(define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
+(eval-after-load 'shell
+  '(define-key shell-mode-map  (kbd "C-c C-l") 'helm-comint-input-ring)); [(\C-z)] 'clear-shell-buffer))
 (add-hook 'shell-mode-hook 'my-shell-mode-hook)
 (defun my-shell-mode-hook ()
   (setq comint-input-ring-file-name "~/.bash_eternal_history")  ;; or bash_history
@@ -172,7 +174,7 @@
 
 (setq helm-mini-default-sources '(helm-source-buffers-list
                                   helm-source-recentf
-                                  helm-source-bookmarks
+                                  ;helm-source-bookmarks
                                   helm-source-buffer-not-found))
 (require 'helm-shell-history)
 (add-hook 'term-mode-hook (lambda () (define-key term-raw-map (kbd "C-r") 'helm-shell-history)))

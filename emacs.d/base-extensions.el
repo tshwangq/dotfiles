@@ -10,9 +10,9 @@
 
 (use-package dashboard
   :config
-  (setq dashboard-items '((recents  . 5)
+  (setq dashboard-items '((recents  . 30)
                           (bookmarks . 5)
-                          (projects . 12)
+                          (projects . 15)
                           (agenda . 5)))
   (dashboard-setup-startup-hook))
 
