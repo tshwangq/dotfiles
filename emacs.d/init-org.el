@@ -119,7 +119,7 @@
 (setq org-agenda-include-diary t)
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
-      (quote (("t" "todo" entry (file (concat org-directory "inbox.org"))
+      (quote (("t" "todo" entry (file+headline "~/workspace/workspace/inbox.org" "Tasks")
                "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
               ("r" "respond" entry (file (concat org-directory "notes.org"))
                "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
