@@ -320,17 +320,6 @@ buffer is not visiting a file."
 (use-package plantuml-mode
   :ensure t
   :init)
-;(use-package mode-icons
-;  :ensure t
-;  :defer t
-;  :init (mode-icons-mode))
-(defun dired-open-file ()
-  "In dired, open the file named on this line."
-  (interactive)
-  (let* ((file (dired-get-filename nil t)))
-    (message "Opening %s..." file)
-    (call-process "gnome-open" nil 0 nil file)
-    (message "Opening %s done" file)))
 
 (require 'run-assoc)
 (setq associated-program-alist
@@ -562,6 +551,11 @@ buffer is not visiting a file."
    'elfeed-search-title-face
    nil
    :foreground (face-attribute 'font-lock-comment-face :foreground)))
+
+(setq holiday-bahai-holidays nil)
+(setq holiday-hebrew-holidays nil)
+(setq holiday-islamic-holidays nil)
+
 (provide '.emacs)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
