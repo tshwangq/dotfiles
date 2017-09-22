@@ -61,7 +61,6 @@
 
 (load-theme 'solarized-light)
 
-
 ;; Use variable width font faces in current buffer
 (defun my-buffer-face-mode-variable ()
   "Set font to a variable width (proportional) fonts in current buffer"
@@ -80,13 +79,5 @@
 ;(add-hook 'erc-mode-hook 'my-buffer-face-mode-variable)
 (add-hook 'w3m-mode-hook 'my-buffer-face-mode-fixed)
 
-(defun dired-open-file ()
-  "In dired, open the file named on this line."
-  (interactive)
-  (let* ((file (dired-get-filename nil t)))
-    (message "Opening %s..." file)
-    (call-process "gnome-open" nil 0 nil file)
-    (message "Opening %s done" file)))
-(define-key dired-mode-map (kbd "C-c o") 'dired-open-file)
 
 (provide 'base)

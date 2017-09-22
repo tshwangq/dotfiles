@@ -270,18 +270,6 @@ buffer is not visiting a file."
 
 (semantic-mode 1)
 
-(use-package dired-subtree :ensure t
-  :after dired
-  :config
-  (bind-key "<tab>" #'dired-subtree-toggle dired-mode-map)
-  (bind-key "<backtab>" #'dired-subtree-cycle dired-mode-map))
-(add-hook 'dired-mode-hook 'hl-line-mode)
-;;preview files in dired
-(use-package peep-dired
-  :ensure t
-  :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
-  :bind (:map dired-mode-map
-              ("P" . peep-dired)))
 (use-package yaml-mode
   :mode ("\\.yml$" . yaml-mode))
 
@@ -337,13 +325,6 @@ buffer is not visiting a file."
   (if (not (member host ange-ftp-hosts-no-pasv))
       (ange-ftp-raw-send-cmd proc "passive")))
 (add-hook 'ange-ftp-process-startup-hook 'ange-ftp-set-passive)
-(defun dired-open-file ()
-  "In dired, open the file named on this line."
-  (interactive)
-  (let* ((file (dired-get-filename nil t)))
-    (message "Opening %s..." file)
-    (call-process "gnome-open" nil 0 nil file)
-    (message "Opening %s done" file)))
 
 
 
@@ -372,7 +353,7 @@ buffer is not visiting a file."
   (define-key eww-mode-map (kbd "<C-tab>")           'eww-next-buffer)
 )
 
-(setq dired-dwim-target t)
+
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/init"))
 ;(require 'init-python)
 
@@ -448,18 +429,6 @@ buffer is not visiting a file."
 
 (require 'albin-music-mode)
 
-(defun sudo-edit-current-file ()
-  (interactive)
-  (let ((my-file-name) ; fill this with the file to open
-        (position))    ; if the file is already open save position
-    (if (equal major-mode 'dired-mode) ; test if we are in dired-mode
-        (progn
-          (setq my-file-name (dired-get-file-for-visit))
-          (find-alternate-file (prepare-tramp-sudo-string my-file-name)))
-      (setq my-file-name (buffer-file-name); hopefully anything else is an already opened file
-            position (point))
-      (find-alternate-file (prepare-tramp-sudo-string my-file-name))
-      (goto-char position))))
 
 
 (defun prepare-tramp-sudo-string (tempfile)
@@ -476,7 +445,7 @@ buffer is not visiting a file."
                  (tramp-file-name-host vec))))
     (concat "/sudo:root@localhost:" tempfile)))
 
-(define-key dired-mode-map [s-return] 'sudo-edit-current-file)
+
 (setq python-shell-prompt-detect-failure-warning nil)
 
 
@@ -560,6 +529,10 @@ buffer is not visiting a file."
 (setq mark-holidays-in-calendar t)
 (setq cal-china-x-important-holidays cal-china-x-chinese-holidays)
 (setq calendar-holidays cal-china-x-important-holidays)
+(defun my/fix-inline-images ()
+  (when org-inline-image-overlays
+    (org-redisplay-inline-images)))
+(add-hook 'org-babel-after-execute-hook 'my/fix-inline-images)
 
 (provide '.emacs)
 (custom-set-faces
