@@ -75,15 +75,6 @@
   ("C-<" . mc/mark-previous-like-this)
   ("C-c C->" . mc/mark-all-like-this))
 
-(use-package neotree
-  :config
-  (setq neo-theme 'arrow
-        neotree-smart-optn t
-        neo-window-fixed-size nil)
-  ;; Disable linum for neotree
- ; (add-hook 'neo-after-create-hook 'disable-neotree-hook)
- )
-
 (setq magit-repository-directories `("~/workspace", user-emacs-directory))
 
 
@@ -91,5 +82,31 @@
   :config
   ;; Remember undo history
   (global-undo-tree-mode 1))
+
+
+;; Jump to things in Emacs tree-style
+(use-package avy
+  :bind (("C-:" . avy-goto-char)
+         ("C-'" . avy-goto-char-2)
+         ("M-g f" . avy-goto-line)
+         ("M-g w" . avy-goto-word-1)
+         ("M-g e" . avy-goto-word-0))
+  :init (add-hook 'after-init-hook 'avy-setup-default)
+  :config (setq avy-background t))
+
+;; Kill text between the point and the character CHAR
+(use-package avy-zap
+  :bind (("M-z" . avy-zap-to-char-dwim)
+         ("M-Z" . avy-zap-up-to-char-dwim)))
+
+;; Quickly follow links
+(use-package ace-link
+  :bind (("M-o" . ace-link-addr))
+  :init (add-hook 'after-init-hook 'ace-link-setup-default))
+
+;; Jump to Chinese characters
+(use-package ace-pinyin
+  :diminish ace-pinyin-mode
+  :init (add-hook 'after-init-hook 'ace-pinyin-global-mode))
 
 (provide 'base-extensions)
