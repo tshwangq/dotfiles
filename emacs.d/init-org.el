@@ -242,8 +242,8 @@
                        (org-agenda-skip-function 'bh/skip-non-archivable-tasks)
                        (org-tags-match-list-sublevels nil))))
                nil))))
-;(add-to-list 'load-path "~/org-8.3.3/contrib/lisp" t)
-                                        ;(require 'ox-taskjuggler)
+
+(require 'ox-taskjuggler)
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
 
