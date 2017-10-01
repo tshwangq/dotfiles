@@ -39,7 +39,6 @@
   (setq-default flycheck-disabled-checkers
                 (append flycheck-disabled-checkers
                         '(javascript-jshint)))
-
   (setq flycheck-checkers '(javascript-eslint))
   ;; use eslint with web-mode for jsx files
   (flycheck-add-mode 'javascript-eslint 'web-mode)
@@ -49,13 +48,12 @@
   (setq-default flycheck-disabled-checkers
                 (append flycheck-disabled-checkers
                         '(json-jsonlist)))
-  )
+)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (use-package magit
   :config
-
   :bind
   ;; Magic
   ("C-x g s" . magit-status)

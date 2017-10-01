@@ -27,7 +27,7 @@
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (jump-tree ace-link avy-zap paredit expand-region ob-redis indium counsel-dash jedi circe circle elfeed company ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete-auctex auto-complete zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin peep-dired paradox ox-twbs org nyan-mode nginx-mode markdown-preview-eww markdown-mode lenlen-theme json-mode js2-refactor iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
+    (jump-tree ace-link avy-zap paredit expand-region ob-redis indium counsel-dash jedi circe circle elfeed company ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete-auctex auto-complete zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin peep-dired paradox ox-twbs org nyan-mode nginx-mode markdown-preview-eww markdown-mode lenlen-theme iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
  '(protect-buffer-bury-p nil)
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
@@ -39,6 +39,7 @@
 (add-to-list 'load-path (expand-file-name "~/emacs.d/"))
 (require 'base)
 (require 'base-extensions)
+(require 'ycmd)
 (require 'init-dired)
 (require 'init-web)
 (require 'init-php)
@@ -113,7 +114,6 @@ buffer is not visiting a file."
     projectile
     volatile-highlights
     zygospore
-    js2-mode
     ))
 
 (defun install-packages ()
@@ -224,41 +224,11 @@ buffer is not visiting a file."
   :init
   (bash-completion-setup))
 
-;; javascript
-(use-package js2-mode
-  :ensure t
-  :init
-  (setq js-basic-indent 2)
-  (setq-default js2-basic-indent 2
-                js2-basic-offset 2
-                js2-auto-indent-p t
-                js2-cleanup-whitespace t
-                js2-enter-indents-newline t
-                js2-indent-on-enter-key t
-                js2-global-externs (list "window" "module" "require" "buster" "sinon" "assert" "refute" "setTimeout" "clearTimeout" "setInterval" "clearInterval" "location" "__dirname" "console" "JSON" "jQuery" "$")))
-
-  (add-hook 'js2-mode-hook
-            (lambda ()
-              (push '("function" . ?ƒ) prettify-symbols-alist)))
-  ;(add-hook 'js2-mode-hook (lambda () (tern-mode t)))
-  ;(setq tern-command (cons (executable-find "tern") '()))
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 (use-package ag
   :ensure t
   :init
   )
-
-
-(use-package color-identifiers-mode
-  :ensure t
-  :init
-  (add-hook 'js2-mode-hook 'color-identifiers-mode))
-
-(use-package js2-refactor
-  :ensure t
-  :init   (add-hook 'js2-mode-hook 'js2-refactor-mode)
-  :config (js2r-add-keybindings-with-prefix "C-c ."))
 
 
 (setq-local imenu-create-index-function #'ggtags-build-imenu-index)
@@ -390,29 +360,14 @@ buffer is not visiting a file."
 
   (window-configuration-to-register ?w))
 
-(add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode))
 
-(require 'ycmd)
+
 (set-variable 'ycmd-server-command '("python" "/home/qun/ycmd/ycmd"))
 (company-ycmd-setup)
                                         ; Jedi
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
 
-
-(define-derived-mode react-mode web-mode "React-IDE"
-  "Major mode for eding jsx code.")
-(add-hook 'react-mode-hook 'ycmd-mode)
-(add-hook 'react-mode-hook
-          '(lambda
-             ()
-             (web-mode-set-content-type "jsx")
-             (message "set web-mode-content-type %s" web-mode-content-type))
-
-          (add-to-list 'ycmd-file-type-map '(react-mode . ("javascript")))
-          (add-to-list 'auto-mode-alist '("\\.jsx$" . react-mode)))
-(add-hook 'web-mode-hook (lambda () (tern-mode t)))
-(add-to-list 'company-backends 'company-tern)
 
 (use-package circe
   :ensure t

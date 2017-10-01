@@ -59,14 +59,6 @@
 
 ;; The following lines are always needed. Choose your own keys.
 (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
-                                        ;(require 'org-latex)
-(unless (boundp 'org-export-latex-classes)
-  (setq org-export-latex-classes nil))
-(add-to-list 'org-export-latex-classes
-             '("article"
-               "\\documentclass{article}"
-               ("\\section{%s}" . "\\section*{%s}")))
-
 (setq Tex-auto-save t) ;I forget what these do, I've
 (setq TeX-parse-self t) ;always had them
                                         ;(require 'tex-mik)
@@ -247,7 +239,6 @@
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
 
-
 (global-set-key (kbd "C-c o")
                 (lambda () (interactive) (find-file "~/workspace/workspace/notes.org")))
 (global-set-key (kbd "C-c g")
@@ -301,7 +292,32 @@
 
 (add-to-list 'org-modules 'org-habit)
 
+(require 'ox-latex)
+(add-to-list 'org-latex-classes
+             '("ctexart"
+               "\\documentclass[fontset=ubuntu,UTF8]{ctexart}
+        \\usepackage{amsmath,latexsym,amssymb,mathrsfs,pifont}
+        \\usepackage[T1]{fontenc}
+        \\usepackage{fixltx2e}
+        \\usepackage{graphicx}
+        \\usepackage{subfig}
+        \\usepackage{grffile}
+        \\usepackage{longtable}
+        \\usepackage{wrapfig}
+        \\usepackage{rotating}
+         \\usepackage[colorlinks=true]{hyperref}
+        \\tolerance=1000
+        [NO-DEFAULT-PACKAGES]
+        [NO-PACKAGES]"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
+(setq org-latex-pdf-process
+      '("xelatex -interaction nonstopmode %f"
+        "xelatex -interaction nonstopmode %f")) ;; for multiple passes
 (require 'org-habit)
 
 ;;;###autoload(require 'init-org)

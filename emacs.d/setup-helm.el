@@ -17,7 +17,7 @@
          ;("C-x o" . helm-occur)
          ("M-y" . helm-show-kill-ring)
          ("C-h a" . helm-apropos)
-         ("C-h m" . helm-man-woman)
+;         ("C-h m" . helm-man-woman)
          ("C-h SPC" . helm-all-mark-rings)
          ("C-x C-i" . helm-semantic-or-imenu)
          ("C-x C-m" . helm-M-x)
