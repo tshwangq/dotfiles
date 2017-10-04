@@ -1,35 +1,30 @@
 (use-package haml-mode :ensure t :defer t)
-
 (use-package restclient :ensure t :defer t)
-
 (use-package scss-mode
   :ensure t
   :mode "\\.scss\\'"
   :config
   (setq scss-compile-at-save nil))
-
 (use-package sass-mode
   :disabled t
   :ensure t
   :mode "\\.scss\\'")
-
 (use-package markdown-mode
   :ensure t
   :mode "\\.md\\'")
-
 (use-package emmet-mode
   :ensure t
   :commands emmet-mode
   :config
   (add-hook 'web-mode-hook #'emmet-mode)
   (add-hook 'html-mode-hook #'emmet-mode))
-
 (use-package web-mode
   :ensure t
   :commands web-mode
   :mode ("\\.hbs\\'"
          "\\.jsx\\'"
-         "/\\([Vv]iews\\|[Hh]tml\\|[Tt]emplates\\)/.*\\.php\\'")
+         "\\.vue\\'"
+         "/\\([Vv]iews\\|[Hh]tml\\|[Vv]ue\\|[Tt]emplates\\)/.*\\.php\\'")
   :config
   (setq sgml-basic-offset 4)
   (setq indent-tabs-mode t
@@ -55,7 +50,7 @@
                      (setq emmet-use-css-transform t)
                    (setq emmet-use-css-transform nil)))))
 
-  (add-hook 'html-mode-hook 'web-mode))
+(add-hook 'html-mode-hook 'web-mode))
 
 (use-package tagedit
   :ensure t
@@ -85,10 +80,11 @@
 (add-hook 'js2-mode-hook
           (lambda ()
             (push '("function" . ?ƒ) prettify-symbols-alist)))
-                                        ;(add-hook 'js2-mode-hook (lambda () (tern-mode t)))
+(add-hook 'js2-mode-hook (lambda () (tern-mode t)(company-mode t)))
                                         ;(setq tern-command (cons (executable-find "tern") '()))
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
+;; Better imenu
+(add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
 (use-package color-identifiers-mode
   :ensure t
   :init
@@ -99,8 +95,21 @@
   :init   (add-hook 'js2-mode-hook 'js2-refactor-mode)
   :config (js2r-add-keybindings-with-prefix "C-c ."))
 
-;(add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode))
+(use-package xref-js2
+  :ensure t
+  :init (add-hook 'js2-mode-hook (lambda ()
+                                   (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t))))
 
+
+(js2r-add-keybindings-with-prefix "C-c C-r")
+(define-key js2-mode-map (kbd "C-k") #'js2r-kill)
+
+;; js-mode (which js2 is based on) binds "M-." which conflicts with xref, so
+;; unbind it.
+(define-key js-mode-map (kbd "M-.") nil)
+
+(add-hook 'js2-mode-hook (lambda ()
+                           (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
 
 (define-derived-mode react-mode web-mode "React-IDE"
   "Major mode for eding jsx code.")
@@ -114,5 +123,7 @@
           (add-to-list 'auto-mode-alist '("\\.jsx$" . react-mode)))
 (add-hook 'web-mode-hook (lambda () (tern-mode t)))
 (add-to-list 'company-backends 'company-tern)
-
+(require 'company-tern)
+(define-key tern-mode-keymap (kbd "M-.") nil)
+(define-key tern-mode-keymap (kbd "M-,") nil)
 (provide 'init-web)
