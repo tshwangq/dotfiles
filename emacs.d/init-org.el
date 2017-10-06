@@ -67,6 +67,26 @@
 (setq org-export-with-LaTeX-fragments "dvipng") ;Now necessary with
                                         ;orgmove version 7.4
                                         ;or later
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-table ((t (:foreground "#6c71c4" :family "Ubuntu Mono"))))
+ )
+
+;; font config for org table showing.
+
+;(set-default-font "monospace-11")
+
+;(dolist (charset '(kana han symbol cjk-misc bopomofo))
+
+ ; (set-fontset-font (frame-parameter nil 'font)
+                    ;charset
+                    ;(font-spec :family "WenQuanYi Micro Hei")))
+
+;; tune rescale so that Chinese character width = 2 * English character width
+;(setq face-font-rescale-alist '(("monospace" . 1.0) ("WenQuanYi" . 1.23)))
 
 (setq org-log-done 'time)
 (setq org-log-done 'note)
