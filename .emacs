@@ -67,13 +67,26 @@ buffer is not visiting a file."
 (defun hn ()
   (interactive)
   (browse-url "http://news.ycombinator.com"))
-;; export HTTP_PROXY=127.0.0.1:8888
-;; eww
-(setq url-proxy-services '(("no_proxy" . "work\\.com")
-                           ("http" . "127.0.0.1:8888")
-                           ("https" . "127.0.0.1:8888")))
-;(setq url-gateway-method 'socks)
-;(setq socks-server '("Default server" "127.0.0.1" 1080 5))
+
+(defun toggle-eww-proxy ()
+  "set/unset eww proxy"
+  (interactive)
+  (setq socks-server '("Default server" "127.0.0.1" 1080 5))
+  (let ((gateway 'socks))
+    (if (eq url-gateway-method gateway)
+        ;; clear the gateway
+        (progn
+          (setq url-gateway-method 'native)
+          (message "url gateway method is empty now")
+          )
+
+      ;; set the gateway
+      (setq url-gateway-method gateway)
+      (message "url gateway method is %s now" gateway)
+        )
+    )
+  )
+
 (defun toggle-env-http-proxy ()
   "set/unset the environment variable http_proxy which w3m uses"
   (interactive)
