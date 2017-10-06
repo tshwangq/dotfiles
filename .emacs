@@ -416,9 +416,8 @@ buffer is not visiting a file."
   :init
   (setq elfeed-feeds
     '(
-       ("http://fivethirtyeight.com/all/feed")
-       ("http://longform.org/feed.rss")
        ("https://xueqiu.com/hots/topic/rss"             xueqiu)
+       ("http://www.360doc.com/rssperson/32953612.aspx"    r360)
        ;; software
        ;; Hacker News
        ("https://news.ycombinator.com/rss"                sw news)
@@ -444,11 +443,6 @@ buffer is not visiting a file."
        ("http://githubengineering.com/atom.xml"           sw tech)
        ;; Google Testing Blog
        ("http://feeds.feedburner.com/blogspot/RLXA"       sw google tech)
-       ("http://www.eater.com/rss/index.xml"                     food)
-       ("http://ny.eater.com/rss/index.xml"                      food ny)
-       ("http://notwithoutsalt.com/feed/"                        food)
-       ("http://feeds.feedburner.com/nymag/Food"                 food)
-       ("http://feeds.feedburner.com/seriouseatsfeaturesvideos"  food)
        ("http://feeds.feedburner.com/blogspot/sBff")
        ;; SMBC
        ("http://feeds.feedburner.com/smbc-comics/PvLb" comic)
@@ -529,7 +523,7 @@ buffer is not visiting a file."
 (use-package jump-tree
   :config
   (setq global-jump-tree-mode t))
-(provide '.emacs)
+(setq browse-url-browser-function 'eww-browse-url)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
