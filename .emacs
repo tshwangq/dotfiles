@@ -221,6 +221,8 @@ buffer is not visiting a file."
 ;; Package: projejctile
 (require 'projectile)
 (projectile-global-mode)
+;; static string for mode-line to fix slow in tramp mode issue.
+(setq projectile-mode-line "Projectile")
 (setq projectile-enable-caching t)
 
 (require 'helm-projectile)
