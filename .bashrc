@@ -205,3 +205,6 @@ export SDKMAN_DIR="/home/qun/.sdkman"
 export ANDROID_HOME=~/Android/Sdk
 export PATH=${PATH}:${ANDROID_HOME}/tools
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+
+
+alias php='docker run --rm -it -v $(pwd):/opt php:cli'
