@@ -185,4 +185,9 @@
   :config
   )
 
+(use-package docker-tramp
+  :ensure t)
+
+(use-package helm-tramp)
+
 (provide 'setup-helm)

@@ -39,7 +39,8 @@
   (setq-default flycheck-disabled-checkers
                 (append flycheck-disabled-checkers
                         '(javascript-jshint)))
-  (setq flycheck-checkers '(javascript-eslint))
+                                        ; (setq flycheck-checkers '(javascript-eslint))
+  (setq flycheck-eslint-eslintrc "~/.eslintrc")
   ;; use eslint with web-mode for jsx files
   (flycheck-add-mode 'javascript-eslint 'web-mode)
   (flycheck-add-mode 'javascript-eslint 'js2-mode)

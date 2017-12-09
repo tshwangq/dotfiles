@@ -207,4 +207,4 @@ export PATH=${PATH}:${ANDROID_HOME}/tools
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
 
-alias php='docker run --rm -it -v $(pwd):/opt php:cli'
+# alias php='docker run --rm -it -v $(pwd):/opt php:cli'

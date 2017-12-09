@@ -1,6 +1,6 @@
-                                        ;(use-package php-extras
-                                        ;  :ensure t
-                                        ;  :commands php-mode)
+;; (use-package php-extras
+;;  :ensure t
+;;  :commands php-mode)
 
 (use-package php-mode
   :ensure t
@@ -15,7 +15,7 @@
   (defun cmack/php-mode-hook ()
     (emmet-mode 1)
     (flycheck-mode 1)
-                                        ;(ggtags-mode 1)
+    ;; (ggtags-mode 1)
     (turn-on-auto-fill)
     (electric-indent-mode)
     (electric-pair-mode)
@@ -41,6 +41,19 @@
 (require 'cl)
 (require 'php-mode)
 (use-package php-extras :ensure t)
+
+(use-package auto-complete
+  :ensure t
+  :demand
+  :config
+  (ac-config-default)
+  (ac-flyspell-workaround)
+  (use-package fuzzy
+    :config
+    (setq ac-fuzzy-enable 1 )
+    )
+  )
+
 (add-hook 'php-mode-hook
           '(lambda ()
              (auto-complete-mode t)
@@ -51,9 +64,9 @@
              (define-key php-mode-map  (kbd "C-t") 'ac-php-location-stack-back   ) ;go back
              ))
 
-                                        ;(add-hook 'php-mode-hook
-                                        ;         '(lambda ()
-                                        ;           (require 'company-php)
-                                        ;          (company-mode t)
-                                        ;         (add-to-list 'company-backends 'company-ac-php-backend )))
+;;(add-hook 'php-mode-hook
+;;         '(lambda ()
+;;           (require 'company-php)
+;;          (company-mode t)
+;;         (add-to-list 'company-backends 'company-ac-php-backend )))
 (provide 'init-php)

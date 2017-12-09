@@ -54,4 +54,5 @@
       (find-alternate-file (prepare-tramp-sudo-string my-file-name))
       (goto-char position))))
 
+(setq dired-listing-switches "-alh")
 (provide 'init-dired)

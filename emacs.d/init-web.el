@@ -9,9 +9,17 @@
   :disabled t
   :ensure t
   :mode "\\.scss\\'")
+
 (use-package markdown-mode
   :ensure t
-  :mode "\\.md\\'")
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init
+  :config
+  (add-hook 'markdown-mode-hook 'undo-tree-mode)
+  )
 (use-package emmet-mode
   :ensure t
   :commands emmet-mode

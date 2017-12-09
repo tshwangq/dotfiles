@@ -60,11 +60,6 @@
 (add-hook 'text-mode 'ws-butler-mode)
 (add-hook 'fundamental-mode 'ws-butler-mode)
 
-;; Package: undo-tree
-;; GROUP: Editing -> Undo -> Undo Tree
-(require 'undo-tree)
-(global-undo-tree-mode)
-
 ;; Package: yasnippet
 ;; GROUP: Editing -> Yasnippet
 (require 'yasnippet)
