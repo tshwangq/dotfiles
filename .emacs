@@ -44,9 +44,6 @@
 (require 'init-web)
 (require 'init-php)
 (require 'init-org)
-(defun turn-on-flyspell () (flyspell-mode 1))
-;(add-hook 'find-file-hooks 'turn-on-flyspell)
-(setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))
 
 (defun sudo-edit (&optional arg)
   "Edit currently visited file as root.

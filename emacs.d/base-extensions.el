@@ -27,7 +27,31 @@
 (use-package expand-region
   :config
   (global-set-key (kbd "C-~") 'er/expand-region)
-)
+  )
+
+(use-package flyspell
+  :ensure t
+  :diminish ""
+  :init
+  (progn
+    ;; Enable spell check in program comments
+    (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+    ;; Enable spell check in plain text / org-mode
+    (add-hook 'text-mode-hook 'flyspell-mode)
+    (add-hook 'org-mode-hook 'flyspell-mode)
+    (setq flyspell-issue-welcome-flag nil)
+    (setq flyspell-issue-message-flag nil)
+    ;; ignore repeated words
+    (setq flyspell-mark-duplications-flag nil)
+    (setq-default ispell-list-command "list"))
+  :config
+  (progn
+    (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))
+    ;; Make spell check on right click.
+    (define-key flyspell-mouse-map [down-mouse-3] 'flyspell-correct-word)
+    (define-key flyspell-mouse-map [mouse-3] 'undefined)
+    (define-key flyspell-mode-map (kbd "C-;") nil)))
+
 (use-package flycheck-package)
 
 (use-package flycheck
