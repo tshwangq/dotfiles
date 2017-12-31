@@ -43,6 +43,7 @@
 (require 'init-dired)
 (require 'init-web)
 (require 'init-php)
+(require 'init-python)
 (require 'init-org)
 
 (defun sudo-edit (&optional arg)
@@ -336,7 +337,6 @@ buffer is not visiting a file."
 
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/init"))
-;(require 'init-python)
 
 (setq recentf-auto-cleanup 'never) ;; disable before we start recentf!
 (recentf-mode 1)
@@ -371,14 +371,8 @@ buffer is not visiting a file."
 
   (window-configuration-to-register ?w))
 
-
-
 (set-variable 'ycmd-server-command '("python" "/home/qun/ycmd/ycmd"))
 (company-ycmd-setup)
-                                        ; Jedi
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
-
 
 (use-package circe
   :ensure t
