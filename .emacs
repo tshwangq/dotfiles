@@ -27,7 +27,7 @@
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (helm-tramp fuzzy mmm-vars css-eldoc rainbow-mode xref-js2 jump-tree ace-link avy-zap paredit expand-region ob-redis indium counsel-dash jedi circe circle elfeed company ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete-auctex auto-complete zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin peep-dired paradox ox-twbs org nyan-mode nginx-mode markdown-preview-eww markdown-mode lenlen-theme iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
+    (company-ycmd treemacs-projectile treemacs coin-ticker stock-ticker helm-tramp fuzzy mmm-vars css-eldoc rainbow-mode xref-js2 jump-tree ace-link avy-zap paredit expand-region ob-redis indium counsel-dash jedi circe circle elfeed company ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete-auctex auto-complete zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin peep-dired paradox ox-twbs org nyan-mode nginx-mode markdown-preview-eww markdown-mode lenlen-theme iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
  '(protect-buffer-bury-p nil)
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
@@ -39,7 +39,7 @@
 (add-to-list 'load-path (expand-file-name "~/emacs.d/"))
 (require 'base)
 (require 'base-extensions)
-(require 'ycmd)
+(use-package ycmd)
 (require 'init-dired)
 (require 'init-web)
 (require 'init-php)
@@ -372,7 +372,10 @@ buffer is not visiting a file."
   (window-configuration-to-register ?w))
 
 (set-variable 'ycmd-server-command '("python" "/home/qun/ycmd/ycmd"))
-(company-ycmd-setup)
+(use-package company-ycmd
+  :init
+  (company-ycmd-setup)
+)
 
 (use-package circe
   :ensure t
@@ -524,7 +527,23 @@ buffer is not visiting a file."
               ("fP" . treemacs-projectile)
               ("fp" . treemacs-projectile-toggle)))
 
+(use-package stock-ticker
+  :config
+  (stock-ticker-global-mode +1)
+;  (setq stock-ticker-symbols '("aapl" "goog" "fb"))
+  (setq  stock-ticker-symbol "sh600535"))
+                                        ;(stock-ticker--update)
 
+(use-package coin-ticker
+  :config
+  ;; Optional: Set the update interval, in seconds (default 300)
+  (setq coin-ticker-api-poll-interval 120)
+  ;; Optional: Set the currency list (default is BTC and ETH)
+  (setq coin-ticker-syms '("BTC" "ETH" "LTC" "XPR"))
+  ;; Optional: Just show prices (and no symbols)
+  (setq coin-ticker-show-syms nil)
+  (coin-ticker-mode 1)
+)
 (use-package jump-tree
   :config
   (setq global-jump-tree-mode t))

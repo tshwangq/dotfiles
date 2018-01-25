@@ -35,7 +35,7 @@
 (use-package org
   :ensure t
   :defer t
-  :ensure org-plus-contrib
+;  :ensure org-plus-contrib
   :init
   (setq org-replace-disputed-keys t
         org-default-notes-file (expand-file-name "notes.org" (getenv "HOME")))
@@ -150,6 +150,7 @@
 
 (setq org-agenda-files (list "~/workspace/workspace/gtd.org"
                              "~/workspace/workspace/inbox.org"
+                             "~/workspace/jjys/init.org"
                              "~/workspace/workspace/journal.org"
                              "~/workspace/workspace/notes.org"
                              "~/workspace/workspace/dairy.org"
@@ -255,7 +256,7 @@
                        (org-tags-match-list-sublevels nil))))
                nil))))
 
-(require 'ox-taskjuggler)
+;(require 'ox-taskjuggler)
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
 

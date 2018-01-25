@@ -131,7 +131,7 @@
           (add-to-list 'auto-mode-alist '("\\.jsx$" . react-mode)))
 (add-hook 'web-mode-hook (lambda () (tern-mode t)))
 (add-to-list 'company-backends 'company-tern)
-(require 'company-tern)
+(use-package company-tern)
 (define-key tern-mode-keymap (kbd "M-.") nil)
 (define-key tern-mode-keymap (kbd "M-,") nil)
 

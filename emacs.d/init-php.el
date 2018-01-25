@@ -40,7 +40,7 @@
 
 (require 'cl)
 (require 'php-mode)
-(use-package php-extras :ensure t)
+;(use-package php-extras :ensure t)
 
 (use-package auto-complete
   :ensure t
