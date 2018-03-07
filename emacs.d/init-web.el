@@ -36,7 +36,7 @@
   :config
   (setq sgml-basic-offset 4)
   (setq indent-tabs-mode t
-        tab-width 4
+        tab-width 2
         web-mode-code-indent-offset 2
         web-mode-css-indent-offset 2
         web-mode-markup-indent-offset 4)
@@ -84,7 +84,7 @@
                 js2-enter-indents-newline t
                 js2-indent-on-enter-key t
                 js2-global-externs (list "window" "module" "require" "buster" "sinon" "assert" "refute" "setTimeout" "clearTimeout" "setInterval" "clearInterval" "location" "__dirname" "console" "JSON" "jQuery" "$")))
-
+(setq js2-strict-missing-semi-warning nil)
 (add-hook 'js2-mode-hook
           (lambda ()
             (push '("function" . ?ƒ) prettify-symbols-alist)))

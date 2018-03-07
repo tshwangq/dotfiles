@@ -24,7 +24,7 @@
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
                                         ;  ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                          ))
-
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 (when (not package-archive-contents)
   (package-refresh-contents))
 
