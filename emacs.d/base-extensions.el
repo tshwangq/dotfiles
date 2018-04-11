@@ -1,11 +1,38 @@
-(use-package company
+;;; base-extensions.el --- basice extension configuration
+
+;; Copyright (C) 2018, tshwangq
+
+;; Author: Qun Wang <tshwangq@gmail.com>
+;; Keywords: configuration
+;; Version: 1.0.0
+
+;;; Commentary:
+
+;; basic extension
+
+;;; Code:
+
+(use-package company-quickhelp :ensure)
+
+(use-package company-lsp
+  :ensure
   :config
-  (add-hook 'after-init-hook 'global-company-mode)
-  (setq company-tooltip-limit 10)
+  ;; 开启yasnippet支持
+  (setq company-lsp-enable-snippet t))
+
+(use-package company
+  :ensure
+  :config
+  (setq company-minimum-prefix-length 1)
+  (setq company-dabbrev-downcase nil)
+  (setq company-tooltip-limit 120)
   (setq company-idle-delay 0.5)
   (setq company-echo-delay 0)
   (setq company-begin-commands '(self-insert-command))
-  (setq company-require-match nil))
+  (setq company-require-match nil)
+  (add-hook 'company-mode-hook 'company-quickhelp-mode)
+  (add-hook 'after-init-hook 'global-company-mode)
+  (add-to-list 'company-backends 'company-lsp))
 
 
 (use-package dashboard

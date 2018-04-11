@@ -278,13 +278,14 @@
 
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((sh         . t)
+ '(
+                                        ;(sh         . t)
    (js         . t)
    (sql        . t)
    (emacs-lisp . t)
    (perl       . t)
-   (scala      . t)
-   (clojure    . t)
+;   (scala      . t)
+ ;  (clojure    . t)
    (python     . t)
    (ruby       . t)
    (dot        . t)
