@@ -223,3 +223,10 @@ export PIP_VIRTUALENV_BASE=$WORKON_HOME
 export PIP_RESPECT_VIRTUALENV=true
 
 fi
+
+export PATH="/home/qun/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# added by Anaconda3 installer
+export PATH="/home/qun/anaconda3/bin:$PATH"

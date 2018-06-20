@@ -88,4 +88,7 @@
   :config (setq dumb-jump-selector 'helm)
   :ensure)
 
+
+(use-package csv-mode
+  :ensure)
 (provide 'base)

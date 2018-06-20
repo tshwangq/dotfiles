@@ -82,6 +82,14 @@
 (flycheck-def-config-file-var flycheck-pylint2rc python2-pylint ".pylintrc"
   :safe #'stringp)
 (add-to-list 'flycheck-checkers 'python-pylint 'python2-pylint)
+
+;; default ipython
+(when (executable-find "ipython")
+  (setq python-shell-interpreter "ipython"))
+(setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args "--simple-prompt -i")
 (provide 'init-python)
 
+(eval-after-load "company"
+  '(add-to-list 'company-backends '(company-anaconda :with company-capf)))
 ;;; init-40-python.el ends here

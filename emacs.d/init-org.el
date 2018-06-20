@@ -34,6 +34,7 @@
 ;; Standard key bindings
 (use-package org
   :ensure t
+  :ensure org-plus-contrib
   :defer t
 ;  :ensure org-plus-contrib
   :init
@@ -150,6 +151,7 @@
 
 (setq org-agenda-files (list "~/workspace/workspace/gtd.org"
                              "~/workspace/workspace/inbox.org"
+                             "~/workspace/tfp/powerbank/task.org"
                              "~/workspace/jjys/init.org"
                              "~/workspace/workspace/journal.org"
                              "~/workspace/workspace/notes.org"
@@ -256,7 +258,7 @@
                        (org-tags-match-list-sublevels nil))))
                nil))))
 
-;(require 'ox-taskjuggler)
+(require 'ox-taskjuggler)
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
 

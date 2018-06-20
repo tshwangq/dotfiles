@@ -25,7 +25,7 @@
   :config
   (setq company-minimum-prefix-length 1)
   (setq company-dabbrev-downcase nil)
-  (setq company-tooltip-limit 120)
+  (setq company-tooltip-limit 1200)
   (setq company-idle-delay 0.5)
   (setq company-echo-delay 0)
   (setq company-begin-commands '(self-insert-command))
