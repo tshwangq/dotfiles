@@ -88,7 +88,7 @@
 (add-hook 'js2-mode-hook
           (lambda ()
             (push '("function" . ?ƒ) prettify-symbols-alist)))
-(add-hook 'js2-mode-hook (lambda () (tern-mode t)(company-mode t)))
+;(add-hook 'js2-mode-hook (lambda () (tern-mode t)(company-mode t)))
                                         ;(setq tern-command (cons (executable-find "tern") '()))
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 ;; Better imenu
@@ -129,11 +129,11 @@
              (message "set web-mode-content-type %s" web-mode-content-type))
           (add-to-list 'ycmd-file-type-map '(react-mode . ("javascript")))
           (add-to-list 'auto-mode-alist '("\\.jsx$" . react-mode)))
-(add-hook 'web-mode-hook (lambda () (tern-mode t)))
-(add-to-list 'company-backends 'company-tern)
-(use-package company-tern)
-(define-key tern-mode-keymap (kbd "M-.") nil)
-(define-key tern-mode-keymap (kbd "M-,") nil)
+;(add-hook 'web-mode-hook (lambda () (tern-mode t)))
+;(add-to-list 'company-backends 'company-tern)
+;(use-package company-tern)
+;(define-key tern-mode-keymap (kbd "M-.") nil)
+;(define-key tern-mode-keymap (kbd "M-,") nil)
 
 
 (use-package css-mode
@@ -148,4 +148,104 @@
 
   (use-package css-eldoc))
 
+(defun cesco/tide-checker ()
+
+  (flycheck-def-option-var flycheck-typescript-tsconfig
+      nil typescript-tslint-cesco
+    "The path of tsconfig.json ."
+    :type '(choice (const :tag "No custom tsconfig file" nil)
+		   (directory :tag "Custom tsconfig.json"))
+    :safe #'stringp
+    :package-version '(flycheck . "27"))
+
+  (flycheck-define-checker typescript-tslint-cesco
+    "TypeScript style checker using TSLint."
+    :command ("tslint" "--format" "json"
+	      (config-file "--config" flycheck-typescript-tslint-config)
+	      (config-file "--project" flycheck-typescript-tsconfig)
+	      (option "--rules-dir" flycheck-typescript-tslint-rulesdir)
+	      (eval flycheck-tslint-args)
+	      source-inplace)
+    :error-parser flycheck-parse-tslint
+    :modes (typescript-mode web-mode))
+  )
+
+(defun cesco/custom-tslint ()
+  (if (projectile-project-p)
+      (progn
+	(setq flycheck-tslint-args . ("--type-check"))
+	(setq flycheck-typescript-tsconfig . ( (concat projectile-project-root "tsconfig.json" )))
+	(flycheck-select-checker 'typescript-tslint-cesco))))
+
+
+(defun cesco/tslint ()
+  (setq flycheck-tslint-args . (nil))
+  (flycheck-add-mode 'typescript-tslint 'web-mode)
+  (flycheck-select-checker 'typescript-tslint)
+  )
+
+(defun cesco/tide-mode ()
+  (interactive)
+  (tide-setup)
+  (cesco/custom-tslint)
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (add-hook 'before-save-hook 'tide-format-before-save)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (add-to-list 'company-backends '(company-tide :with company-yasnippet))
+  )
+
+(defun cesco/tide-evil ()
+  (evil-leader/set-key-for-mode 'web-mode
+    "j" (lambda () (interactive)(tide-jump-to-definition))
+    )
+  )
+
+
+(use-package tide
+  :diminish tide-mode
+  :after (flycheck evil-leader)
+  :config
+  (cesco/tide-evil)
+  (cesco/tide-checker)
+  (add-hook 'typescript-mode-hook #'cesco/tide-mode) )
+
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+;; formats the buffer before saving
+(add-hook 'before-save-hook 'tide-format-before-save)
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
+
+(add-hook 'js2-mode-hook #'setup-tide-mode)
+;; configure javascript-tide checker to run after your default javascript checker
+;; (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
+
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "jsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+;; configure jsx-tide checker to run after your default jsx checker
+(flycheck-add-mode 'javascript-eslint 'web-mode)
+;(flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)
+
+(use-package tide
+  :ensure t
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (before-save . tide-format-before-save)))
 (provide 'init-web)
