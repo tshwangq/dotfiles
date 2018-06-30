@@ -277,7 +277,8 @@
   :ensure nil
   :config
   (setq org-plantuml-jar-path "~/plantuml.jar"))
-
+(use-package ob-redis
+  )
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
@@ -286,6 +287,7 @@
    (sql        . t)
    (emacs-lisp . t)
    (perl       . t)
+   (redis      . t)
 ;   (scala      . t)
  ;  (clojure    . t)
    (python     . t)

@@ -248,4 +248,12 @@
   :hook ((typescript-mode . tide-setup)
          (typescript-mode . tide-hl-identifier-mode)
          (before-save . tide-format-before-save)))
+
+;; remove padding after script tag in vue mode
+(defun maybe-use-twig-settings ()
+  (when (and (buffer-file-name)
+             (equal (file-name-extension (buffer-file-name)) "vue"))
+    (setq web-mode-script-padding 0))
+
+(add-hook 'web-mode-hook 'maybe-use-twig-settings)
 (provide 'init-web)
