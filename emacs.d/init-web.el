@@ -1,3 +1,7 @@
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
+
 (use-package haml-mode :ensure t :defer t)
 (use-package restclient :ensure t :defer t)
 (use-package scss-mode
@@ -253,7 +257,9 @@
 (defun maybe-use-twig-settings ()
   (when (and (buffer-file-name)
              (equal (file-name-extension (buffer-file-name)) "vue"))
-    (setq web-mode-script-padding 0))
+    (setq web-mode-script-padding 0)))
 
 (add-hook 'web-mode-hook 'maybe-use-twig-settings)
 (provide 'init-web)
+
+;;; init-web ends here
