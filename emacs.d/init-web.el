@@ -43,8 +43,8 @@
         tab-width 2
         web-mode-code-indent-offset 2
         web-mode-css-indent-offset 2
-        web-mode-markup-indent-offset 4)
-
+        web-mode-markup-indent-offset 2)
+	(setq javascript-indent-level 2)
   (subword-mode)
   (emmet-mode)
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -258,7 +258,7 @@
   (when (and (buffer-file-name)
              (equal (file-name-extension (buffer-file-name)) "vue"))
     (setq web-mode-script-padding 0)))
-
+(setq tide-format-options '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil :indentSize 2 :tabSize 2))
 (add-hook 'web-mode-hook 'maybe-use-twig-settings)
 (provide 'init-web)
 
