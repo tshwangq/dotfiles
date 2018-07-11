@@ -19,7 +19,7 @@
              '("melpa" . "https://melpa.org/packages/")
              '("elpy" . "http://jorgenschaefer.github.io/packages/"))
 (setq package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
-;                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                       ("marmalade" . "http://marmalade-repo.org/packages/")
                                         ;("melpa" . "https://melpa.org/packages/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
                                         ;  ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
@@ -111,5 +111,21 @@
   (setq projectile-indexing-method 'alien)
   (setq projectile-switch-project-action 'helm-projectile)
   )
+
+
+(use-package lsp-mode
+  :ensure t
+  :commands lsp-mode
+  ;; :disabled nil
+  :config
+  (setq lsp-response-timeout 25
+        lsp-enable-flycheck t
+        lsp-enable-eldoc t
+        lsp-enable-completion-at-point t))
+
+(use-package lsp-ui
+  :ensure t
+  :after lsp-mode
+  :hook ((lsp-mode . lsp-ui-mode)))
 
 (provide 'base)

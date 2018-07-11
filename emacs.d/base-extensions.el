@@ -21,7 +21,8 @@
   (setq company-lsp-enable-snippet t))
 
 (use-package company
-  :ensure
+  :ensure t
+  :commands company-mode
   :config
   (setq company-minimum-prefix-length 1)
   (setq company-dabbrev-downcase nil)
@@ -34,6 +35,14 @@
   (add-hook 'after-init-hook 'global-company-mode)
   (add-to-list 'company-backends 'company-lsp))
 
+(use-package company-lsp
+  :ensure t
+  :after (company lsp-mode)
+  :config
+  (add-to-list 'company-backends 'company-lsp)
+  :custom
+  (company-lsp-async t)
+  (company-lsp-enable-snippet t))
 
 (use-package dashboard
   :config
