@@ -55,6 +55,7 @@
   :ensure t
   :mode ("\\.php\\'" "\\.inc\\'" "\\.module\\'")
   :bind (("C--" . cmack/php-quick-arrow)
+         ("M-." . xref-find-definitions)
          :map php-mode-map
          ("C-d" . sp-delete-char))
   :config
@@ -67,8 +68,6 @@
   (defun cmack/php-mode-hook ()
     (emmet-mode +1)
     (flycheck-mode +1)
-    ;; (ggtags-mode 1)
-    ;; (helm-gtags-mode +1)
     (company-mode +1)
     (eldoc-mode +1)
     (turn-on-auto-fill)

@@ -5,6 +5,7 @@
     ~/.emacs: .emacs
     ~/emacs.d: emacs.d
     ~/.gitconfig: .gitconfig
+    ~/.emacs.d: snippets
     
 - shell:
   - [git submodule update --init --recursive, Installing submodules]

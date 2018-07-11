@@ -1,0 +1,16 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <?php ... class
+# key: pclass
+# --
+<?php
+
+${1:namespace ${2:Namespace};}
+
+class ${3:ClassName} ${4:implements ${5:Interface}}
+{
+        ${6:public function __construct(${7:$vars})
+        {
+
+        }}
+        $0
+}

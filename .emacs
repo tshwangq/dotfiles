@@ -151,7 +151,7 @@ buffer is not visiting a file."
 (install-packages)
 
 (require 'setup-helm)
-(require 'setup-helm-gtags)
+;(require 'setup-helm-gtags)
 ;; (require 'setup-ggtags)
 (require 'setup-cedet)
 (require 'setup-editing)
