@@ -91,4 +91,25 @@
 
 (use-package csv-mode
   :ensure)
+
+
+;; Package: projejctile
+(use-package projectile
+  :ensure t
+  :config
+  ;(projectile-global-mode)
+  ;; static string for mode-line to fix slow in tramp mode issue.
+  (setq projectile-mode-line "Projectile")
+  (setq projectile-enable-caching t)
+  )
+
+(use-package helm-projectile
+  :ensure t
+  :config
+  (helm-projectile-on)
+  (setq projectile-completion-system 'helm)
+  (setq projectile-indexing-method 'alien)
+  (setq projectile-switch-project-action 'helm-projectile)
+  )
+
 (provide 'base)

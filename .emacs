@@ -41,7 +41,7 @@
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (md4rd true tide org-plus-contrib csv-mode lsp-vue company-lsp company-quickhelp helm-flx py-autopep8 ac-php php-mode company-tern js2-refactor ace-pinyin undo-tree multiple-cursors magit dashboard dumb-jump company-ycmd treemacs-projectile treemacs coin-ticker stock-ticker helm-tramp fuzzy mmm-vars css-eldoc rainbow-mode xref-js2 jump-tree ace-link avy-zap paredit expand-region ob-redis indium counsel-dash jedi circe circle elfeed company ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete-auctex auto-complete zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin peep-dired paradox ox-twbs nyan-mode nginx-mode markdown-preview-eww markdown-mode lenlen-theme iedit helm-swoop helm-projectile helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
+    (md4rd true tide org-plus-contrib csv-mode lsp-vue company-lsp company-quickhelp helm-flx py-autopep8 ac-php php-mode company-tern js2-refactor ace-pinyin undo-tree multiple-cursors magit dashboard dumb-jump company-ycmd treemacs coin-ticker stock-ticker helm-tramp fuzzy mmm-vars css-eldoc rainbow-mode xref-js2 jump-tree ace-link avy-zap paredit expand-region ob-redis indium counsel-dash jedi circe circle elfeed company ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete-auctex auto-complete zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin peep-dired paradox ox-twbs nyan-mode nginx-mode markdown-preview-eww markdown-mode lenlen-theme iedit helm-swoop helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
  '(paradox-github-token t)
  '(protect-buffer-bury-p nil)
  '(save-place t nil (saveplace))
@@ -125,7 +125,6 @@ buffer is not visiting a file."
     duplicate-thing
     ggtags
     helm-gtags
-    helm-projectile
     helm-swoop
     helm-descbinds
     ;; function-args
@@ -136,7 +135,6 @@ buffer is not visiting a file."
     sr-speedbar
     iedit
     smartparens
-    projectile
     volatile-highlights
     zygospore
     ))
@@ -231,18 +229,7 @@ buffer is not visiting a file."
 (show-smartparens-global-mode +1)
 (smartparens-global-mode 1)
 
-;; Package: projejctile
-(require 'projectile)
-(projectile-global-mode)
-;; static string for mode-line to fix slow in tramp mode issue.
-(setq projectile-mode-line "Projectile")
-(setq projectile-enable-caching t)
 
-(require 'helm-projectile)
-(helm-projectile-on)
-(setq projectile-completion-system 'helm)
-(setq projectile-indexing-method 'alien)
-(setq projectile-switch-project-action 'helm-projectile)
 ;; Package zygospore
 (global-set-key (kbd "C-x 1") 'zygospore-toggle-delete-other-windows)
 
@@ -533,14 +520,6 @@ buffer is not visiting a file."
         ("M-0"       . treemacs-select-window)
         ("C-c 1"     . treemacs-delete-other-windows)
 ))
-(use-package treemacs-projectile
-  :defer t
-  :ensure t
-  :config
-  (setq treemacs-header-function #'treemacs-projectile-create-header)
-  :bind (:map spacemacs-default-map
-              ("fP" . treemacs-projectile)
-              ("fp" . treemacs-projectile-toggle)))
 
 (use-package stock-ticker
   :config

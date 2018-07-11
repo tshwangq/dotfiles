@@ -225,9 +225,10 @@
   (interactive "n序号:")
   (杀掉当前播放进程)
   (setq 播放到第几首 某)
+  ;(message (symbol-value 播放列表_JSON数据))
   (setq 当前正在播放歌曲的进程
 	(start-process "albin-music-proc"
-		 nil
+		 "*Message*"
 		 albin-music-player
 		 (cdr (assoc 'mp3Url (elt 播放列表_JSON数据源 某)))))
   (set-process-sentinel
@@ -238,6 +239,7 @@
 )
 
 (defun 从页面中抓取歌曲列表 (页面)
+  (message 页面)
   (setq 列表 "[")
  
   (while (setq 位置 (string-match "\\(><a href=\"/song\\?id=\\)\\([0-9]\\{5,10\\}\\)"
