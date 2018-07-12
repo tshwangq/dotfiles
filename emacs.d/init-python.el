@@ -20,18 +20,18 @@
     (venv-workon python-venv)))
     (add-hook 'python-mode-hook 'schnouki/setup-venv)))
 
-(use-package anaconda-mode
-  :ensure t
-  :commands anaconda-mode
-  :diminish anaconda-mode
-  :init
-  (progn
-    (add-hook 'python-mode-hook 'anaconda-mode)
-    (add-hook 'python-mode-hook 'eldoc-mode)))
+;; (use-package anaconda-mode
+;;   :ensure t
+;;   :commands anaconda-mode
+;;   :diminish anaconda-mode
+;;   :init
+;;   (progn
+;;     (add-hook 'python-mode-hook 'anaconda-mode)
+;;     (add-hook 'python-mode-hook 'eldoc-mode)))
 
-(use-package company-anaconda
-  :ensure t
-  :init (add-to-list 'company-backends 'company-anaconda))
+;; (use-package company-anaconda
+;;   :ensure t
+;;   :init (add-to-list 'company-backends 'company-anaconda))
 
 (use-package py-autopep8
   :ensure t
@@ -88,8 +88,26 @@
   (setq python-shell-interpreter "ipython"))
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "--simple-prompt -i")
-(provide 'init-python)
 
-(eval-after-load "company"
-  '(add-to-list 'company-backends '(company-anaconda :with company-capf)))
+
+;(eval-after-load "company"
+;  '(add-to-list 'company-backends '(company-anaconda :with company-capf)))
+
+(lsp-define-stdio-client lsp-python "python"
+                         #'projectile-project-root
+                         '("pyls"))
+
+(use-package lsp-python
+  :config
+  ;; make sure this is activated when python-mode is activated
+  ;; lsp-python-enable is created by macro above
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (lsp-python-enable)))
+)
+(use-package company-lsp
+  :config
+  (push 'company-lsp company-backends))
+
+(provide 'init-python)
 ;;; init-40-python.el ends here
