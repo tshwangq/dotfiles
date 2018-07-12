@@ -117,14 +117,6 @@
 
   (add-hook 'php-mode-hook #'cmack/php-mode-hook))
 
-;; (use-package lsp-php
-;;   :ensure t
-;;   :after (php-mode lsp-mode)
-;;   :config
-;;   (lsp-php-enable)
-;;   :custom
-;;   (lsp-php-server-install-dir (expand-file-name "~/.composer/")))
-
 (use-package lsp-php
   ;:ensure t
   :after (php-mode lsp-mode)
