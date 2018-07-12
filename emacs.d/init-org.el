@@ -267,12 +267,6 @@
 (global-set-key (kbd "C-c g")
                 (lambda () (interactive) (find-file "~/workspace/workspace/gtd.org")))
 
-
-;; active Org-babel languages
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '(;; other Babel languages
-   (plantuml . t)))
 (use-package ob-plantuml
   :ensure nil
   :config
@@ -282,7 +276,7 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
-                                        ;(sh         . t)
+   ;(restclient . t)                                        ;(sh         . t)
    (js         . t)
    (sql        . t)
    (emacs-lisp . t)
@@ -295,6 +289,7 @@
    (dot        . t)
    (css        . t)
    (plantuml   . t)))
+
 (setq org-publish-project-alist
       '(("www"
          :base-directory "~/workspace/www/"
