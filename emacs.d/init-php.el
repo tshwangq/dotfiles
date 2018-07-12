@@ -35,11 +35,6 @@
   :ensure t
   :commands php-mode)
 
-(use-package phpcbf
-  :ensure t
-  :commands php-mode
-  :config
-  (setq phpcbf-standard "PSR2"))
 
 (use-package phpunit
   :ensure t
@@ -55,7 +50,7 @@
   :ensure t
   :mode ("\\.php\\'" "\\.inc\\'" "\\.module\\'")
   :bind (("C--" . cmack/php-quick-arrow)
-         ("M-." . xref-find-definitions)
+;         ("M-." . xref-find-definitions)
          :map php-mode-map
          ("C-d" . sp-delete-char))
   :config
@@ -79,34 +74,6 @@
           flycheck-php-executable "/opt/local/bin/php"
           flycheck-php-phpcs-executable "~/.composer/vendor/bin/phpcs"
           flycheck-php-phpmd-executable "~/.composer/vendor/bin/phpmd")
-
-    ;; Experiment with highlighting keys in assoc. arrays
-    ;; (let ((array-keys-font-lock
-    ;;        (rx-to-string '(and (group (any "\"" "'")
-    ;;                                   (one-or-more (and (not (any space ";")))))
-    ;;                            (one-or-more space)
-    ;;                            "=>"
-    ;;                            (one-or-more space))))
-
-    ;;       (arrow-function-font-lock
-    ;;        (rx-to-string '(and "->" (group (one-or-more word)) "(")))
-
-    ;;       (psr2-type-hint-multiline-font-lock
-    ;;        (rx-to-string '(and (or "public" "private" "protected" "static")
-    ;;                            (one-or-more space) "function"
-    ;;                            (one-or-more space)
-    ;;                            (one-or-more (not (any ":" "{")))
-    ;;                            ":"
-    ;;                            (opt (one-or-more space))
-    ;;                            (group (one-or-more word))
-    ;;                            (opt (one-or-more space))
-    ;;                            "{"))))
-    ;;  (font-lock-add-keywords
-    ;;   'php-mode
-    ;;   (list (list array-keys-font-lock 1 'font-lock-variable-name-face t)
-    ;;         (list arrow-function-font-lock 1 'font-lock-function-name-face )
-    ;;         ;; (list psr2-type-hint-multiline-font-lock 1 'font-lock-type-face)
-    ;;         )))
     (lsp-mode t))
 
   ;; (setq php-executable "/usr/bin/php")
@@ -114,7 +81,7 @@
   (setq tab-width 4
         fill-column 119
         indent-tabs-mode nil)
-
+  (add-hook 'php-mode-hook 'phpcbf-enable-on-save)
   (add-hook 'php-mode-hook #'cmack/php-mode-hook))
 
 (use-package lsp-php
@@ -128,5 +95,13 @@
    (list "php"
          (expand-file-name "~/.emacs.d/php-language-server/vendor/bin/php-language-server.php"))))
 
+
+(use-package phpcbf
+  :ensure t
+  :commands php-mode
+  :config
+  (setq phpcbf-executable "/usr/local/bin/phpcbf.phar")
+  (setq phpcbf-standard "PSR2")
+  (add-hook 'php-mode-hook 'phpcbf-enable-on-save))
 
 (provide 'init-php)
