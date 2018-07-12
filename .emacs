@@ -432,32 +432,16 @@ buffer is not visiting a file."
        ;; Hacker News
        ("https://news.ycombinator.com/rss"                sw news)
        ("https://www.reddit.com/r/emacs/.rss"             sw emacs)
-       ;; The Setup
-       ("http://usesthis.com/feed/"                       sw)
        ("http://endlessparentheses.com/atom.xml"          sw emacs)
        ;; Emacs Horrors
        ("http://emacshorrors.com/feed.atom"               sw emacs)
        ;; Emacs Ninja
        ("http://emacsninja.com/feed.atom"                 sw emacs)
-       ;; Coding Horror
-       ("http://feeds.feedburner.com/codinghorror"        sw)
-       ;; The Daily WTF
-       ("http://syndication.thedailywtf.com/TheDailyWtf"  sw)
-       ;; This Developer's Life
-       ("http://feeds.feedburner.com/thisdeveloperslife"  sw)
        ;; One Thing Well
        ("http://onethingwell.org/rss"                     sw tech)
-       ;; The Daily WTF
-       ("http://syndication.thedailywtf.com/TheDailyWtf"  sw)
        ;; Github Engineering
        ("http://githubengineering.com/atom.xml"           sw tech)
-       ;; Google Testing Blog
-       ("http://feeds.feedburner.com/blogspot/RLXA"       sw google tech)
-       ("http://feeds.feedburner.com/blogspot/sBff")
-       ;; SMBC
-       ("http://feeds.feedburner.com/smbc-comics/PvLb" comic)
-       ;; Wondermark
-       ("http://feeds.feedburner.com/wondermark"       comic)))
+       ))
   (setq elfeed-max-connections 10)
   (setq url-queue-timeout 30)
   :config

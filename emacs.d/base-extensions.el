@@ -24,7 +24,7 @@
   :ensure t
   :commands company-mode
   :config
-  (setq company-minimum-prefix-length 0)
+  (setq company-minimum-prefix-length 2)
   (setq company-dabbrev-downcase nil)
   (setq company-tooltip-limit 5200)
   (setq company-idle-delay 0.2)
