@@ -24,16 +24,15 @@
   :ensure t
   :commands company-mode
   :config
-  (setq company-minimum-prefix-length 1)
+  (setq company-minimum-prefix-length 0)
   (setq company-dabbrev-downcase nil)
-  (setq company-tooltip-limit 1200)
-  (setq company-idle-delay 0.5)
+  (setq company-tooltip-limit 5200)
+  (setq company-idle-delay 0.2)
   (setq company-echo-delay 0)
   (setq company-begin-commands '(self-insert-command))
   (setq company-require-match nil)
   (add-hook 'company-mode-hook 'company-quickhelp-mode)
-  (add-hook 'after-init-hook 'global-company-mode)
-  (add-to-list 'company-backends 'company-lsp))
+  (add-hook 'after-init-hook 'global-company-mode)  )
 
 (use-package company-lsp
   :ensure t

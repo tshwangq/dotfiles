@@ -92,22 +92,23 @@
 
 ;(eval-after-load "company"
 ;  '(add-to-list 'company-backends '(company-anaconda :with company-capf)))
+(eval-after-load "lsp"
+  '(add-to-list 'company-backends '(company-lsp)))
+(use-package lsp-python
+  :ensure t
+  :requires lsp-mode
+  :defer t
+  :hook (python-mode-hook . lsp-python-enable))
 
 (lsp-define-stdio-client lsp-python "python"
                          #'projectile-project-root
                          '("pyls"))
-
-(use-package lsp-python
-  :config
-  ;; make sure this is activated when python-mode is activated
-  ;; lsp-python-enable is created by macro above
-  (add-hook 'python-mode-hook
-            (lambda ()
-              (lsp-python-enable)))
-)
-(use-package company-lsp
-  :config
-  (push 'company-lsp company-backends))
+;; make sure this is activated when python-mode is activated
+;; lsp-python-enable is created by macro above, also looks like have to push company-lsp again to get complement
+(add-hook 'python-mode-hook
+          (lambda ()
+            (lsp-python-enable)
+            (push 'company-lsp company-backends)))
 
 (provide 'init-python)
 ;;; init-40-python.el ends here
