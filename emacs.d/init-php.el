@@ -44,8 +44,8 @@
   :ensure t
   :after php-mode
   :config
-  (add-to-list 'company-backends 'company-ac-php-backend))
-
+  ;(add-to-list 'company-backends 'company-ac-php-backend))
+)
 (use-package php-mode
   :ensure t
   :mode ("\\.php\\'" "\\.inc\\'" "\\.module\\'")
