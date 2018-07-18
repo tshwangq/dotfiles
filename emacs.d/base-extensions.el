@@ -171,4 +171,7 @@
   :diminish ace-pinyin-mode
   :init (add-hook 'after-init-hook 'ace-pinyin-global-mode))
 
+(use-package powerline
+  :init (powerline-default-theme)
+  )
 (provide 'base-extensions)

@@ -273,6 +273,11 @@
   (setq org-plantuml-jar-path "~/plantuml.jar"))
 (use-package ob-redis
   )
+
+(use-package org-bullets
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  )
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
