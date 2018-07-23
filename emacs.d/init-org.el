@@ -281,7 +281,8 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
-   ;(restclient . t)                                        ;(sh         . t)
+                                        ;(restclient . t)
+   (shell         . t)
    (js         . t)
    (sql        . t)
    (emacs-lisp . t)
