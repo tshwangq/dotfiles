@@ -169,9 +169,6 @@
 ;; Jump to Chinese characters
 (use-package ace-pinyin
   :diminish ace-pinyin-mode
-  :init (add-hook 'after-init-hook 'ace-pinyin-global-mode))
+  :init)
 
-(use-package powerline
-  :init (powerline-default-theme)
-  )
 (provide 'base-extensions)

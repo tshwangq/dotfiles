@@ -41,7 +41,7 @@
  '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(package-selected-packages
    (quote
-    (powerline org-bullets lsp-python lsp-ui smartparens-config lsp-php company-php phpunit php-extras phpcbf md4rd true tide org-plus-contrib csv-mode lsp-vue company-lsp company-quickhelp helm-flx py-autopep8 ac-php php-mode company-tern js2-refactor ace-pinyin undo-tree multiple-cursors magit dashboard dumb-jump company-ycmd treemacs coin-ticker stock-ticker helm-tramp fuzzy mmm-vars css-eldoc xref-js2 jump-tree ace-link avy-zap paredit expand-region ob-redis indium counsel-dash jedi circe circle company ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin peep-dired paradox ox-twbs nyan-mode nginx-mode markdown-preview-eww markdown-mode lenlen-theme iedit helm-swoop helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
+    (org-bullets lsp-python lsp-ui smartparens-config lsp-php company-php phpunit php-extras phpcbf md4rd true tide org-plus-contrib csv-mode lsp-vue company-lsp company-quickhelp helm-flx py-autopep8 ac-php php-mode company-tern js2-refactor ace-pinyin undo-tree multiple-cursors magit dashboard dumb-jump company-ycmd treemacs coin-ticker stock-ticker helm-tramp fuzzy mmm-vars css-eldoc xref-js2 jump-tree ace-link avy-zap paredit expand-region ob-redis indium counsel-dash jedi circe circle company ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode virtualenvwrapper plantuml-mode docker hackernews helm-ag ag popup auto-complete zygospore youdao-dictionary yaml-mode ws-butler web-mode w3m volatile-highlights use-package tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin peep-dired paradox ox-twbs nyan-mode nginx-mode markdown-preview-eww markdown-mode lenlen-theme iedit helm-swoop helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
  '(paradox-github-token t)
  '(protect-buffer-bury-p nil)
  '(save-place t nil (saveplace))
@@ -253,6 +253,7 @@ buffer is not visiting a file."
 (global-semantic-idle-scheduler-mode 1)
 
 (semantic-mode 1)
+(column-number-mode 1)
 
 (use-package yaml-mode
   :mode ("\\.yml$" . yaml-mode))
@@ -264,6 +265,9 @@ buffer is not visiting a file."
 
 (use-package smart-mode-line
   :ensure t
+  :config
+  (setq sml/name-width 20)
+  (setq sml/mode-width 'full)
   :init
   (progn
     (setq sml/no-confirm-load-theme t)
@@ -476,10 +480,6 @@ buffer is not visiting a file."
     (org-redisplay-inline-images)))
 (add-hook 'org-babel-after-execute-hook 'my/fix-inline-images)
 
-(add-to-list 'load-path "~/emacs-application-framework")
-
-(require 'eaf)
-
 (use-package treemacs
   :ensure t
   :defer t
@@ -513,29 +513,21 @@ buffer is not visiting a file."
   (stock-ticker-global-mode +1)
 ;  (setq stock-ticker-symbols '("aapl" "goog" "fb"))
   (setq  stock-ticker-symbol "sh600535"))
-                                        ;(stock-ticker--update)
 
-(use-package coin-ticker
-  :config
-  ;; Optional: Set the update interval, in seconds (default 300)
-  (setq coin-ticker-api-poll-interval 120)
-  ;; Optional: Set the currency list (default is BTC and ETH)
-  (setq coin-ticker-syms '("BTC" "ETH" "LTC" "XPR"))
-  ;; Optional: Just show prices (and no symbols)
-  (setq coin-ticker-show-syms nil)
-  (coin-ticker-mode 1)
-)
 (use-package jump-tree
   :config
   (setq global-jump-tree-mode t))
 (setq browse-url-browser-function 'eww-browse-url)
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(org-table ((t (:foreground "#6c71c4" :family "Ubuntu Mono")))))
+
 (setq elfeed-use-curl nil)
+
 
 (use-package md4rd)
 (setq md4rd-subs-active '(lisp+Common_Lisp emacs prolog ripple))
