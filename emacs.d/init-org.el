@@ -152,7 +152,6 @@
 (setq org-agenda-files (list "~/workspace/workspace/gtd.org"
                              "~/workspace/workspace/inbox.org"
                              "~/workspace/tfp/powerbank/task.org"
-                             "~/workspace/jjys/init.org"
                              "~/workspace/workspace/journal.org"
                              "~/workspace/workspace/notes.org"
                              "~/workspace/workspace/dairy.org"

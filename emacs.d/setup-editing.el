@@ -65,12 +65,9 @@
 (use-package yasnippet
   :config
   (setq yas-snippet-dirs
-        '("~/.emacs.d/snippets"                 ;; personal snippets
-          "~/emacs.d/snippets"           ;; foo-mode and bar-mode snippet collection
-          "/path/to/yasnippet/yasmate/snippets" ;; the yasmate collection
+        '("~/emacs.d/snippets"           ;; foo-mode and bar-mode snippet collection
           ))
-  (yas-global-mode 1)
-  )
+  (yas-global-mode 1))
 
 ;; PACKAGE: smartparens
 (require 'smartparens-config)
