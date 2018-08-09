@@ -14,40 +14,50 @@
          ("C-M-z" . helm-resume)
          ("C-x C-f" . helm-find-files)
          ("C-x b" . helm-mini)
-         ;("C-x o" . helm-occur)
+         ("C-x o" . helm-occur)
          ("M-y" . helm-show-kill-ring)
          ("C-h a" . helm-apropos)
-;         ("C-h m" . helm-man-woman)
+         ("C-h m" . helm-man-woman)
          ("C-h SPC" . helm-all-mark-rings)
          ("C-x C-i" . helm-semantic-or-imenu)
          ("C-x C-m" . helm-M-x)
          ("C-x C-b" . helm-buffers-list)
-         ("C-x v" . helm-projectile)
-         ("C-x p" . helm-projectile-ag)
+         ("C-c p g" . helm-google-suggest)
+         ("C-c p p" . helm-projectile)
+         ("C-c p f" . helm-projectile-find-file)
+         ("C-c p a" . helm-do-ag-project-root)
          :map helm-map
-         ("<tab>" . helm-execute-persistent-action))
+         ("<tab>" . helm-execute-persistent-action)
+         ("C-i"   . helm-execute-persistent-action)
+         ("C-z"   . helm-select-action))
   :init
   :config
-  (setq helm-split-window-in-side-p t
-        helm-split-window-default-side 'below
-        helm-idle-delay 0.0
-        helm-input-idle-delay 0.01
-        helm-quick-update t
-        helm-ff-skip-boring-files t)
+  (setq
+
+   helm-split-window-in-side-p t
+   helm-move-to-line-cycle-in-source t ; move to end or beginning of source when reaching top or bottom of source.
+   helm-ff-search-library-in-sexp t ; search for library in `require' and `declare-function' sexp.
+   helm-scroll-amount 4 ; scroll 4 lines other window using M-<next>/M-<prior>
+   helm-split-window-default-side 'below
+   helm-ff-file-name-history-use-recentf t
+   helm-candidate-number-limit 500 ; limit the number of displayed canidates
+   helm-buffers-fuzzy-matching t          ; fuzzy matching buffer names when non-nil
+   helm-M-x-fuzzy-matching t
+                                        ; useful in helm-mini that lists buffers
+   helm-idle-delay 0.0
+   helm-input-idle-delay 0.01
+   helm-quick-update t
+   helm-ff-skip-boring-files t)
   (helm-mode 1)
-  )
+  (helm-autoresize-mode t))
 
 (require 'helm-grep)
 
 ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
 ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
 ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
-;(global-set-key (kbd "C-c h") 'helm-command-prefix)
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
 (global-unset-key (kbd "C-x c"))
-
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebihnd tab to do persistent action
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
 (define-key helm-grep-mode-map (kbd "<return>")  'helm-grep-mode-jump-other-window)
 (define-key helm-grep-mode-map (kbd "n")  'helm-grep-mode-jump-other-window-forward)
@@ -56,29 +66,11 @@
 (when (executable-find "curl")
   (setq helm-google-suggest-use-curl-p t))
 
-(setq
- helm-scroll-amount 4 ; scroll 4 lines other window using M-<next>/M-<prior>
- helm-ff-search-library-in-sexp t ; search for library in `require' and `declare-function' sexp.
- helm-split-window-in-side-p t ;; open helm buffer inside current window, not occupy whole other window
- helm-candidate-number-limit 500 ; limit the number of displayed canidates
- helm-ff-file-name-history-use-recentf t
- helm-move-to-line-cycle-in-source t ; move to end or beginning of source when reaching top or bottom of source.
- helm-buffers-fuzzy-matching t          ; fuzzy matching buffer names when non-nil
-                                        ; useful in helm-mini that lists buffers
-
- )
-
 (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
 
-(global-set-key (kbd "C-x b") 'helm-mini)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
-;(global-set-key (kbd "C-c h o") 'helm-occur)
-
-;(global-set-key (kbd "C-c h C-c w") 'helm-wikipedia-suggest)
-
-;(global-set-key (kbd "C-c h x") 'helm-register)
-;; (global-set-key (kbd "C-x r j") 'jump-to-register)
+; (global-set-key (kbd "C-c h C-c w") 'helm-wikipedia-suggest)
+; (global-set-key (kbd "C-c h x") 'helm-register)
+; (global-set-key (kbd "C-x r j") 'jump-to-register)
 
 (define-key 'help-command (kbd "C-f") 'helm-apropos)
 (define-key 'help-command (kbd "r") 'helm-info-emacs)
@@ -97,7 +89,6 @@
 (define-key minibuffer-local-map (kbd "M-n") 'helm-minibuffer-history)
 
 (define-key global-map [remap find-tag] 'helm-etags-select)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; PACKAGE: helm-swoop                ;;
@@ -127,8 +118,6 @@
 ;; If nil, you can slightly boost invoke speed in exchange for text color
 (setq helm-swoop-speed-or-color t)
 
-(helm-mode 1)
-                                        ;(define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
 (eval-after-load 'shell
   '(define-key shell-mode-map  (kbd "C-c C-l") 'helm-comint-input-ring)); [(\C-z)] 'clear-shell-buffer))
 (add-hook 'shell-mode-hook 'my-shell-mode-hook)
@@ -144,11 +133,8 @@
  helm-gtags-prefix-key "\C-cg"
  helm-gtags-suggested-key-mapping t
  )
-
 (require 'helm-descbinds)
 (helm-descbinds-mode)
-
-
 (use-package helm-ag
   :ensure t
   :init
@@ -167,8 +153,7 @@
 
 (use-package helm-zhihu-daily
   :ensure t
-  :config
-  )
+  :config)
 
 (use-package docker-tramp
   :ensure t)
