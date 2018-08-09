@@ -14,7 +14,7 @@
          ("C-M-z" . helm-resume)
          ("C-x C-f" . helm-find-files)
          ("C-x b" . helm-mini)
-         ("C-x o" . helm-occur)
+         ("C-c p o" . helm-occur)
          ("M-y" . helm-show-kill-ring)
          ("C-h a" . helm-apropos)
          ("C-h m" . helm-man-woman)

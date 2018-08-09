@@ -100,6 +100,7 @@
   ;(projectile-global-mode)
   ;; static string for mode-line to fix slow in tramp mode issue.
   (setq projectile-mode-line "Projectile")
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (setq projectile-enable-caching t)
   )
 
