@@ -119,6 +119,8 @@
   :commands lsp-mode
   ;; :disabled nil
   :config
+  (require 'lsp-imenu)
+  (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
   (setq lsp-response-timeout 25
         lsp-enable-flycheck t
         lsp-enable-eldoc t

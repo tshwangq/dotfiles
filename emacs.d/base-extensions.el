@@ -18,6 +18,7 @@
   :ensure
   :config
   ;; 开启yasnippet支持
+;;  (push 'company-lsp company-backends)
   (setq company-lsp-enable-snippet t))
 
 (use-package company

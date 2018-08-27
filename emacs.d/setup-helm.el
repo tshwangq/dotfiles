@@ -25,7 +25,7 @@
          ("C-c p g" . helm-google-suggest)
          ("C-c p p" . helm-projectile)
          ("C-c p f" . helm-projectile-find-file)
-         ("C-c p a" . helm-do-ag-project-root)
+         ("C-c p n" . helm-do-ag-project-root)
          :map helm-map
          ("<tab>" . helm-execute-persistent-action)
          ("C-i"   . helm-execute-persistent-action)
@@ -135,17 +135,17 @@
  )
 (require 'helm-descbinds)
 (helm-descbinds-mode)
+
 (use-package helm-ag
   :ensure t
   :init
   (custom-set-variables
    '(helm-ag-base-command "rg --smart-case --no-heading --line-number"))
-                                        ;:bind ("C-c a g" . helm-do-ag-project-root))
-  )
+                                        :bind ("M-p s" . helm-do-ag-project-root))
 
 (setq helm-mini-default-sources '(helm-source-buffers-list
                                   helm-source-recentf
-                                  ;helm-source-bookmarks
+                                  helm-source-bookmarks
                                   helm-source-buffer-not-found))
 (require 'helm-shell-history)
 (add-hook 'term-mode-hook (lambda () (define-key term-raw-map (kbd "C-r") 'helm-shell-history)))
