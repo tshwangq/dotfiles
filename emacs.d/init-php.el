@@ -1,12 +1,5 @@
 ;;; -*- lexical-binding: t -*-
 
-(use-package ggtags
-  :ensure t
-  :commands ggtags-mode
-  :diminish ggtags-mode
-  :config
-  (setq ggtags-completing-read-function nil))
-
 (use-package smartparens
   :ensure smartparens
   :commands (smartparens turn-on-smartparens-strict-mode)
@@ -40,11 +33,6 @@
   :ensure t
   :commands php-mode)
 
-(use-package company-php
-  :ensure t
-  :after php-mode
-  :config
-)
 (use-package php-mode
   :ensure t
   :mode ("\\.php\\'" "\\.inc\\'" "\\.module\\'")
@@ -93,7 +81,6 @@
   (lsp-php-language-server-command
    (list "php"
          (expand-file-name "~/.emacs.d/php-language-server/vendor/bin/php-language-server.php"))))
-
 
 (use-package phpcbf
   :ensure t
