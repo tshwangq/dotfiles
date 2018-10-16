@@ -508,12 +508,6 @@ buffer is not visiting a file."
         ("C-c 1"     . treemacs-delete-other-windows)
 ))
 
-(use-package stock-ticker
-  :config
-  (stock-ticker-global-mode +1)
-;  (setq stock-ticker-symbols '("aapl" "goog" "fb"))
-  (setq  stock-ticker-symbol "sh600535"))
-
 (use-package jump-tree
   :config
   (setq global-jump-tree-mode t))
@@ -527,7 +521,6 @@ buffer is not visiting a file."
  '(org-table ((t (:foreground "#6c71c4" :family "Ubuntu Mono")))))
 
 (setq elfeed-use-curl nil)
-
 
 (use-package md4rd)
 (setq md4rd-subs-active '(lisp+Common_Lisp emacs prolog ripple))
