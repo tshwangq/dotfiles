@@ -521,6 +521,18 @@ buffer is not visiting a file."
  '(org-table ((t (:foreground "#6c71c4" :family "Ubuntu Mono")))))
 
 (setq elfeed-use-curl nil)
+(require 'coin-ticker)
+
+;; Optional: Set the update interval, in seconds (default 300)
+(setq coin-ticker-api-poll-interval 120)
+
+;; Optional: Set the currency list (default is BTC and ETH)
+(setq coin-ticker-syms '("BTC" "ETH" "LTC" "XPR"))
+
+;; Optional: Just show prices (and no symbols)
+(setq coin-ticker-show-syms nil)
+;; Enable coin-ticker-mode
+(coin-ticker-mode 1)
 
 (use-package md4rd)
 (setq md4rd-subs-active '(lisp+Common_Lisp emacs prolog ripple))

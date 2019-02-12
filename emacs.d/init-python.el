@@ -100,9 +100,11 @@
   :defer t
   :hook (python-mode-hook . lsp-python-enable))
 
-(lsp-define-stdio-client lsp-python "python"
-                         #'projectile-project-root
-                         '("pyls"))
+(lsp-register-client
+ (make-lsp-client :new-connection (lsp-tramp-connection "pyls")
+                  :major-modes '(python-mode)
+                  :remote? t
+                  :server-id 'pyls))
 ;; make sure this is activated when python-mode is activated
 ;; lsp-python-enable is created by macro above, also looks like have to push company-lsp again to get complement
 (add-hook 'python-mode-hook
