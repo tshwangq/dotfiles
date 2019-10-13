@@ -17,7 +17,8 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
-
+(setq package-check-signature nil)
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -32,22 +33,25 @@
  '(comint-scroll-show-maximum-output t)
  '(comint-scroll-to-bottom-on-input t)
  '(comint-scroll-to-bottom-on-output nil)
+ '(company-lsp-async t)
+ '(company-lsp-enable-snippet t)
  '(custom-safe-themes
    (quote
-    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
+    ("d91ef4e714f05fff2070da7ca452980999f5361209e679ee988e3c432df24347" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
  '(debug-on-error nil)
  '(eww-search-prefix "http://www.google.com/search?q=")
  '(helm-ag-base-command "rg --smart-case --no-heading --line-number")
  '(initial-frame-alist (quote ((fullscreen . maximized))))
+ '(org-agenda-files (quote ("~/workspace/workspace/gtd.org")))
  '(package-selected-packages
    (quote
-    (rainbow-mode web-mode treemacs virtualenvwrapper elfeed helm-projectile projectile org-bullets lsp-python lsp-ui smartparens-config lsp-php phpunit php-extras phpcbf md4rd true tide org-plus-contrib csv-mode lsp-vue company-lsp company-quickhelp helm-flx py-autopep8 php-mode company-tern js2-refactor ace-pinyin undo-tree multiple-cursors magit dashboard dumb-jump company-ycmd coin-ticker stock-ticker helm-tramp fuzzy mmm-vars css-eldoc xref-js2 jump-tree ace-link avy-zap paredit expand-region ob-redis indium counsel-dash jedi circe circle ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode plantuml-mode docker hackernews helm-ag ag popup auto-complete zygospore youdao-dictionary yaml-mode ws-butler w3m volatile-highlights use-package tern-auto-complete tagedit sr-speedbar solarized-theme smartparens smart-mode-line scss-mode restclient popwin peep-dired paradox ox-twbs nyan-mode nginx-mode markdown-preview-eww markdown-mode lenlen-theme iedit helm-swoop helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree dired+ company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
+    (rainbow-mode web-mode treemacs virtualenvwrapper elfeed helm-projectile projectile org-bullets lsp-python lsp-ui smartparens-config lsp-php phpunit php-extras phpcbf md4rd true tide org-plus-contrib lsp-vue company-lsp company-quickhelp helm-flx py-autopep8 php-mode company-tern js2-refactor ace-pinyin undo-tree multiple-cursors magit dashboard dumb-jump company-ycmd helm-tramp fuzzy mmm-vars css-eldoc xref-js2 jump-tree ace-link avy-zap paredit expand-region ob-redis indium counsel-dash jedi circe circle ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode plantuml-mode docker hackernews helm-ag ag popup auto-complete zygospore youdao-dictionary yaml-mode ws-butler w3m volatile-highlights use-package tern-auto-complete tagedit sr-speedbar solarized-theme smart-mode-line scss-mode restclient popwin peep-dired paradox ox-twbs nyan-mode nginx-mode markdown-preview-eww markdown-mode lenlen-theme iedit helm-swoop helm-gtags helm-descbinds haml-mode gitignore-mode ggtags function-args flycheck-package exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu)))
  '(paradox-github-token t)
  '(protect-buffer-bury-p nil)
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
- '(tramp-default-method "ssh" nil (tramp)))
+ '(tramp-default-method "ssh"))
 
 (server-start)
 
@@ -134,7 +138,7 @@ buffer is not visiting a file."
     ws-butler
     sr-speedbar
     iedit
-    smartparens
+
     volatile-highlights
     zygospore
     ))
@@ -220,15 +224,14 @@ buffer is not visiting a file."
 (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
 
 ;; Package: smartparens
-(require 'smartparens-config)
-(setq sp-base-key-bindings 'paredit)
-(setq sp-autoskip-closing-pair 'always)
-(setq sp-hybrid-kill-entire-symbol nil)
-(sp-use-paredit-bindings)
+;(require 'smartparens-config)
+;(setq sp-base-key-bindings 'paredit)
+;(setq sp-autoskip-closing-pair 'always)
+;(setq sp-hybrid-kill-entire-symbol nil)
+;(sp-use-paredit-bindings)
 
-(show-smartparens-global-mode +1)
-(smartparens-global-mode 1)
-
+;(show-smartparens-global-mode +1)
+;(smartparens-global-mode 1)
 
 ;; Package zygospore
 (global-set-key (kbd "C-x 1") 'zygospore-toggle-delete-other-windows)
@@ -521,18 +524,7 @@ buffer is not visiting a file."
  '(org-table ((t (:foreground "#6c71c4" :family "Ubuntu Mono")))))
 
 (setq elfeed-use-curl nil)
-(require 'coin-ticker)
-
-;; Optional: Set the update interval, in seconds (default 300)
-(setq coin-ticker-api-poll-interval 120)
-
-;; Optional: Set the currency list (default is BTC and ETH)
-(setq coin-ticker-syms '("BTC" "ETH" "LTC" "XPR"))
-
-;; Optional: Just show prices (and no symbols)
-(setq coin-ticker-show-syms nil)
-;; Enable coin-ticker-mode
-(coin-ticker-mode 1)
 
 (use-package md4rd)
 (setq md4rd-subs-active '(lisp+Common_Lisp emacs prolog ripple))
+(setq x-wait-for-event-timeout nil)

@@ -269,8 +269,6 @@
   :ensure nil
   :config
   (setq org-plantuml-jar-path "~/plantuml.jar"))
-(use-package ob-redis
-  )
 
 (use-package org-bullets
   :config

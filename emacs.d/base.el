@@ -14,17 +14,13 @@
 
 
 (package-initialize)
-(add-to-list 'package-archives '("org" . "http://elpa.emacs-china.org/org/") t)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/")
-             '("elpy" . "http://jorgenschaefer.github.io/packages/"))
+
 (setq package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
-                       ("marmalade" . "http://marmalade-repo.org/packages/")
-                                        ;("melpa" . "https://melpa.org/packages/")
+                       ("marmalade" . "http://elpa.emacs-china.org/marmalade/")
+		       ("org" . "http://elpa.emacs-china.org/org/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
-                                        ;  ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                          ))
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+
 (when (not package-archive-contents)
   (package-refresh-contents))
 
@@ -59,7 +55,10 @@
       x-select-enable-clipboard          t
       use-package-always-ensure          t)
 
-(load-theme 'solarized-light)
+(use-package solarized-theme
+  :init
+  (load-theme 'solarized-light)
+  )
 
 ;; Use variable width font faces in current buffer
 (defun my-buffer-face-mode-variable ()
@@ -88,16 +87,11 @@
   :config (setq dumb-jump-selector 'helm)
   :ensure)
 
-
-(use-package csv-mode
-  :ensure)
-
-
 ;; Package: projejctile
 (use-package projectile
   :ensure t
   :config
-  ;(projectile-global-mode)
+  (projectile-global-mode)
   ;; static string for mode-line to fix slow in tramp mode issue.
   (setq projectile-mode-line "Projectile")
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)

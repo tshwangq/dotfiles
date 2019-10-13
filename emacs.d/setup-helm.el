@@ -1,4 +1,4 @@
-(add-to-list 'load-path "~/.emacs.d/packages/helm-shell-history")
+(add-to-list 'load-path "~/emacs.d")
 
 (use-package helm-flx
   :ensure t

@@ -70,14 +70,14 @@
   (yas-global-mode 1))
 
 ;; PACKAGE: smartparens
-(require 'smartparens-config)
-(setq sp-base-key-bindings 'paredit)
-(setq sp-autoskip-closing-pair 'always)
-(setq sp-hybrid-kill-entire-symbol nil)
-(sp-use-paredit-bindings)
+;(require 'smartparens-config)
+;(setq sp-base-key-bindings 'paredit)
+;(setq sp-autoskip-closing-pair 'always)
+;(setq sp-hybrid-kill-entire-symbol nil)
+;(sp-use-paredit-bindings)
 
-(show-smartparens-global-mode +1)
-(smartparens-global-mode 1)
+;;(show-smartparens-global-mode +1)
+;;(smartparens-global-mode 1)
 
 ;; PACKAGE: comment-dwim-2
 (global-set-key (kbd "M-;") 'comment-dwim-2)
