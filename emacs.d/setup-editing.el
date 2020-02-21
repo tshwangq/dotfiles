@@ -195,7 +195,7 @@ line instead."
   '(LaTeX-mode TeX-mode)
   "Modes in which to indent regions that are yanked (or yank-popped).
 Only modes that don't derive from `prog-mode' should be listed here.")
-
+(setq org-latex-create-formula-image-program 'dvipng)
 (defvar yank-indent-blacklisted-modes
   '(python-mode slim-mode haml-mode)
   "Modes for which auto-indenting is suppressed.")

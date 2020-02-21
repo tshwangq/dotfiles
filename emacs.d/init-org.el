@@ -129,6 +129,7 @@
 (setq org-directory "~/workspace/workspace/")
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (global-set-key (kbd "C-c c") 'org-capture)
+(require 'org-protocol)
 (setq org-agenda-include-diary t)
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
@@ -140,8 +141,9 @@
                "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
               ("j" "Journal" entry (file+datetree (concat org-directory "diary.org"))
                "* %?\n%U\n" :clock-in t :clock-resume t)
-              ("w" "org-protocol" entry (file (concat org-directory "inbox.org"))
-               "* TODO Review %c\n%U\n" :immediate-finish t)
+              ("w"   "Default template" entry (file+headline "~/capture.org" "Notes")
+               "* %^{Title}\n\n  Source: %u, %c\n\n  %i"
+               :empty-lines 1)
               ("m" "Meeting" entry (file (concat org-directory "inbox.org"))
                "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
               ("p" "Phone call" entry (file (concat org-directory "inbox.org"))
@@ -270,10 +272,10 @@
   :config
   (setq org-plantuml-jar-path "~/plantuml.jar"))
 
-(use-package org-bullets
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  )
+;(use-package org-bullets
+ ; :config
+  ;(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  ;)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(

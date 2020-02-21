@@ -216,7 +216,7 @@ export VIRTUALENV_USE_DISTRIBUTE=1        # <-- Always use pip/distribute
 
 export WORKON_HOME=$HOME/.virtualenvs       # <-- Where all virtualenvs will be stored
 
-source /usr/local/bin/virtualenvwrapper.sh
+#source /usr/local/bin/virtualenvwrapper.sh
 
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
 
@@ -226,7 +226,7 @@ fi
 
 export PATH="/home/qun/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+#eval "$(pyenv virtualenv-init -)"
 
 # added by Anaconda3 installer
 export PATH="/home/qun/anaconda3/bin:$PATH"

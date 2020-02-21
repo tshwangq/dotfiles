@@ -1,7 +1,12 @@
 #Anyting ending with a tilde
 *~
-
+\#*\#
+*.elc
 #Anything ending with a .class
 *.class
 *.log
 .idea
+
+snippets
+/elpa/
+.projectile
