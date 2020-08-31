@@ -12,9 +12,6 @@
 (prefer-coding-system        'utf-8)   ; with sugar on top
 (setq default-process-coding-system '(utf-8-unix . utf-8-unix))
 
-
-(package-initialize)
-
 (setq package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
                        ("marmalade" . "http://elpa.emacs-china.org/marmalade/")
 		       ("org" . "http://elpa.emacs-china.org/org/")
