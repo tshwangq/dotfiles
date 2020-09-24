@@ -107,7 +107,7 @@
 
 (use-package lsp-mode
   :ensure t
-  :commands lsp-mode
+  :commands lsp
   ;; :disabled nil
   :config
   (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)

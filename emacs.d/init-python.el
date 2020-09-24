@@ -94,22 +94,22 @@
 ;  '(add-to-list 'company-backends '(company-anaconda :with company-capf)))
 (eval-after-load "lsp"
   '(add-to-list 'company-backends '(company-lsp)))
-(use-package lsp-python
-  :ensure t
-  :requires lsp-mode
-  :defer t
-  :hook (python-mode-hook . lsp-python-enable))
 
 (lsp-register-client
  (make-lsp-client :new-connection (lsp-tramp-connection "pyls")
                   :major-modes '(python-mode)
                   :remote? t
                   :server-id 'pyls))
+(use-package lsp-python-ms
+  :ensure t
+  :init (setq lsp-python-ms-auto-install-server t)
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-python-ms)
+                         (lsp))))  ; or lsp-deferred
 ;; make sure this is activated when python-mode is activated
 ;; lsp-python-enable is created by macro above, also looks like have to push company-lsp again to get complement
 (add-hook 'python-mode-hook
           (lambda ()
-            (lsp-python-enable)
             (push 'company-lsp company-backends)))
 
 (provide 'init-python)
