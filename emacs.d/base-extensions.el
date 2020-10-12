@@ -57,11 +57,10 @@
   (dashboard-setup-startup-hook))
 
 
-(use-package ediff
-  :config
+(require 'ediff)
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
   (setq-default ediff-highlight-all-diffs 'nil)
-  (setq ediff-diff-options "-w"))
+  (setq ediff-diff-options "-w")
 
 
 (use-package expand-region
@@ -69,11 +68,9 @@
   (global-set-key (kbd "C-~") 'er/expand-region)
   )
 
-(use-package flyspell
-  :ensure t
-  :diminish ""
-  :init
-  (progn
+(require 'flyspell)
+(dolist (hook '(text-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode 1))))
     ;; Enable spell check in program comments
     (add-hook 'prog-mode-hook 'flyspell-prog-mode)
     ;; Enable spell check in plain text / org-mode
@@ -83,14 +80,12 @@
     (setq flyspell-issue-message-flag nil)
     ;; ignore repeated words
     (setq flyspell-mark-duplications-flag nil)
-    (setq-default ispell-list-command "list"))
-  :config
-  (progn
+    (setq-default ispell-list-command "list")
     (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))
     ;; Make spell check on right click.
     (define-key flyspell-mouse-map [down-mouse-3] 'flyspell-correct-word)
     (define-key flyspell-mouse-map [mouse-3] 'undefined)
-    (define-key flyspell-mode-map (kbd "C-;") nil)))
+    (define-key flyspell-mode-map (kbd "C-;") nil)
 
 (use-package flycheck-package)
 

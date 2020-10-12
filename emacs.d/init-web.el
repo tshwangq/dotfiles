@@ -139,15 +139,12 @@
 ;(define-key tern-mode-keymap (kbd "M-,") nil)
 
 
-(use-package css-mode
-  :commands css-mode
-  :init
+(require 'css-mode)
   (setq css-indent-offset 2)
-  :config
   (use-package rainbow-mode
     :init
     (dolist (hook '(css-mode-hook html-mode-hook sass-mode-hook))
-      (add-hook hook 'rainbow-mode)))
+      (add-hook hook 'rainbow-mode))
 
   (use-package css-eldoc))
 
