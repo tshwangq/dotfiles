@@ -125,7 +125,7 @@
   ("C-x g r" . magit-rebase-interactive))
 
 (use-package magit-popup)
-
+(use-package youdao-dictionary)
 (use-package multiple-cursors
   :bind
   ("C-S-c C-S-c" . mc/edit-lines)
@@ -166,5 +166,5 @@
 (use-package ace-pinyin
   :diminish ace-pinyin-mode
   :init)
-
+(use-package helm-dictionary)
 (provide 'base-extensions)

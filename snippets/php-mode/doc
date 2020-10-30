@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: docblock
-# key: doc
-# expand-env: ((yas-indent-line 'auto))
-# --
-/**
-* ${1:description}
-* $0
-*/
