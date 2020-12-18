@@ -167,4 +167,11 @@
   :diminish ace-pinyin-mode
   :init)
 (use-package helm-dictionary)
+(defun org-export-docx ()
+  (interactive)
+  (let ((docx-file (concat (file-name-sans-extension (buffer-file-name)) ".docx"))
+        (template-file "/home/qun/template.docx"))
+    (shell-command (format "pandoc %s -o %s --reference-doc=%s" (buffer-file-name) docx-file template-file))
+    (message "Convert finish: %s" docx-file)))
+
 (provide 'base-extensions)

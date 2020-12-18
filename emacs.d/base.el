@@ -18,8 +18,8 @@
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
                          ))
 
-(when (not package-archive-contents)
-  (package-refresh-contents))
+;(when (not package-archive-contents)
+  ;(package-refresh-contents))
 
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))

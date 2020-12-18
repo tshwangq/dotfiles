@@ -230,3 +230,5 @@ eval "$(pyenv init -)"
 
 # added by Anaconda3 installer
 export PATH="/home/qun/anaconda3/bin:$PATH"
+
+export PATH="$HOME/.config/composer/vendor/bin:$PATH"

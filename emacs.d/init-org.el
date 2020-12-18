@@ -1,9 +1,9 @@
 ;;; init-org.el --- Qun's org-mode configuation
 
-;; Copyright (c) 2017, Qun Wang
+;; Copyright (c) 2017, 2020 Qun Wang
 
 ;; Author: Qun Wang <tshwangq@gmail.com>
-;; Version: 0.0.1
+;; Version: 0.0.2
 
 ;;; Commentary:
 
@@ -113,7 +113,7 @@
 
 
 (setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)" "CANCELLED(c)")
               (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
 
 
@@ -126,15 +126,29 @@
               ("CANCELLED" :foreground "forest green" :weight bold)
               ("MEETING" :foreground "forest green" :weight bold)
               ("PHONE" :foreground "forest green" :weight bold))))
-(setq org-directory "~/workspace/workspace/")
+(setq org-directory "~/workspace/workspace")
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (global-set-key (kbd "C-c c") 'org-capture)
+(server-start)
 (require 'org-protocol)
 (setq org-agenda-include-diary t)
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
-      (quote (("t" "todo" entry (file+headline "~/workspace/workspace/inbox.org" "Tasks")
-               "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
+      (quote (
+              ("d" "default" plain (function org-roam--capture-get-point)
+               "%?"
+               :file-name "%<%Y%m%d%H%M%S>-${slug}"
+               :head "#+title: ${title}\n"
+               :unnarrowed t)
+	          ("p" "Protocol" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
+               "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
+	          ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
+               "* %? [[%:link][%:description]] \nCaptured On: %U")
+              ("t" "todo" entry (file+headline "~/workspace/workspace/inbox.org" "Tasks")
+               "* TODO %?\n%U\n%a\n")
+              ("T" "Tickler" entry
+               (file+headline "~/gtd/tickler.org" "Tickler")
+               "* %i%? \n %U")
               ("r" "respond" entry (file (concat org-directory "notes.org"))
                "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
               ("n" "note" entry (file (concat org-directory "notes.org"))
@@ -167,6 +181,9 @@
       '(("TODO" . org-warning) ("STARTED" . "red")
         ("CANCELED" . (:foreground "blue" :weight bold))))
 
+(setq org-agenda-custom-commands
+      '(("o" "At the office" tags-todo "@office"
+         ((org-agenda-overriding-header "Office")))))
 (setq org-agenda-custom-commands
       '(("k" "work haha"
          ((agenda "")
@@ -350,7 +367,7 @@
   :hook
   (after-init . org-roam-mode)
   :custom
-  (org-roam-directory "~/workspace/workspace/")
+  (org-roam-directory "~/workspace/workspace")
   :bind (:map org-roam-mode-map
               (("C-c n l" . org-roam)
                ("C-c n f" . org-roam-find-file)
@@ -358,6 +375,63 @@
               :map org-mode-map
               (("C-c n i" . org-roam-insert))
               (("C-c n I" . org-roam-insert-immediate))))
+(use-package org-roam-server
+  :ensure t
+
+  )
+
+(setq org-roam-capture-templates
+      '(
+        ("d" "default" plain (function org-roam-capture--get-point)
+         "%?"
+         :file-name "%<%Y%m%d%H%M%S>-${slug}"
+         :head "#+title: ${title}\n#+roam_alias:\n\n")
+        ("g" "group")
+        ("ga" "Group A" plain (function org-roam-capture--get-point)
+         "%?"
+         :file-name "%<%Y%m%d%H%M%S>-${slug}"
+         :head "#+title: ${title}\n#+roam_alias:\n\n")
+        ("gb" "Group B" plain (function org-roam-capture--get-point)
+         "%?"
+         :file-name "%<%Y%m%d%H%M%S>-${slug}"
+         :head "#+title: ${title}\n#+roam_alias:\n\n")))
+
+(add-to-list 'org-roam-capture-templates
+             '("t" "Term" plain (function org-roam-capture--get-point)
+               "- 领域: %^{术语所属领域}\n- 释义:"
+               :file-name "%<%Y%m%d%H%M%S>-${slug}"
+               :head "#+title: ${title}\n#+roam_alias:\n#+roam_tags: \n\n"
+               :unnarrowed t
+               ))
+(setq org-roam-capture-immediate-template
+      '("d" "default" plain (function org-roam-capture--get-point)
+        "%?"
+        :file-name "%<%Y%m%d%H%M%S>-${slug}"
+        :head "#+title: ${title}\n"
+        :unnarrowed t))
+(setq org-roam-server-host "127.0.0.1"
+      org-roam-server-port 9093
+      org-roam-server-export-inline-images t
+      org-roam-server-authenticate nil
+      org-roam-server-network-label-truncate t
+      org-roam-server-network-label-truncate-length 60
+      org-roam-server-network-label-wrap-length 20)
+(org-roam-server-mode)
+(require 'org-roam-protocol)
+(setq org-roam-capture-ref-templates
+      '(("r" "ref" plain (function org-roam-capture--get-point)
+         ""
+         :file-name "${slug}"
+         :head "#+title: ${title}\n#+roam_key: ${ref}\n"
+         :unnarrowed t)))
+
+(add-to-list 'org-roam-capture-ref-templates
+             '("a" "Annotation" plain (function org-roam-capture--get-point)
+               "%U ${body}\n"
+               :file-name "${slug}"
+               :head "#+title: ${title}\n#+roam_key: ${ref}\n#+roam_alias:\n"
+               :immediate-finish t
+               :unnarrowed t))
 
 ;;;###autoload(require 'init-org)
 (provide 'init-org)
