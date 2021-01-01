@@ -232,3 +232,6 @@ eval "$(pyenv init -)"
 export PATH="/home/qun/anaconda3/bin:$PATH"
 
 export PATH="$HOME/.config/composer/vendor/bin:$PATH"
+
+export PUB_HOSTED_URL=https://pub.flutter-io.cn
+export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
