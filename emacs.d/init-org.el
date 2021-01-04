@@ -145,7 +145,7 @@
 	          ("L" "Protocol Link" entry (file+headline ,(concat org-directory "notes.org") "Inbox")
                "* %? [[%:link][%:description]] \nCaptured On: %U")
               ("t" "todo" entry (file+headline "~/workspace/workspace/inbox.org" "Tasks")
-               "* TODO %?\n%U\n%a\n")
+               "* TODO %?\n%U\n")
               ("T" "Tickler" entry
                (file+headline "~/gtd/tickler.org" "Tickler")
                "* %i%? \n %U")
