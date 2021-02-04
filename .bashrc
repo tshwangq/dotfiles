@@ -235,3 +235,5 @@ export PATH="$HOME/.config/composer/vendor/bin:$PATH"
 
 export PUB_HOSTED_URL=https://pub.flutter-io.cn
 export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+export PATH_TO_FX=/opt/javafx-sdk-11.0.2/lib
+export PATH="$HOME/.cask/bin:$PATH"
