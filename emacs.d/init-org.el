@@ -433,6 +433,30 @@
                :immediate-finish t
                :unnarrowed t))
 
+
+
+(use-package org-ref
+    :config
+    (setq
+         org-ref-completion-library 'org-ref-ivy-cite
+         org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
+         org-ref-default-bibliography (list "~/workspace/workspace/init.bib")
+         org-ref-bibliography-notes "~/workspace/workspace/bibnotes.org"
+         org-ref-note-title-format "* TODO %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
+         org-ref-notes-directory "~/workspace/workspace/Notes/"
+         org-ref-notes-function 'orb-edit-notes
+         ))
+
+(use-package nov
+  :config
+  (setq nov-text-width 80)
+  (setq nov-text-width t)
+  (setq visual-fill-column-center-text t)
+  (add-hook 'nov-mode-hook 'visual-line-mode)
+  (add-hook 'nov-mode-hook 'visual-fill-column-mode)
+  )
+
+
 ;;;###autoload(require 'init-org)
 (provide 'init-org)
 

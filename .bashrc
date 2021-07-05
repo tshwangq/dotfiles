@@ -190,7 +190,7 @@ elif type compctl &>/dev/null; then
 fi
 ###-end-npm-completion-###
 
-alias hp="http_proxy=http://localhost:8123"
+alias hp="http_proxy=''"
 ###alias php='docker run --rm -it -v $(pwd):/opt php:7.0-cli'
 
 
@@ -229,7 +229,7 @@ eval "$(pyenv init -)"
 #eval "$(pyenv virtualenv-init -)"
 
 # added by Anaconda3 installer
-export PATH="/home/qun/anaconda3/bin:$PATH"
+# export PATH="/home/qun/anaconda3/bin:$PATH"  # commented out by conda initialize
 
 export PATH="$HOME/.config/composer/vendor/bin:$PATH"
 
@@ -237,3 +237,22 @@ export PUB_HOSTED_URL=https://pub.flutter-io.cn
 export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
 export PATH_TO_FX=/opt/javafx-sdk-11.0.2/lib
 export PATH="$HOME/.cask/bin:$PATH"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/qun/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/qun/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/qun/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/qun/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+export https_proxy=''
+export ftp_proxy=''
+export socks_proxy=''

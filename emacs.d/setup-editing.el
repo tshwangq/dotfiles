@@ -363,5 +363,12 @@ With a prefix ARG, remove start location."
   (with-eval-after-load 'pdf-annot
     (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
 
+(use-package deft
+  :commands (deft)
+  :config
+  (setq deft-directory "~/workspace/workspace/")
+  (setq deft-extensions '("txt" "tex" "org"))
+  (setq deft-recursive t)
+)
 
 (provide 'setup-editing)
