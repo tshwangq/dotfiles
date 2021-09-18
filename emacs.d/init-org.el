@@ -129,7 +129,7 @@
 (setq org-directory "~/workspace/workspace")
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (global-set-key (kbd "C-c c") 'org-capture)
-(server-start)
+
 (require 'org-protocol)
 (setq org-agenda-include-diary t)
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
@@ -363,60 +363,23 @@
 (require 'org-habit)
 
 (use-package org-roam
+  :after org
+  :init (setq org-roam-v2-ack t)
   :ensure t
   :hook
   (after-init . org-roam-mode)
   :custom
   (org-roam-directory "~/workspace/workspace")
+  :config
+  (org-roam-setup)
   :bind (:map org-roam-mode-map
-              (("C-c n l" . org-roam)
-               ("C-c n f" . org-roam-find-file)
+              (("C-c n r" . org-roam-node-random)
+               ("C-c n f" . org-roam-node-find)
                ("C-c n g" . org-roam-graph))
               :map org-mode-map
               (("C-c n i" . org-roam-insert))
               (("C-c n I" . org-roam-insert-immediate))))
-(use-package org-roam-server
-  :ensure t
 
-  )
-
-(setq org-roam-capture-templates
-      '(
-        ("d" "default" plain (function org-roam-capture--get-point)
-         "%?"
-         :file-name "%<%Y%m%d%H%M%S>-${slug}"
-         :head "#+title: ${title}\n#+roam_alias:\n\n")
-        ("g" "group")
-        ("ga" "Group A" plain (function org-roam-capture--get-point)
-         "%?"
-         :file-name "%<%Y%m%d%H%M%S>-${slug}"
-         :head "#+title: ${title}\n#+roam_alias:\n\n")
-        ("gb" "Group B" plain (function org-roam-capture--get-point)
-         "%?"
-         :file-name "%<%Y%m%d%H%M%S>-${slug}"
-         :head "#+title: ${title}\n#+roam_alias:\n\n")))
-
-(add-to-list 'org-roam-capture-templates
-             '("t" "Term" plain (function org-roam-capture--get-point)
-               "- 领域: %^{术语所属领域}\n- 释义:"
-               :file-name "%<%Y%m%d%H%M%S>-${slug}"
-               :head "#+title: ${title}\n#+roam_alias:\n#+roam_tags: \n\n"
-               :unnarrowed t
-               ))
-(setq org-roam-capture-immediate-template
-      '("d" "default" plain (function org-roam-capture--get-point)
-        "%?"
-        :file-name "%<%Y%m%d%H%M%S>-${slug}"
-        :head "#+title: ${title}\n"
-        :unnarrowed t))
-(setq org-roam-server-host "127.0.0.1"
-      org-roam-server-port 9093
-      org-roam-server-export-inline-images t
-      org-roam-server-authenticate nil
-      org-roam-server-network-label-truncate t
-      org-roam-server-network-label-truncate-length 60
-      org-roam-server-network-label-wrap-length 20)
-(org-roam-server-mode)
 (require 'org-roam-protocol)
 (setq org-roam-capture-ref-templates
       '(("r" "ref" plain (function org-roam-capture--get-point)
@@ -432,8 +395,6 @@
                :head "#+title: ${title}\n#+roam_key: ${ref}\n#+roam_alias:\n"
                :immediate-finish t
                :unnarrowed t))
-
-
 
 (use-package org-ref
     :config
@@ -455,6 +416,19 @@
   (add-hook 'nov-mode-hook 'visual-line-mode)
   (add-hook 'nov-mode-hook 'visual-fill-column-mode)
   )
+
+(use-package deft
+  :config
+  (setq deft-directory org-directory
+        deft-recursive t
+        deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n"
+        deft-use-filename-as-title t)
+  :bind
+  ("C-c n d" . deft))
+
+(add-to-list 'load-path "~/org-roam-ui")
+(load-library "org-roam-ui")
+
 
 
 ;;;###autoload(require 'init-org)

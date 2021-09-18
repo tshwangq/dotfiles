@@ -13,7 +13,7 @@
 (setq default-process-coding-system '(utf-8-unix . utf-8-unix))
 
 (setq package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
-                       ("marmalade" . "http://elpa.emacs-china.org/marmalade/")
+                    ;   ("marmalade" . "http://elpa.emacs-china.org/marmalade/")
 		       ("org" . "http://elpa.emacs-china.org/org/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
                          ))
@@ -120,5 +120,7 @@
   :ensure t
   :after lsp-mode
   :hook ((lsp-mode . lsp-ui-mode)))
+
+
 
 (provide 'base)

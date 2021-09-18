@@ -190,7 +190,6 @@ elif type compctl &>/dev/null; then
 fi
 ###-end-npm-completion-###
 
-alias hp="http_proxy=''"
 ###alias php='docker run --rm -it -v $(pwd):/opt php:7.0-cli'
 
 
@@ -253,6 +252,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-export https_proxy=''
-export ftp_proxy=''
-export socks_proxy=''
+export https_proxy='127.0.0.1:8118'
+export ftp_proxy='127.0.0.1:8118'
+export socks_proxy='127.0.0.1:8080'
