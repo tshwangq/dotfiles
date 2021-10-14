@@ -113,26 +113,23 @@
 
 
 (setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)" "CANCELLED(c)")
-              (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
-
+      (quote ((sequence "TODO(t)" "NEXT(n)" "DONE(d)"
+               "WAITING(w@/!)" "CANCELLED(c@/!)"))))
 
 (setq org-todo-keyword-faces
       (quote (("TODO" :foreground "red" :weight bold)
               ("NEXT" :foreground "blue" :weight bold)
               ("DONE" :foreground "forest green" :weight bold)
               ("WAITING" :foreground "orange" :weight bold)
-              ("HOLD" :foreground "magenta" :weight bold)
               ("CANCELLED" :foreground "forest green" :weight bold)
-              ("MEETING" :foreground "forest green" :weight bold)
-              ("PHONE" :foreground "forest green" :weight bold))))
+              )))
 (setq org-directory "~/workspace/workspace")
 (setq org-default-notes-file (concat org-directory "notes.org"))
 (global-set-key (kbd "C-c c") 'org-capture)
 
 (require 'org-protocol)
 (setq org-agenda-include-diary t)
-;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
+;; Capture templates for: TODO tasks, Notes, appointments, and org-protocol
 (setq org-capture-templates
       (quote (
               ("d" "default" plain (function org-roam--capture-get-point)
@@ -158,10 +155,6 @@
               ("w"   "Default template" entry (file+headline "~/capture.org" "Notes")
                "* %^{Title}\n\n  Source: %u, %c\n\n  %i"
                :empty-lines 1)
-              ("m" "Meeting" entry (file (concat org-directory "inbox.org"))
-               "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
-              ("p" "Phone call" entry (file (concat org-directory "inbox.org"))
-               "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
               ("h" "Habit" entry (file (concat org-directory "inbox.org"))
                "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
 
@@ -171,6 +164,7 @@
                              "~/workspace/workspace/notes.org"
                              "~/workspace/workspace/dairy.org"
                              "~/workspace/workspace/finance.org"
+                             "~/workspace/workspace/20210929164904-airdrop.org"
                              "~/workspace/awesome-smoking/README.org"
                              ))
 
@@ -200,6 +194,10 @@
           (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp ":smoking:"))))
         ;; other commands here
         ))
+(setq org-agenda-custom-commands
+      '(("d" "Today's Tasks"
+         ((agenda "" ((org-agenda-span 1)
+                      (org-agenda-overriding-header "Today's Task")))))))
 
 ;; Custom agenda command definitions
 (setq org-agenda-custom-commands
@@ -276,6 +274,11 @@
                nil))))
 
 (require 'ox-taskjuggler)
+(setq org-export-taskjuggler-default-global-properties "
+account cost "费用"
+account revenue "收入"
+balance cost revenue")
+
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
 
@@ -331,9 +334,6 @@
                         (file-name-as-directory (expand-file-name dest))
                         (file-name-sans-extension rel)
                         ".html"))))
-
-(add-to-list 'org-modules 'org-habit)
-
 (require 'ox-latex)
 (add-to-list 'org-latex-classes
              '("ctexart"
@@ -360,8 +360,6 @@
 (setq org-latex-pdf-process
       '("xelatex -interaction nonstopmode %f"
         "xelatex -interaction nonstopmode %f")) ;; for multiple passes
-(require 'org-habit)
-
 (use-package org-roam
   :after org
   :init (setq org-roam-v2-ack t)
@@ -426,8 +424,22 @@
   :bind
   ("C-c n d" . deft))
 
-(add-to-list 'load-path "~/org-roam-ui")
-(load-library "org-roam-ui")
+;(add-to-list 'load-path "~/org-roam-ui")
+;(load-library "org-roam-ui")
+
+(use-package org-roam-ui
+  :straight
+  (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
+  :after org-roam
+  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+  ;;         a hookable mode anymore, you're advised to pick something yourself
+  ;;         if you don't care about startup time, use
+  ;;  :hook (after-init . org-roam-ui-mode)
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
 
 
 
