@@ -368,15 +368,8 @@ balance cost revenue")
   (after-init . org-roam-mode)
   :custom
   (org-roam-directory "~/workspace/workspace")
-  :config
   (org-roam-setup)
-  :bind (:map org-roam-mode-map
-              (("C-c n r" . org-roam-node-random)
-               ("C-c n f" . org-roam-node-find)
-               ("C-c n g" . org-roam-graph))
-              :map org-mode-map
-              (("C-c n i" . org-roam-insert))
-              (("C-c n I" . org-roam-insert-immediate))))
+  )
 
 (require 'org-roam-protocol)
 (setq org-roam-capture-ref-templates

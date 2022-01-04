@@ -14,7 +14,7 @@
 
 (setq package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
                     ;   ("marmalade" . "http://elpa.emacs-china.org/marmalade/")
-		       ("org" . "http://elpa.emacs-china.org/org/")
+		       ;("org" . "http://elpa.emacs-china.org/org/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
                          ))
 
@@ -134,5 +134,7 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
+
+(use-package bug-hunter)
 
 (provide 'base)
