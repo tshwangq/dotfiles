@@ -255,3 +255,6 @@ unset __conda_setup
 export https_proxy='127.0.0.1:8118'
 export ftp_proxy='127.0.0.1:8118'
 export socks_proxy='127.0.0.1:8080'
+
+# disable middle mouse paste key
+xmodmap -e "pointer = 1 25 3 4 5 6 7 2" 2>/dev/null
