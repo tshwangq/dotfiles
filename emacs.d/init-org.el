@@ -164,7 +164,7 @@
                              "~/workspace/workspace/notes.org"
                              "~/workspace/workspace/dairy.org"
                              "~/workspace/workspace/finance.org"
-                             "~/workspace/workspace/20210929164904-airdrop.org"
+                             "~/workspace/cryptocurrency/notebook/20210929164904-airdrop.org"
                              "~/workspace/awesome-smoking/README.org"
                              ))
 

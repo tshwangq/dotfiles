@@ -1,7 +1,10 @@
 [user]
 	email = tshwangq@gmail.com
 	name = Qun
+	signingkey = 0766B10AF1448CE4038A7AEF18A7D4AFB4E53A29
 [merge]
 	tool = kdiff3
 [push]
 	default = matching
+[commit]
+	gpgsign = true
