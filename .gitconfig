@@ -8,3 +8,5 @@
 	default = matching
 [commit]
 	gpgsign = true
+[diff "gpg"]
+	textconv = gpg --no-tty --decrypt

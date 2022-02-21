@@ -12,10 +12,10 @@
 (prefer-coding-system        'utf-8)   ; with sugar on top
 (setq default-process-coding-system '(utf-8-unix . utf-8-unix))
 
-(setq package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
-                    ;   ("marmalade" . "http://elpa.emacs-china.org/marmalade/")
-		       ;("org" . "http://elpa.emacs-china.org/org/")
-                         ("melpa" . "http://elpa.emacs-china.org/melpa/")
+(setq package-archives '(("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+;                         ("nongnu" . "http://mirrors.tuna.tsinghua.edu.cn/nongu/")
+			("nongnu" . "https://elpa.nongnu.org/nongnu/")
                          ))
 
 ;(when (not package-archive-contents)

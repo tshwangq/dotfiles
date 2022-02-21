@@ -34,7 +34,7 @@
 ;; Standard key bindings
 (use-package org
   :ensure t
-  :ensure org-plus-contrib
+  :ensure org-contrib
   :defer t
 ;  :ensure org-plus-contrib
   :init
