@@ -1,0 +1,6 @@
+* Blogs                                             :elfeed:
+** Emacs                                            :Emacs:
+*** [[https://lucidmanager.org/tags/emacs/index.xml][More productive with Emacs]]
+*** [[http://www.reddit.com/r/emacs/.rss][Emacs on Reddit]]
+** News                                              :news:
+*** http://rss.cnn.com/rss/edition_world.rss
