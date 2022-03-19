@@ -47,7 +47,19 @@
  '(paradox-github-token t)
  '(protect-buffer-bury-p nil)
  '(safe-local-variable-values
-   '((eval setq-local org-roam-db-location
+   '((eval progn
+           (setq-local org-roam-directory
+                       (expand-file-name "./"))
+           (setq-local org-roam-db-location
+                       (concat org-roam-directory "org-roam.db")))
+     (eval setq-local org-roam-directory
+           (expand-file-name "./"))
+     (eval progn
+           (setq-local org-roam-directory
+                       (locate-dominating-file default-directory ".dir-locals.el"))
+           (setq-local org-roam-db-location
+                       (concat org-roam-directory "org-roam.db")))
+     (eval setq-local org-roam-db-location
            (expand-file-name "org-roam.db" org-roam-directory))
      (eval setq-local org-roam-directory
            (expand-file-name

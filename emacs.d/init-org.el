@@ -165,6 +165,7 @@
                              "~/workspace/workspace/dairy.org"
                              "~/workspace/workspace/finance.org"
                              "~/workspace/cryptocurrency/notebook/20210929164904-airdrop.org"
+                             "~/workspace/cryptocurrency/notebook/20220319121151-gitcoin.org"
                              "~/workspace/awesome-smoking/README.org"
                              ))
 
@@ -418,8 +419,6 @@ balance cost revenue")
   :bind
   ("C-c n d" . deft))
 
-;(add-to-list 'load-path "~/org-roam-ui")
-;(load-library "org-roam-ui")
 
 (use-package org-roam-ui
   :straight
