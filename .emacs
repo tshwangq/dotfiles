@@ -46,6 +46,12 @@
    '(websocket justify-kp nov org-ref deft org-noter-pdftools org-pdftools org-noter pdf-tools org-pdfview helm-gtags flycheck-package company-quickhelp helm-projectile org-roam-server org-roam helm-dictionary css-mode flyspell ediff magit-popup lsp-python-ms dired-quick-sort rainbow-mode web-mode treemacs virtualenvwrapper elfeed projectile lsp-python lsp-ui smartparens-config lsp-php phpunit php-extras phpcbf md4rd true tide org-plus-contrib lsp-vue company-lsp helm-flx py-autopep8 php-mode company-tern js2-refactor ace-pinyin undo-tree multiple-cursors magit dashboard dumb-jump company-ycmd helm-tramp fuzzy mmm-vars css-eldoc xref-js2 jump-tree ace-link avy-zap paredit expand-region ob-redis indium counsel-dash jedi circe circle ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode plantuml-mode docker hackernews helm-ag ag auto-complete zygospore youdao-dictionary yaml-mode ws-butler w3m volatile-highlights use-package tern-auto-complete tagedit sr-speedbar solarized-theme smart-mode-line scss-mode restclient popwin peep-dired paradox ox-twbs nyan-mode nginx-mode markdown-preview-eww markdown-mode lenlen-theme iedit helm-swoop helm-descbinds haml-mode gitignore-mode ggtags function-args exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu))
  '(paradox-github-token t)
  '(protect-buffer-bury-p nil)
+ '(safe-local-variable-values
+   '((eval setq-local org-roam-db-location
+           (expand-file-name "org-roam.db" org-roam-directory))
+     (eval setq-local org-roam-directory
+           (expand-file-name
+            (locate-dominating-file default-directory ".dir-locals.el")))))
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
@@ -429,23 +435,7 @@ buffer is not visiting a file."
   :ensure t
   :commands (elfeed-search-mode elfeed-show-mode)
   :init
-  (setq elfeed-feeds
-    '(
-       ("https://xueqiu.com/hots/topic/rss"             xueqiu)
-       ("http://www.360doc.com/rssperson/32953612.aspx"    r360)
-       ("https://cn.reuters.com/rssFeed/stocksNews"      reuters)
-       ("https://news.ycombinator.com/rss"                sw news)
-       ("https://www.reddit.com/r/emacs/.rss"             sw emacs)
-       ("http://endlessparentheses.com/atom.xml"          sw emacs)
-       ;; Emacs Horrors
-       ("http://emacshorrors.com/feed.atom"               sw emacs)
-       ;; Emacs Ninja
-       ("http://emacsninja.com/feed.atom"                 sw emacs)
-       ;; One Thing Well
-       ("http://onethingwell.org/rss"                     sw tech)
-       ;; Github Engineering
-       ("http://githubengineering.com/atom.xml"           sw tech)
-       ))
+
   (setq elfeed-max-connections 10)
   (setq url-queue-timeout 30)
   :config
@@ -467,6 +457,16 @@ buffer is not visiting a file."
    'elfeed-search-title-face
    nil
    :foreground (face-attribute 'font-lock-comment-face :foreground)))
+;; Configure Elfeed with org mode
+(use-package elfeed-org
+  :ensure t
+  :config
+  (setq elfeed-show-entry-switch 'display-buffer)
+  (setq rmh-elfeed-org-files (list "~/workspace/.dotfiles/elfeed.org"))
+  (elfeed-org))
+
+(use-package elfeed-web
+  :ensure t)
 
 (setq holiday-bahai-holidays nil)
 (setq holiday-hebrew-holidays nil)
@@ -480,7 +480,7 @@ buffer is not visiting a file."
   (when org-inline-image-overlays
     (org-redisplay-inline-images)))
 (add-hook 'org-babel-after-execute-hook 'my/fix-inline-images)
-
+(setq httpd-port 8182)
 (use-package treemacs
   :ensure t
   :defer t

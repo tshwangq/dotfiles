@@ -272,7 +272,8 @@
                        (org-agenda-skip-function 'bh/skip-non-archivable-tasks)
                        (org-tags-match-list-sublevels nil))))
                nil))))
-
+(add-to-list 'org-modules 'org-habit t)
+(setq org-modules (quote (org-habit)))
 (require 'ox-taskjuggler)
 (setq org-export-taskjuggler-default-global-properties "
 account cost "费用"
@@ -407,7 +408,7 @@ balance cost revenue")
   (add-hook 'nov-mode-hook 'visual-line-mode)
   (add-hook 'nov-mode-hook 'visual-fill-column-mode)
   )
-
+(setq org-agenda-overriding-columns-format "%TODO %7EFFORT %PRIORITY     %100ITEM 100%TAGS")
 (use-package deft
   :config
   (setq deft-directory org-directory
