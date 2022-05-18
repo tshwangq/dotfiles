@@ -166,6 +166,12 @@
                              "~/workspace/workspace/finance.org"
                              "~/workspace/cryptocurrency/notebook/20210929164904-airdrop.org"
                              "~/workspace/cryptocurrency/notebook/20220319121151-gitcoin.org"
+                             "~/workspace/cryptocurrency/notebook/20220319184128-builder.org"
+                             "~/workspace/cryptocurrency/notebook/20220319211749-xrp.org"
+                             "~/workspace/cryptocurrency/notebook/20211117200218-ido.org"
+                             "~/workspace/cryptocurrency/notebook/20211118104257-cosmos.org"
+                             "~/workspace/cryptocurrency/notebook/20220518091404-arbitrum.org"
+                             "~/workspace/cryptocurrency/notebook/20220518091337-op.org"
                              "~/workspace/awesome-smoking/README.org"
                              ))
 
