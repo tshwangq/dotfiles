@@ -259,3 +259,4 @@ export socks_proxy=''
 # disable middle mouse paste key
 xmodmap -e "pointer = 1 25 3 4 5 6 7 2" 2>/dev/null
 export http_proxy='127.0.0.1:8118'
+. "$HOME/.cargo/env"
