@@ -417,7 +417,7 @@ in a week."
 
 (defun cal-china-x-solar-term-alist-new (year)
   "Return a solar-term alist for YEAR."
-  (loop for i from 0 upto 23
+  (cl-loop for i from 0 upto 23
 
         for date = (cal-china-x-next-solar-term `(1 1 ,year))
         then (setq date (cal-china-x-next-solar-term date))

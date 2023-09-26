@@ -135,7 +135,9 @@
  )
 (require 'helm-descbinds)
 (helm-descbinds-mode)
-
+(use-package helm-comint
+  :ensure t
+)
 (use-package helm-ag
   :ensure t
   :init

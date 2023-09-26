@@ -172,15 +172,14 @@
   (load bootstrap-file nil 'nomessage))
 
 (use-package bug-hunter)
+;(setenv "JAVA_HOME"  "/usr/lib/jvm/java-11-openjdk-amd64")
+;(setq lsp-java-java-path "/usr/lib/jvm/java-11-openjdk-amd64/bin/java")
 
+;(use-package java
+;  :ensure nil
+;  :after lsp-java
+;  :bind (:map java-mode-map ("C-c i" . lsp-java-add-import)))
 
-(use-package lsp-java :config (add-hook 'java-mode-hook 'lsp))
-(use-package java
-  :ensure nil
-  :after lsp-java
-  :bind (:map java-mode-map ("C-c i" . lsp-java-add-import)))
-
-(setenv "JAVA_HOME"  "/usr/lib/jvm/java-11-openjdk-amd64")
-(setq lsp-java-java-path "/usr/lib/jvm/java-11-openjdk-amd64/bin/java")
+;(use-package lsp-java :config (add-hook 'java-mode-hook 'lsp))
 
 (provide 'base)
