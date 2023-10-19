@@ -61,7 +61,7 @@
           flycheck-php-executable "/opt/local/bin/php"
           flycheck-php-phpcs-executable "~/.composer/vendor/bin/phpcs"
           flycheck-php-phpmd-executable "~/.composer/vendor/bin/phpmd")
-    (lsp-mode t))
+    )
 
   ;; (setq php-executable "/usr/bin/php")
   (setq php-mode-coding-style 'psr2)
@@ -70,17 +70,6 @@
         indent-tabs-mode nil)
   (add-hook 'php-mode-hook 'phpcbf-enable-on-save)
   (add-hook 'php-mode-hook #'cmack/php-mode-hook))
-
-(use-package lsp-php
-  ;:ensure t
-  :after (php-mode lsp-mode)
-  :load-path "~/lsp-php"
-  :pin manual
-  :hook ((php-mode . lsp-php-enable))
-  :custom
-  (lsp-php-language-server-command
-   (list "php"
-         (expand-file-name "~/.emacs.d/php-language-server/vendor/bin/php-language-server.php"))))
 
 (use-package phpcbf
   :ensure t

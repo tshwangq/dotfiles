@@ -417,15 +417,6 @@ buffer is not visiting a file."
   :ensure t
   :init)
 
-;(require 'run-assoc)
-;(setq associated-program-alist
-      ;; '(("gnochm" "\\.chm$")
-;;        ("evince" "\\.pdf$")
-        ;;("mplayer" "\\.mp3$")
-        ;;("evince" "\\.ps$")
-        ;;((lambda (file)
-           ;;(browse-url (concat "file:///" (expand-file-name file)))) "\\.html?$")))
-
 (defun ange-ftp-set-passive ()
   "Function to send a PASV command to hosts not named in the variable
   `ange-ft-hosts-no-pasv'. Intended to be called from the hook variable
@@ -516,7 +507,7 @@ buffer is not visiting a file."
            )))
   )
 
-(require 'albin-music-mode)
+;(require 'albin-music-mode)
 
 
 

@@ -14,13 +14,6 @@
 
 (use-package company-quickhelp :ensure)
 
-(use-package company-lsp
-  :ensure
-  :config
-  ;; 开启yasnippet支持
-;;  (push 'company-lsp company-backends)
-  (setq company-lsp-enable-snippet t))
-
 (use-package company
   :ensure t
   :commands company-mode
@@ -35,18 +28,6 @@
   (add-hook 'company-mode-hook 'company-quickhelp-mode)
   (add-hook 'after-init-hook 'global-company-mode)  )
 
-(use-package company-lsp
-  :ensure t
-  :after (company lsp-mode)
-  :config
-  (add-to-list 'company-backends 'company-lsp)
-  :bind (("C-c C-y" . company-yasnippet)
-         :map company-active-map
-         ("C-n" . company-select-next)
-         ("C-p" . company-select-previous))
-  :custom
-  (company-lsp-async t)
-  (company-lsp-enable-snippet t))
 
 (use-package dashboard
   :config

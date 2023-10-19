@@ -90,27 +90,16 @@
       python-shell-interpreter-args "--simple-prompt -i")
 
 
-;(eval-after-load "company"
-;  '(add-to-list 'company-backends '(company-anaconda :with company-capf)))
-(eval-after-load "lsp"
-  '(add-to-list 'company-backends '(company-lsp)))
-
-(lsp-register-client
- (make-lsp-client :new-connection (lsp-tramp-connection "pyls")
-                  :major-modes '(python-mode)
-                  :remote? t
-                  :server-id 'pyls))
-(use-package lsp-python-ms
+(use-package eglot
   :ensure t
-  :init (setq lsp-python-ms-auto-install-server t)
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-python-ms)
-                         (lsp))))  ; or lsp-deferred
-;; make sure this is activated when python-mode is activated
-;; lsp-python-enable is created by macro above, also looks like have to push company-lsp again to get complement
-(add-hook 'python-mode-hook
-          (lambda ()
-            (push 'company-lsp company-backends)))
+  :config
+  (add-to-list 'eglot-server-programs '(python-mode . ("/home/qun/anaconda3/bin/pyls")))
+
+  (setq-default eglot-workspace-configuration
+                '((:pylsp . (:configurationSources ["flake8"] :plugins (:pycodestyle (:enabled nil) :mccabe (:enabled nil) :flake8 (:enabled t))))))
+
+  :hook
+  ((python-mode . eglot-ensure)))
 
 (provide 'init-python)
 ;;; init-40-python.el ends here
