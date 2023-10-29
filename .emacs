@@ -94,7 +94,7 @@ CURRENT-NAME, if it does not already have them:
 (defvar native-comp-deferred-compilation-deny-list nil)
 
 ;(setq straight-use-package-by-default t)
-(require 'org-macs)
+
 ;; Install org early before builtin version gets loaded
 ;(straight-use-package 'org)
 
@@ -139,8 +139,6 @@ CURRENT-NAME, if it does not already have them:
  '(eww-search-prefix "http://www.google.com/search?q=")
  '(helm-ag-base-command "rg --smart-case --no-heading --line-number")
  '(initial-frame-alist '((fullscreen . maximized)))
- '(org-agenda-files
-   '("/home/qun/workspace/workspace/gtd.org" "/home/qun/workspace/workspace/inbox.org" "/home/qun/workspace/workspace/journal.org" "/home/qun/workspace/workspace/notes.org" "/home/qun/workspace/workspace/dairy.org" "/home/qun/workspace/workspace/finance.org" "/home/qun/workspace/awesome-smoking/README.org"))
  '(package-selected-packages
    '(websocket justify-kp nov org-ref deft org-noter-pdftools org-pdftools org-noter pdf-tools org-pdfview helm-gtags flycheck-package company-quickhelp helm-projectile org-roam-server org-roam helm-dictionary css-mode flyspell ediff magit-popup lsp-python-ms dired-quick-sort rainbow-mode web-mode treemacs virtualenvwrapper elfeed projectile lsp-python lsp-ui smartparens-config lsp-php phpunit php-extras phpcbf md4rd true tide org-plus-contrib lsp-vue company-lsp helm-flx py-autopep8 php-mode company-tern js2-refactor ace-pinyin undo-tree multiple-cursors magit dashboard dumb-jump company-ycmd helm-tramp fuzzy mmm-vars css-eldoc xref-js2 jump-tree ace-link avy-zap paredit expand-region indium counsel-dash jedi circe circle ycmd helm-zhihu-daily groovy-mode gradle-mode company-anaconda anaconda-mode plantuml-mode docker hackernews helm-ag ag auto-complete zygospore yaml-mode ws-butler w3m volatile-highlights use-package tern-auto-complete tagedit sr-speedbar solarized-theme smart-mode-line scss-mode restclient popwin peep-dired paradox ox-twbs nyan-mode nginx-mode markdown-preview-eww markdown-mode lenlen-theme iedit helm-swoop helm-descbinds haml-mode gitignore-mode ggtags function-args exec-path-from-shell emmet-mode duplicate-thing dtrt-indent dockerfile-mode dired-subtree company-irony comment-dwim-2 color-identifiers-mode clean-aindent-mode beacon bash-completion anzu))
  '(paradox-github-token t)
@@ -562,12 +560,12 @@ buffer is not visiting a file."
    nil
    :foreground (face-attribute 'font-lock-comment-face :foreground)))
 ;; Configure Elfeed with org mode
-(use-package elfeed-org
-  :ensure t
-  :config
-  (setq elfeed-show-entry-switch 'display-buffer)
-  (setq rmh-elfeed-org-files (list "~/workspace/.dotfiles/elfeed.org"))
-  (elfeed-org))
+;(use-package elfeed-org
+;  :ensure t
+;  :config
+;  (setq elfeed-show-entry-switch 'display-buffer)
+;  (setq rmh-elfeed-org-files (list "~/workspace/.dotfiles/elfeed.org"))
+;  (elfeed-org))
 
 (use-package elfeed-web
   :ensure t)
@@ -575,15 +573,12 @@ buffer is not visiting a file."
 (setq holiday-bahai-holidays nil)
 (setq holiday-hebrew-holidays nil)
 (setq holiday-islamic-holidays nil)
-(setq org-agenda-span 10)
+;(setq org-agenda-span 10)
 (require 'cal-china-x)
 (setq mark-holidays-in-calendar t)
 (setq cal-china-x-important-holidayxs cal-china-x-chinese-holidays)
 (setq calendar-holidays cal-china-x-important-holidays)
-(defun my/fix-inline-images ()
-  (when org-inline-image-overlays
-    (org-redisplay-inline-images)))
-(add-hook 'org-babel-after-execute-hook 'my/fix-inline-images)
+
 (setq httpd-port 8182)
 (use-package treemacs
   :ensure t
@@ -617,13 +612,6 @@ buffer is not visiting a file."
   :config
   (setq global-jump-tree-mode t))
 (setq browse-url-browser-function 'eww-browse-url)
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-table ((t (:foreground "#6c71c4" :family "Ubuntu Mono")))))
 
 (setq elfeed-use-curl nil)
 
