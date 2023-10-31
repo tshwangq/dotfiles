@@ -142,7 +142,7 @@
   :ensure t
   :init
   (custom-set-variables
-   '(helm-ag-base-command "rg --smart-case --no-heading --line-number"))
+   '(helm-ag-base-command "rg --vimgrep --smart-case --no-heading --line-number"))
                                         :bind ("M-p s" . helm-do-ag-project-root))
 
 (setq helm-mini-default-sources '(helm-source-buffers-list

@@ -1,0 +1,36 @@
+#+TITLE: My dotfiles
+#+AUTHOR: chyun
+#+PROPERTY: header-args:emacs-lisp :tangle init.el :results none :eval never-export :comments link
+#+OPTIONS: toc:1 num:nil
+#+STARTUP: overview indent
+
+* emacs Compiling
+#+name: compile emacs 
+#+begin_src shell
+  git clone git://git.savannah.gnu.org/emacs.git --branch emacs-29 --depth 1
+  export CC=/usr/bin/gcc-10 CXX=/usr/bin/gcc-10
+  ./autogen.sh
+  ./configure \
+    --with-native-compilation \
+    --with-tree-sitter \
+    --with-gnutls \
+    --with-gif \
+    --with-json \
+    --with-jpeg \
+    --with-png \
+    --with-rsvg \
+    --with-tiff \
+    --with-imagemagick \
+    --with-wide-int \
+    --with-xft \
+    --with-xml2 \
+    --with-xpm \
+    --without-dbus \
+    --without-pop
+  make --jobs=$(nproc)
+  sudo make install
+  #+end_src
+
+** tools
+- riggrep
+- ispell

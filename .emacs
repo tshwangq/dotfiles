@@ -95,9 +95,6 @@ CURRENT-NAME, if it does not already have them:
 
 ;(setq straight-use-package-by-default t)
 
-;; Install org early before builtin version gets loaded
-;(straight-use-package 'org)
-
 ;; Copyright (C) 2018, tshwangq
 
 ;; Author: Qun Wang <tshwangq@gmail.com>
@@ -169,9 +166,12 @@ CURRENT-NAME, if it does not already have them:
 
 (server-start)
 
+;; Install org early before builtin version gets loaded
+
 (add-to-list 'load-path (expand-file-name "~/emacs.d/"))
 (require 'base)
 (require 'base-extensions)
+(straight-use-package 'org)
 (require 'setup-helm)
 (use-package ycmd)
 (require 'init-dired)

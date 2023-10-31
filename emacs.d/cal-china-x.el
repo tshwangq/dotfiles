@@ -532,7 +532,7 @@ N congruent to 1 gives the first name, N congruent to 2 gives the second name,
         (calendar-holidays cal-china-x-general-holidays))
     ad-do-it)
   (let ((calendar-holidays
-         (remove-if (lambda (i)
+         (cl-remove-if (lambda (i)
                       (or (member i cal-china-x-important-holidays)
                           (member i cal-china-x-general-holidays)))
                     calendar-holidays)))

@@ -24,9 +24,9 @@
 ;;                                         ;(use-package smartparens-config)
 ;;   )
 
-(use-package php-extras
-  :ensure t
-  :commands php-mode)
+;; (use-package php-extras
+;;   :ensure t
+;;   :commands php-mode)
 
 
 (use-package phpunit
@@ -71,12 +71,12 @@
   (add-hook 'php-mode-hook 'phpcbf-enable-on-save)
   (add-hook 'php-mode-hook #'cmack/php-mode-hook))
 
-(use-package phpcbf
-  :ensure t
-  :commands php-mode
-  :config
-  (setq phpcbf-executable "/usr/local/bin/phpcbf.phar")
-  (setq phpcbf-standard "PSR2")
-  (add-hook 'php-mode-hook 'phpcbf-enable-on-save))
+;; (use-package phpcbf
+;;   :ensure t
+;;   :commands php-mode
+;;   :config
+;;   (setq phpcbf-executable "/usr/local/bin/phpcbf.phar")
+;;   (setq phpcbf-standard "PSR2")
+;;   (add-hook 'php-mode-hook 'phpcbf-enable-on-save))
 
 (provide 'init-php)
