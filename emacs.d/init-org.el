@@ -171,7 +171,10 @@
                              "~/workspace/cryptocurrency/notebook/20211117200218-ido.org"
                              "~/workspace/cryptocurrency/notebook/20211118104257-cosmos.org"
                              "~/workspace/cryptocurrency/notebook/20220518091404-arbitrum.org"
+                             "~/workspace/cryptocurrency/notebook/linea.org"
                              "~/workspace/cryptocurrency/notebook/20220518091337-op.org"
+                             "~/workspace/cryptocurrency/notebook/20220319184128-builder.org"
+                             "~/workspace/cryptocurrency/notebook/zkfair.org"
                              "~/workspace/awesome-smoking/README.org"
                              ))
 

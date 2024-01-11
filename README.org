@@ -1,8 +1,7 @@
 #+TITLE: My dotfiles
 #+AUTHOR: chyun
-#+PROPERTY: header-args:emacs-lisp :tangle init.el :results none :eval never-export :comments link
 #+OPTIONS: toc:1 num:nil
-#+STARTUP: overview indent
+#+STARTUP: overview 
 
 * emacs Compiling
 #+name: compile emacs 
@@ -31,6 +30,15 @@
   sudo make install
   #+end_src
 
-** tools
+* TODO WSL
+[[https://elecming.medium.com/the-ultimate-emacs-hacking-tutorial-in-windows-10-wsl-2-cfd3ea3893e3][The Ultimate Emacs Hacking Tutorial in Windows 10 WSL 2]]
+https://gist.github.com/AloisJanicek/942b93feb7ca3683ce666c913ce56672
+
+emacs in WSL2:
+https://shelper.github.io/posts/setup-emacs-in-wsl2/
+
+https://github.com/hubisan/emacs-wsl/issues/53
+
+* tools
 - riggrep
 - ispell
