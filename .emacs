@@ -619,3 +619,11 @@ buffer is not visiting a file."
 (setq md4rd-subs-active '(lisp+Common_Lisp emacs prolog ripple))
 (setq x-wait-for-event-timeout nil)
 (server-start)
+
+(use-package rime
+  :custom
+  (default-input-method "rime")
+  (rime-show-candidate 'posframe)
+  :bind
+  ("C-\\" . toggle-input-method)
+  )

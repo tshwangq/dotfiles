@@ -176,6 +176,7 @@
                              "~/workspace/cryptocurrency/notebook/20220319184128-builder.org"
                              "~/workspace/cryptocurrency/notebook/zkfair.org"
                              "~/workspace/awesome-smoking/README.org"
+                             "~/workspace/cryptocurrency/notebook/manta.org"
                              ))
 
 (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
